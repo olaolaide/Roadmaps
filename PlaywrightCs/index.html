@@ -5,42 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C# & Playwright Automation Tester — 3-Month Roadmap</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
             --bg: #0f1117;
             --surface: #181c27;
             --surface2: #1e2333;
-            --border: rgba(255, 255, 255, 0.08);
-            --border2: rgba(255, 255, 255, 0.13);
+            --border: rgba(255,255,255,0.08);
+            --border2: rgba(255,255,255,0.13);
             --text: #e8eaf0;
             --muted: #8b90a0;
             --dim: #555b6e;
 
             --m1: #22c55e;
-            --m1-bg: rgba(34, 197, 94, 0.08);
-            --m1-border: rgba(34, 197, 94, 0.25);
-            --m2: #818cf8;
-            --m2-bg: rgba(129, 140, 248, 0.08);
-            --m2-border: rgba(129, 140, 248, 0.25);
+            --m1-bg: rgba(34,197,94,0.08);
+            --m1-border: rgba(34,197,94,0.25);
+
+            --m2: #a78bfa;
+            --m2-bg: rgba(167,139,250,0.08);
+            --m2-border: rgba(167,139,250,0.25);
+
             --m3: #fb923c;
-            --m3-bg: rgba(251, 146, 60, 0.08);
-            --m3-border: rgba(251, 146, 60, 0.25);
+            --m3-bg: rgba(251,146,60,0.08);
+            --m3-border: rgba(251,146,60,0.25);
 
             --font: 'Inter', system-ui, sans-serif;
             --mono: 'JetBrains Mono', monospace;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: var(--font);
@@ -64,8 +59,9 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse 600px 300px at 20% 50%, rgba(129, 140, 248, 0.07) 0%, transparent 70%),
-            radial-gradient(ellipse 500px 250px at 80% 50%, rgba(34, 197, 94, 0.06) 0%, transparent 70%);
+            background:
+                    radial-gradient(ellipse 600px 300px at 20% 50%, rgba(167,139,250,0.07) 0%, transparent 70%),
+                    radial-gradient(ellipse 500px 250px at 80% 50%, rgba(34,197,94,0.06) 0%, transparent 70%);
             pointer-events: none;
         }
 
@@ -86,14 +82,12 @@
             margin-bottom: 16px;
         }
 
-        .hero h1 span {
-            color: var(--m2);
-        }
+        .hero h1 span { color: var(--m2); }
 
         .hero-sub {
             font-size: 16px;
             color: var(--muted);
-            max-width: 520px;
+            max-width: 540px;
             margin: 0 auto 36px;
         }
 
@@ -117,57 +111,21 @@
             color: var(--muted);
         }
 
-        .pill .dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-        }
+        .pill .dot { width: 7px; height: 7px; border-radius: 50%; }
 
-        .pill.m1 {
-            border-color: var(--m1-border);
-            color: var(--m1);
-            background: var(--m1-bg);
-        }
-
-        .pill.m2 {
-            border-color: var(--m2-border);
-            color: var(--m2);
-            background: var(--m2-bg);
-        }
-
-        .pill.m3 {
-            border-color: var(--m3-border);
-            color: var(--m3);
-            background: var(--m3-bg);
-        }
-
-        .pill.m1 .dot {
-            background: var(--m1);
-        }
-
-        .pill.m2 .dot {
-            background: var(--m2);
-        }
-
-        .pill.m3 .dot {
-            background: var(--m3);
-        }
+        .pill.m1 { border-color: var(--m1-border); color: var(--m1); background: var(--m1-bg); }
+        .pill.m2 { border-color: var(--m2-border); color: var(--m2); background: var(--m2-bg); }
+        .pill.m3 { border-color: var(--m3-border); color: var(--m3); background: var(--m3-bg); }
+        .pill.m1 .dot { background: var(--m1); }
+        .pill.m2 .dot { background: var(--m2); }
+        .pill.m3 .dot { background: var(--m3); }
 
         /* ── LAYOUT ── */
-        .container {
-            max-width: 1040px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+        .container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
 
         /* ── MONTH SECTION ── */
-        .month-section {
-            padding: 56px 0 40px;
-        }
-
-        .month-section + .month-section {
-            border-top: 1px solid var(--border);
-        }
+        .month-section { padding: 56px 0 40px; }
+        .month-section + .month-section { border-top: 1px solid var(--border); }
 
         .month-header {
             display: flex;
@@ -188,35 +146,37 @@
             margin-top: 4px;
         }
 
-        .m1 .month-number {
-            background: var(--m1-bg);
-            color: var(--m1);
-            border: 1px solid var(--m1-border);
-        }
+        .m1 .month-number { background: var(--m1-bg); color: var(--m1); border: 1px solid var(--m1-border); }
+        .m2 .month-number { background: var(--m2-bg); color: var(--m2); border: 1px solid var(--m2-border); }
+        .m3 .month-number { background: var(--m3-bg); color: var(--m3); border: 1px solid var(--m3-border); }
 
-        .m2 .month-number {
-            background: var(--m2-bg);
-            color: var(--m2);
-            border: 1px solid var(--m2-border);
-        }
+        .month-meta h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 4px; }
+        .month-meta p { font-size: 14px; color: var(--muted); }
 
-        .m3 .month-number {
-            background: var(--m3-bg);
-            color: var(--m3);
-            border: 1px solid var(--m3-border);
-        }
-
-        .month-meta h2 {
-            font-size: 22px;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            margin-bottom: 4px;
-        }
-
-        .month-meta p {
-            font-size: 14px;
+        .month-goal {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.03);
             color: var(--muted);
         }
+
+        .month-goal .goal-dot {
+            width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+        }
+
+        .m1 .month-goal { border-color: var(--m1-border); background: var(--m1-bg); color: var(--m1); }
+        .m1 .month-goal .goal-dot { background: var(--m1); }
+        .m2 .month-goal { border-color: var(--m2-border); background: var(--m2-bg); color: var(--m2); }
+        .m2 .month-goal .goal-dot { background: var(--m2); }
+        .m3 .month-goal { border-color: var(--m3-border); background: var(--m3-bg); color: var(--m3); }
+        .m3 .month-goal .goal-dot { background: var(--m3); }
 
         /* ── WEEK GRID ── */
         .week-grid {
@@ -235,28 +195,12 @@
             position: relative;
         }
 
-        .week-card:hover {
-            border-color: var(--border2);
-            background: var(--surface2);
-            transform: translateY(-1px);
-        }
+        .week-card:hover { border-color: var(--border2); background: var(--surface2); transform: translateY(-1px); }
+        .week-card.open { border-color: var(--border2); background: var(--surface2); }
 
-        .week-card.open {
-            border-color: var(--border2);
-            background: var(--surface2);
-        }
-
-        .m1 .week-card.open {
-            border-color: var(--m1-border);
-        }
-
-        .m2 .week-card.open {
-            border-color: var(--m2-border);
-        }
-
-        .m3 .week-card.open {
-            border-color: var(--m3-border);
-        }
+        .m1 .week-card.open { border-color: var(--m1-border); }
+        .m2 .week-card.open { border-color: var(--m2-border); }
+        .m3 .week-card.open { border-color: var(--m3-border); }
 
         .week-label {
             font-family: var(--mono);
@@ -267,48 +211,23 @@
             margin-bottom: 8px;
         }
 
-        .week-card h3 {
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
+        .week-card h3 { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 12px; line-height: 1.3; }
 
-        .tag-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 14px;
-        }
+        .tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
 
         .tag {
             font-size: 11px;
             padding: 3px 9px;
             border-radius: 20px;
             font-weight: 500;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             color: var(--muted);
             border: 1px solid var(--border);
         }
 
-        .m1 .tag {
-            background: var(--m1-bg);
-            color: var(--m1);
-            border-color: var(--m1-border);
-        }
-
-        .m2 .tag {
-            background: var(--m2-bg);
-            color: var(--m2);
-            border-color: var(--m2-border);
-        }
-
-        .m3 .tag {
-            background: var(--m3-bg);
-            color: var(--m3);
-            border-color: var(--m3-border);
-        }
+        .m1 .tag { background: var(--m1-bg); color: var(--m1); border-color: var(--m1-border); }
+        .m2 .tag { background: var(--m2-bg); color: var(--m2); border-color: var(--m2-border); }
+        .m3 .tag { background: var(--m3-bg); color: var(--m3); border-color: var(--m3-border); }
 
         .deliverable {
             font-size: 12px;
@@ -318,33 +237,40 @@
             line-height: 1.5;
         }
 
-        .deliverable strong {
-            color: var(--text);
-            font-weight: 500;
-        }
+        .deliverable strong { color: var(--text); font-weight: 500; }
 
         .expand-icon {
             position: absolute;
-            top: 18px;
-            right: 18px;
-            width: 20px;
-            height: 20px;
+            top: 18px; right: 18px;
+            width: 20px; height: 20px;
             border-radius: 50%;
             border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            color: var(--dim);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; color: var(--dim);
             transition: transform .2s, color .15s, border-color .15s;
             flex-shrink: 0;
         }
 
-        .week-card.open .expand-icon {
-            transform: rotate(45deg);
-            color: var(--text);
-            border-color: var(--border2);
+        .week-card.open .expand-icon { transform: rotate(45deg); color: var(--text); border-color: var(--border2); }
+
+        /* ── AI BADGE ── */
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(167,139,250,0.15);
+            color: var(--m2);
+            border: 1px solid var(--m2-border);
+            margin-bottom: 8px;
         }
+
+        .ai-badge::before { content: '✦'; font-size: 9px; }
 
         /* ── DETAIL DRAWER ── */
         .detail-drawer {
@@ -357,19 +283,11 @@
             animation: slideDown .18s ease;
         }
 
-        .detail-drawer.visible {
-            display: block;
-        }
+        .detail-drawer.visible { display: block; }
 
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-6px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         .drawer-header {
@@ -379,42 +297,25 @@
             margin-bottom: 20px;
         }
 
-        .drawer-header h4 {
-            font-size: 15px;
-            font-weight: 600;
-        }
+        .drawer-header h4 { font-size: 15px; font-weight: 600; }
 
         .close-btn {
             background: none;
             border: 1px solid var(--border);
             color: var(--muted);
-            width: 28px;
-            height: 28px;
+            width: 28px; height: 28px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             transition: background .15s, color .15s;
         }
 
-        .close-btn:hover {
-            background: var(--border);
-            color: var(--text);
-        }
+        .close-btn:hover { background: var(--border); color: var(--text); }
 
-        .drawer-cols {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
+        .drawer-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 
-        @media (max-width: 600px) {
-            .drawer-cols {
-                grid-template-columns: 1fr;
-            }
-        }
+        @media (max-width: 600px) { .drawer-cols { grid-template-columns: 1fr; } }
 
         .drawer-col h5 {
             font-family: var(--mono);
@@ -425,28 +326,31 @@
             margin-bottom: 12px;
         }
 
-        .drawer-col ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-        }
+        .drawer-col ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
 
         .drawer-col li {
             font-size: 13px;
             color: var(--muted);
-            display: flex;
-            gap: 10px;
+            display: flex; gap: 10px;
             line-height: 1.45;
         }
 
         .drawer-col li::before {
-            content: '—';
-            color: var(--dim);
-            flex-shrink: 0;
-            font-size: 12px;
-            margin-top: 1px;
+            content: '—'; color: var(--dim); flex-shrink: 0; font-size: 12px; margin-top: 1px;
         }
+
+        .drawer-note {
+            margin-top: 16px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: rgba(167,139,250,0.06);
+            border: 1px solid var(--m2-border);
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .drawer-note strong { color: var(--m2); font-weight: 500; }
 
         /* ── FOOTER ── */
         footer {
@@ -457,34 +361,18 @@
             color: var(--dim);
         }
 
-        footer span {
-            color: var(--muted);
-        }
+        footer span { color: var(--muted); }
 
         /* ── RESPONSIVE ── */
         @media (max-width: 600px) {
-            .hero {
-                padding: 48px 20px 40px;
-            }
-
-            .week-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .month-header {
-                flex-direction: column;
-                gap: 10px;
-            }
+            .hero { padding: 48px 20px 40px; }
+            .week-grid { grid-template-columns: 1fr; }
+            .month-header { flex-direction: column; gap: 10px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .detail-drawer {
-                animation: none;
-            }
-
-            .week-card {
-                transition: none;
-            }
+            .detail-drawer { animation: none; }
+            .week-card { transition: none; }
         }
     </style>
 </head>
@@ -493,12 +381,11 @@
 <header class="hero">
     <p class="hero-eyebrow">0 → automation engineer · 12 weeks</p>
     <h1>C# &amp; <span>Playwright</span><br>Automation Roadmap</h1>
-    <p class="hero-sub">A structured 3-month plan from manual testing fundamentals to building a production-ready
-        automation framework.</p>
+    <p class="hero-sub">A structured 3-month plan: start with manual testing, use AI to build and explore automation, then master the C# code behind it.</p>
     <div class="hero-pills">
-        <span class="pill m1"><span class="dot"></span>Month 1 — Manual testing</span>
-        <span class="pill m2"><span class="dot"></span>Month 2 — C# programming</span>
-        <span class="pill m3"><span class="dot"></span>Month 3 — Playwright + framework</span>
+        <span class="pill m1"><span class="dot"></span>Month 1 — Manual testing foundations</span>
+        <span class="pill m2"><span class="dot"></span>Month 2 — AI-assisted automation</span>
+        <span class="pill m3"><span class="dot"></span>Month 3 — C# programming</span>
     </div>
 </header>
 
@@ -511,6 +398,7 @@
             <div class="month-meta">
                 <h2>Manual testing &amp; QA fundamentals</h2>
                 <p>Weeks 1–4 &nbsp;·&nbsp; Tools: Excel, Azure DevOps, any web app (CRC Website)</p>
+                <span class="month-goal"><span class="goal-dot"></span>Goal: think like a tester before writing a single line of code</span>
             </div>
         </div>
 
@@ -551,7 +439,7 @@
                         <ul>
                             <li>SDLC phases: Requirements → Design → Build → Test → Deploy</li>
                             <li>STLC phases: Planning → Analysis → Design → Execution → Closure</li>
-                            <li>Test Plan & Test Strategy</li>
+                            <li>Test Plan &amp; Test Strategy</li>
                             <li>Agile: sprints, user stories, acceptance criteria, definition of done</li>
                             <li>Verification vs validation · QA vs QC</li>
                             <li>Defect lifecycle: New → Assigned → Open → Fixed → Retest → Closed</li>
@@ -561,11 +449,9 @@
                     <div class="drawer-col">
                         <h5>Practice tasks</h5>
                         <ul>
-                            <li>Pick a target site: Crc Website or Demo Web Shop</li>
+                            <li>Pick a target site: CRC Website or Demo Web Shop</li>
                             <li>Expand into 20 detailed test cases with steps and expected results</li>
-                            <li>Log 10 defect reports — include severity, priority, steps to reproduce, and expected vs
-                                actual
-                            </li>
+                            <li>Log 10 defect reports — include severity, priority, steps to reproduce, and expected vs actual</li>
                             <li>Produce your first test plan document covering scope, approach, and exit criteria</li>
                         </ul>
                     </div>
@@ -574,7 +460,7 @@
 
             <div class="detail-drawer" id="w2">
                 <div class="drawer-header">
-                    <h4>Week 2 — Testing types</h4>
+                    <h4>Week 2 — Functional testing types</h4>
                     <button class="close-btn" onclick="close_drawer('w2',event)">×</button>
                 </div>
                 <div class="drawer-cols">
@@ -614,7 +500,7 @@
                     <span class="tag">Boundary value</span>
                     <span class="tag">Decision tables</span>
                 </div>
-                <p class="deliverable"><strong>Deliverable:</strong> 10 technique-based test cases</p>
+                <p class="deliverable"><strong>Deliverable:</strong> 30 technique-labelled test cases + RTM</p>
             </div>
 
             <div class="week-card" onclick="toggle('w4',this)">
@@ -622,11 +508,11 @@
                 <p class="week-label">Week 4</p>
                 <h3>Test management &amp; reporting</h3>
                 <div class="tag-row">
-                    <span class="tag">Azure For Testing</span>
+                    <span class="tag">Azure DevOps</span>
                     <span class="tag">Risk-based testing</span>
                     <span class="tag">Metrics &amp; reporting</span>
                 </div>
-                <p class="deliverable"><strong>Deliverable:</strong> Convert Your Test From Excel To Azure</p>
+                <p class="deliverable"><strong>Deliverable:</strong> Convert Excel tests to Azure · Sprint summary report</p>
             </div>
 
             <div class="detail-drawer" id="w3">
@@ -694,8 +580,9 @@
         <div class="month-header">
             <span class="month-number">Month 2</span>
             <div class="month-meta">
-                <h2>C# for test automation</h2>
-                <p>Weeks 5–8 &nbsp;·&nbsp; Tools: Visual Studio / VS Code, .NET CLI</p>
+                <h2>AI-assisted automation &amp; Playwright</h2>
+                <p>Weeks 5–8 &nbsp;·&nbsp; Tools: GitHub Copilot, Visual Studio, Playwright .NET, NUnit, ExtentReports</p>
+                <span class="month-goal"><span class="goal-dot"></span>Goal: build a working framework using AI — then understand every part of what was generated</span>
             </div>
         </div>
 
@@ -704,35 +591,229 @@
             <div class="week-card" onclick="toggle('w5',this)">
                 <span class="expand-icon">+</span>
                 <p class="week-label">Week 5</p>
+                <h3>Visual Studio &amp; the .NET toolchain</h3>
+                <div class="tag-row">
+                    <span class="tag">VS interface</span>
+                    <span class="tag">Solution explorer</span>
+                    <span class="tag">Debugger</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Navigate and debug a sample project confidently</p>
+            </div>
+
+            <div class="week-card" onclick="toggle('w6',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 6</p>
+                <h3>AI-built framework — teaser</h3>
+                <div class="tag-row">
+                    <span class="tag">GitHub Copilot</span>
+                    <span class="tag">Prompt engineering</span>
+                    <span class="tag">POM scaffold</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Full POM framework generated &amp; running with AI</p>
+            </div>
+
+            <div class="detail-drawer" id="w5">
+                <div class="drawer-header">
+                    <h4>Week 5 — Visual Studio &amp; the .NET toolchain</h4>
+                    <button class="close-btn" onclick="close_drawer('w5',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Visual Studio orientation</h5>
+                        <ul>
+                            <li>Installing Visual Studio Community — workloads: .NET desktop + ASP.NET</li>
+                            <li>Solution Explorer: solutions, projects, files, and references</li>
+                            <li>The editor: IntelliSense, squiggles, quick fixes (lightbulb)</li>
+                            <li>Output / Error List / Test Explorer windows</li>
+                            <li>Running and stopping a project (F5 vs Ctrl+F5)</li>
+                            <li>NuGet Package Manager — install and update packages</li>
+                            <li>.NET CLI basics: dotnet new, dotnet build, dotnet test</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Debugger deep dive</h5>
+                        <ul>
+                            <li>Setting a breakpoint (F9) and running to it (F5)</li>
+                            <li>Step over (F10), step into (F11), step out (Shift+F11)</li>
+                            <li>Watching variables in the Locals and Watch windows</li>
+                            <li>The Call Stack window — trace execution path</li>
+                            <li>Conditional breakpoints — break only when a value matches</li>
+                            <li>Debug a deliberately broken NUnit test and fix it using the debugger</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="drawer-note">
+                    <strong>Why this week exists:</strong> Visual Studio can feel overwhelming at first. Spending a week here before writing any automation code means you won't be fighting the IDE at the same time as learning Playwright. The debugger skill you build here pays dividends in every future week.
+                </div>
+            </div>
+
+            <div class="detail-drawer" id="w6">
+                <div class="drawer-header">
+                    <h4>Week 6 — AI-built framework teaser</h4>
+                    <button class="close-btn" onclick="close_drawer('w6',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Using AI to scaffold</h5>
+                        <ul>
+                            <li>Install GitHub Copilot extension in Visual Studio</li>
+                            <li>Prompt Copilot to create a new NUnit + Playwright .NET project</li>
+                            <li>Ask AI to generate a LoginPage and HomePage using Page Object Model</li>
+                            <li>Prompt for a BaseTest class with browser setup and teardown</li>
+                            <li>Generate a ConfigurationHelper that reads from appsettings.json</li>
+                            <li>Ask AI to write 5 login tests using the generated page objects</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Reading what was generated</h5>
+                        <ul>
+                            <li>Walk through every generated file — what is each class doing?</li>
+                            <li>Identify: namespaces, class declarations, constructor injection</li>
+                            <li>Spot locators — GetByRole, GetByLabel, GetByText</li>
+                            <li>Run the tests from Test Explorer and watch them pass</li>
+                            <li>Use the debugger to step through a test line by line</li>
+                            <li>Write a short notes doc: "what I understand / what I don't yet"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="drawer-note">
+                    <strong>The teaser approach:</strong> You're not expected to understand every line yet — that's Month 3. The goal is to have a real, running framework in front of you. Seeing the finished picture first makes the C# you learn later feel purposeful, not abstract.
+                </div>
+            </div>
+
+            <div class="week-card" onclick="toggle('w7',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 7</p>
+                <h3>Playwright fundamentals</h3>
+                <div class="tag-row">
+                    <span class="tag">Browser &amp; page</span>
+                    <span class="tag">Locators</span>
+                    <span class="tag">Assertions</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> 10 automated tests — login, search, logout flows</p>
+            </div>
+
+            <div class="week-card" onclick="toggle('w8',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 8</p>
+                <h3>Playwright advanced &amp; framework v1</h3>
+                <div class="tag-row">
+                    <span class="tag">Waits &amp; iframes</span>
+                    <span class="tag">Alerts &amp; tables</span>
+                    <span class="tag">POM structure</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> 20 E2E tests · Framework v1 · HTML report</p>
+            </div>
+
+            <div class="detail-drawer" id="w7">
+                <div class="drawer-header">
+                    <h4>Week 7 — Playwright fundamentals</h4>
+                    <button class="close-btn" onclick="close_drawer('w7',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Setup &amp; core API</h5>
+                        <ul>
+                            <li>dotnet new nunit · dotnet add package Microsoft.Playwright</li>
+                            <li>playwright install — download Chromium, Firefox, WebKit</li>
+                            <li>IBrowser, IPage, IBrowserContext lifecycle</li>
+                            <li>page.GotoAsync(), page.TitleAsync(), page.ScreenshotAsync()</li>
+                            <li>Headless vs headed mode, slow-motion option</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Locators &amp; assertions</h5>
+                        <ul>
+                            <li>GetByRole(), GetByText(), GetByLabel(), GetByPlaceholder()</li>
+                            <li>GetByTestId(), Locator() with CSS and XPath</li>
+                            <li>ClickAsync(), FillAsync(), PressAsync()</li>
+                            <li>Expect(locator).ToBeVisibleAsync(), ToHaveTextAsync()</li>
+                            <li>ToHaveURLAsync(), ToBeEnabledAsync()</li>
+                            <li>Automate full login → search → logout flow</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-drawer" id="w8">
+                <div class="drawer-header">
+                    <h4>Week 8 — Playwright advanced &amp; framework v1</h4>
+                    <button class="close-btn" onclick="close_drawer('w8',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Advanced Playwright</h5>
+                        <ul>
+                            <li>WaitForSelectorAsync / WaitForLoadStateAsync / WaitForURLAsync</li>
+                            <li>FrameLocator for iframes and embedded content</li>
+                            <li>New tab and popup handling via page events</li>
+                            <li>dialog.AcceptAsync() / DismissAsync() for browser alerts</li>
+                            <li>SelectOptionAsync for dropdowns</li>
+                            <li>Table row iteration using locator.AllAsync()</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Framework v1 structure</h5>
+                        <ul>
+                            <li>Pages/ — LoginPage, HomePage, CheckoutPage classes</li>
+                            <li>Tests/ — test classes organised by feature</li>
+                            <li>Config/ — appsettings.json + ConfigurationHelper</li>
+                            <li>BasePage and BaseTest with setup/teardown hooks</li>
+                            <li>Screenshot on failure, HTML report with ExtentReports</li>
+                            <li>20 end-to-end tests against an e-commerce site</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ── MONTH 3 ── -->
+    <section class="month-section m3">
+        <div class="month-header">
+            <span class="month-number">Month 3</span>
+            <div class="month-meta">
+                <h2>C# programming &amp; framework mastery</h2>
+                <p>Weeks 9–12 &nbsp;·&nbsp; Tools: Visual Studio, .NET CLI, GitHub Copilot</p>
+                <span class="month-goal"><span class="goal-dot"></span>Goal: understand and own every line of the framework — use AI to improve it, not replace you</span>
+            </div>
+        </div>
+
+        <div class="week-grid">
+
+            <div class="week-card" onclick="toggle('w9',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 9</p>
                 <h3>C# fundamentals</h3>
                 <div class="tag-row">
                     <span class="tag">Variables &amp; types</span>
                     <span class="tag">Loops &amp; conditions</span>
                     <span class="tag">Methods</span>
                 </div>
-                <p class="deliverable"><strong>Deliverable:</strong> 5 console applications</p>
+                <p class="deliverable"><strong>Deliverable:</strong> 5 console apps · Revisit framework week 6 with new eyes</p>
             </div>
 
-            <div class="week-card" onclick="toggle('w6',this)">
+            <div class="week-card" onclick="toggle('w10',this)">
                 <span class="expand-icon">+</span>
-                <p class="week-label">Week 6</p>
+                <p class="week-label">Week 10</p>
                 <h3>Object-oriented programming</h3>
                 <div class="tag-row">
                     <span class="tag">Classes &amp; objects</span>
                     <span class="tag">Inheritance</span>
-                    <span class="tag">Polymorphism</span>
+                    <span class="tag">Interfaces</span>
                 </div>
-                <p class="deliverable"><strong>Deliverable:</strong> Mini employee management system</p>
+                <p class="deliverable"><strong>Deliverable:</strong> Employee system · Explain POM structure in your own words</p>
             </div>
 
-            <div class="detail-drawer" id="w5">
+            <div class="detail-drawer" id="w9">
                 <div class="drawer-header">
-                    <h4>Week 5 — C# fundamentals</h4>
-                    <button class="close-btn" onclick="close_drawer('w5',event)">×</button>
+                    <h4>Week 9 — C# fundamentals</h4>
+                    <button class="close-btn" onclick="close_drawer('w9',event)">×</button>
                 </div>
                 <div class="drawer-cols">
                     <div class="drawer-col">
-                        <h5>Core concepts</h5>
+                        <h5>Core language concepts</h5>
                         <ul>
                             <li>Variables: int, string, bool, double, decimal</li>
                             <li>Operators: arithmetic, comparison, logical, ternary</li>
@@ -750,15 +831,19 @@
                             <li>Grade calculator: score → letter grade</li>
                             <li>FizzBuzz and number pattern printer</li>
                             <li>Simple menu-driven console app</li>
+                            <li>Go back to the Week 6 framework — identify every variable, method, and loop</li>
                         </ul>
                     </div>
                 </div>
+                <div class="drawer-note">
+                    <strong>Connect it back:</strong> After the console exercises, open the AI-generated framework from Month 2. You should now be able to name every C# construct you see. If something is still unclear, note it for week 10–11.
+                </div>
             </div>
 
-            <div class="detail-drawer" id="w6">
+            <div class="detail-drawer" id="w10">
                 <div class="drawer-header">
-                    <h4>Week 6 — Object-oriented programming</h4>
-                    <button class="close-btn" onclick="close_drawer('w6',event)">×</button>
+                    <h4>Week 10 — Object-oriented programming</h4>
+                    <button class="close-btn" onclick="close_drawer('w10',event)">×</button>
                 </div>
                 <div class="drawer-cols">
                     <div class="drawer-col">
@@ -773,199 +858,14 @@
                         </ul>
                     </div>
                     <div class="drawer-col">
-                        <h5>Build these models</h5>
+                        <h5>Build &amp; connect</h5>
                         <ul>
                             <li>Employee class with name, salary, role</li>
                             <li>Manager : Employee (override GetDetails)</li>
-                            <li>Customer and Product classes</li>
                             <li>IRepository&lt;T&gt; interface pattern</li>
                             <li>Mini employee management CRUD console app</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="week-card" onclick="toggle('w7',this)">
-                <span class="expand-icon">+</span>
-                <p class="week-label">Week 7</p>
-                <h3>Collections, LINQ &amp; exceptions</h3>
-                <div class="tag-row">
-                    <span class="tag">List / Dictionary</span>
-                    <span class="tag">LINQ queries</span>
-                    <span class="tag">Try / catch</span>
-                </div>
-                <p class="deliverable"><strong>Deliverable:</strong> 50 coding exercises</p>
-            </div>
-
-            <div class="week-card" onclick="toggle('w8',this)">
-                <span class="expand-icon">+</span>
-                <p class="week-label">Week 8</p>
-                <h3>Advanced C# for automation</h3>
-                <div class="tag-row">
-                    <span class="tag">File I/O &amp; JSON</span>
-                    <span class="tag">Dependency injection</span>
-                    <span class="tag">Config &amp; logging</span>
-                </div>
-                <p class="deliverable"><strong>Deliverable:</strong> Config-driven console app</p>
-            </div>
-
-            <div class="detail-drawer" id="w7">
-                <div class="drawer-header">
-                    <h4>Week 7 — Collections, LINQ &amp; exception handling</h4>
-                    <button class="close-btn" onclick="close_drawer('w7',event)">×</button>
-                </div>
-                <div class="drawer-cols">
-                    <div class="drawer-col">
-                        <h5>Collections &amp; LINQ</h5>
-                        <ul>
-                            <li>List&lt;T&gt; — Add, Remove, Contains, Count</li>
-                            <li>Dictionary&lt;K,V&gt; — key-value pairs and lookup</li>
-                            <li>HashSet&lt;T&gt; — unique item sets</li>
-                            <li>Queue&lt;T&gt; — FIFO with Enqueue / Dequeue</li>
-                            <li>LINQ: Where, Select, FirstOrDefault, Any, All</li>
-                            <li>LINQ: OrderBy, GroupBy, Count, Sum, Distinct</li>
-                        </ul>
-                    </div>
-                    <div class="drawer-col">
-                        <h5>Exceptions &amp; projects</h5>
-                        <ul>
-                            <li>try / catch / finally blocks</li>
-                            <li>throw and re-throw exceptions</li>
-                            <li>Custom exception classes</li>
-                            <li>Build: Student management system with LINQ filters</li>
-                            <li>Build: Product search app (filter by price/category)</li>
-                            <li>Complete 50 targeted coding exercises</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="detail-drawer" id="w8">
-                <div class="drawer-header">
-                    <h4>Week 8 — Advanced C# for automation</h4>
-                    <button class="close-btn" onclick="close_drawer('w8',event)">×</button>
-                </div>
-                <div class="drawer-cols">
-                    <div class="drawer-col">
-                        <h5>Topics to learn</h5>
-                        <ul>
-                            <li>File.ReadAllText / WriteAllText / AppendAllText</li>
-                            <li>JSON serialisation with Newtonsoft.Json</li>
-                            <li>System.Text.Json (built-in .NET)</li>
-                            <li>appsettings.json + IConfiguration + IOptions&lt;T&gt;</li>
-                            <li>Dependency injection pattern (constructor injection)</li>
-                            <li>NLog or Serilog basics — log to file and console</li>
-                            <li>Asynchronous Programming</li>
-                        </ul>
-                    </div>
-                    <div class="drawer-col">
-                        <h5>Build: config-driven app</h5>
-                        <ul>
-                            <li>Read url, browser, environment from appsettings.json</li>
-                            <li>Support dev / staging / production config layers</li>
-                            <li>Inject config into services via constructor DI</li>
-                            <li>Log startup events and errors to a file</li>
-                            <li>This becomes the config layer of your Month 3 framework</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ── MONTH 3 ── -->
-    <section class="month-section m3">
-        <div class="month-header">
-            <span class="month-number">Month 3</span>
-            <div class="month-meta">
-                <h2>Playwright + automation framework</h2>
-                <p>Weeks 9–12 &nbsp;·&nbsp; Tools: Playwright .NET, NUnit / xUnit, ExtentReports, GitHub Actions</p>
-            </div>
-        </div>
-
-        <div class="week-grid">
-
-            <div class="week-card" onclick="toggle('w9',this)">
-                <span class="expand-icon">+</span>
-                <p class="week-label">Week 9</p>
-                <h3>Playwright fundamentals</h3>
-                <div class="tag-row">
-                    <span class="tag">Browser &amp; page</span>
-                    <span class="tag">Locators</span>
-                    <span class="tag">Assertions</span>
-                </div>
-                <p class="deliverable"><strong>Deliverable:</strong> 10 automated tests — login, search, logout flows
-                </p>
-            </div>
-
-            <div class="week-card" onclick="toggle('w10',this)">
-                <span class="expand-icon">+</span>
-                <p class="week-label">Week 10</p>
-                <h3>Playwright advanced</h3>
-                <div class="tag-row">
-                    <span class="tag">Waits &amp; frames</span>
-                    <span class="tag">Alerts &amp; dropdowns</span>
-                    <span class="tag">Tables</span>
-                </div>
-                <p class="deliverable"><strong>Deliverable:</strong> 20 end-to-end tests on e-commerce site</p>
-            </div>
-
-            <div class="detail-drawer" id="w9">
-                <div class="drawer-header">
-                    <h4>Week 9 — Playwright fundamentals</h4>
-                    <button class="close-btn" onclick="close_drawer('w9',event)">×</button>
-                </div>
-                <div class="drawer-cols">
-                    <div class="drawer-col">
-                        <h5>Setup &amp; core API</h5>
-                        <ul>
-                            <li>dotnet new nunit / dotnet add package Microsoft.Playwright</li>
-                            <li>playwright install — download Chromium, Firefox, WebKit</li>
-                            <li>IBrowser, IPage, IBrowserContext lifecycle</li>
-                            <li>page.GotoAsync(), page.TitleAsync(), page.ScreenshotAsync()</li>
-                            <li>Headless vs headed mode, slow-motion option</li>
-                        </ul>
-                    </div>
-                    <div class="drawer-col">
-                        <h5>Locators &amp; assertions</h5>
-                        <ul>
-                            <li>GetByRole(), GetByText(), GetByLabel()</li>
-                            <li>GetByPlaceholder(), GetByTestId(), Locator()</li>
-                            <li>ClickAsync(), FillAsync(), PressAsync()</li>
-                            <li>Expect(locator).ToBeVisibleAsync()</li>
-                            <li>ToHaveTextAsync(), ToHaveURLAsync(), ToBeEnabledAsync()</li>
-                            <li>Automate full login → search → logout flow</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="detail-drawer" id="w10">
-                <div class="drawer-header">
-                    <h4>Week 10 — Playwright advanced</h4>
-                    <button class="close-btn" onclick="close_drawer('w10',event)">×</button>
-                </div>
-                <div class="drawer-cols">
-                    <div class="drawer-col">
-                        <h5>Advanced interactions</h5>
-                        <ul>
-                            <li>WaitForSelectorAsync / WaitForLoadStateAsync / WaitForURLAsync</li>
-                            <li>FrameLocator for iframes and embedded content</li>
-                            <li>New tab and popup handling via page events</li>
-                            <li>dialog.AcceptAsync() / DismissAsync() for browser alerts</li>
-                            <li>SelectOptionAsync for dropdowns</li>
-                            <li>Table row iteration using locator.AllAsync()</li>
-                        </ul>
-                    </div>
-                    <div class="drawer-col">
-                        <h5>E-commerce test suite</h5>
-                        <ul>
-                            <li>Browse categories and apply filters</li>
-                            <li>Add to cart, update quantity, remove item</li>
-                            <li>Full checkout flow — guest and registered user</li>
-                            <li>Order confirmation page assertions</li>
-                            <li>20 end-to-end tests total, all passing</li>
+                            <li>Map: BasePage → LoginPage mirrors base class → derived class</li>
+                            <li>Explain in writing why POM uses inheritance and interfaces</li>
                         </ul>
                     </div>
                 </div>
@@ -974,53 +874,53 @@
             <div class="week-card" onclick="toggle('w11',this)">
                 <span class="expand-icon">+</span>
                 <p class="week-label">Week 11</p>
-                <h3>Build the automation framework</h3>
+                <h3>Collections, LINQ &amp; advanced C#</h3>
                 <div class="tag-row">
-                    <span class="tag">Page Object Model</span>
-                    <span class="tag">Base page / test</span>
-                    <span class="tag">Reporting</span>
+                    <span class="tag">List / Dictionary</span>
+                    <span class="tag">LINQ</span>
+                    <span class="tag">File I/O &amp; JSON</span>
                 </div>
-                <p class="deliverable"><strong>Deliverable:</strong> Framework v1 with full POM structure</p>
+                <p class="deliverable"><strong>Deliverable:</strong> 50 exercises · Config-driven console app</p>
             </div>
 
             <div class="week-card" onclick="toggle('w12',this)">
                 <span class="expand-icon">+</span>
                 <p class="week-label">Week 12</p>
-                <h3>AI &amp; framework polish</h3>
+                <h3>Fix the framework manually + AI</h3>
                 <div class="tag-row">
-                    <span class="tag">GitHub CoPilot</span>
-                    <span class="tag">Test data mgmt</span>
+                    <span class="tag">Refactor with C#</span>
+                    <span class="tag">AI code review</span>
                     <span class="tag">Parallel runs</span>
                 </div>
-                <p class="deliverable"><strong>Deliverable:</strong> Using AI to test</p>
+                <p class="deliverable"><strong>Deliverable:</strong> Fully owned, refactored framework · CI/CD pipeline</p>
             </div>
 
             <div class="detail-drawer" id="w11">
                 <div class="drawer-header">
-                    <h4>Week 11 — Build the automation framework</h4>
+                    <h4>Week 11 — Collections, LINQ &amp; advanced C#</h4>
                     <button class="close-btn" onclick="close_drawer('w11',event)">×</button>
                 </div>
                 <div class="drawer-cols">
                     <div class="drawer-col">
-                        <h5>Framework structure</h5>
+                        <h5>Collections &amp; LINQ</h5>
                         <ul>
-                            <li>Pages/ — LoginPage, HomePage, CheckoutPage classes</li>
-                            <li>Tests/ — test classes organised by feature or user journey</li>
-                            <li>Utilities/ — extension methods, helpers, waits</li>
-                            <li>Config/ — appsettings.json + ConfigurationHelper singleton</li>
-                            <li>Reports/ — HTML report generation</li>
-                            <li>TestData/ — JSON data files for data-driven tests</li>
+                            <li>List&lt;T&gt; — Add, Remove, Contains, Count</li>
+                            <li>Dictionary&lt;K,V&gt; — key-value pairs and lookup</li>
+                            <li>HashSet&lt;T&gt; — unique item sets</li>
+                            <li>LINQ: Where, Select, FirstOrDefault, Any, All</li>
+                            <li>LINQ: OrderBy, GroupBy, Count, Sum, Distinct</li>
+                            <li>try / catch / finally · custom exception classes</li>
                         </ul>
                     </div>
                     <div class="drawer-col">
-                        <h5>Patterns to implement</h5>
+                        <h5>Advanced C# for automation</h5>
                         <ul>
-                            <li>BasePage — shared navigation, wait, and assertion methods</li>
-                            <li>Hooks — [SetUp] / [TearDown] with browser lifecycle</li>
-                            <li>Page Object Model — one class per page, no selectors in tests</li>
-                            <li>Data-driven tests reading from JSON test data files</li>
-                            <li>Screenshot captured automatically on any test failure</li>
-                            <li>Reports in HTML output with pass/fail per test</li>
+                            <li>File.ReadAllText / WriteAllText / AppendAllText</li>
+                            <li>JSON serialisation with System.Text.Json</li>
+                            <li>appsettings.json + IConfiguration + IOptions&lt;T&gt;</li>
+                            <li>Dependency injection — constructor injection pattern</li>
+                            <li>Async/await basics — why Playwright uses it everywhere</li>
+                            <li>Build: config-driven console app that becomes the framework config layer</li>
                         </ul>
                     </div>
                 </div>
@@ -1028,26 +928,35 @@
 
             <div class="detail-drawer" id="w12">
                 <div class="drawer-header">
-                    <h4>Week 12 — AI &amp; framework polish</h4>
+                    <h4>Week 12 — Fix the framework manually + AI</h4>
                     <button class="close-btn" onclick="close_drawer('w12',event)">×</button>
                 </div>
                 <div class="drawer-cols">
                     <div class="drawer-col">
-                        <h5>Fixing Test With AI</h5>
+                        <h5>Manual refactoring (you lead)</h5>
                         <ul>
-                            <li>Use AI to analyse failing tests and identify root causes</li>
-                            <li>Automatically suggest fixes for flaky or brittle tests</li>
-                            <li>Improve selector stability for UI automation</li>
+                            <li>Open the AI-generated framework from Month 2, Week 6</li>
+                            <li>Rewrite any page object you don't fully understand from scratch</li>
+                            <li>Replace hard-coded values with config-driven properties</li>
+                            <li>Add proper exception handling around browser interactions</li>
+                            <li>Write data-driven tests reading test data from JSON files</li>
+                            <li>Add NLog or Serilog for structured logging to a file</li>
                         </ul>
                     </div>
                     <div class="drawer-col">
-                        <h5>Final polish</h5>
+                        <h5>AI as pair programmer (not author)</h5>
                         <ul>
-                            <li>Parallel test execution via NUnit parallelism config</li>
-                            <li>Retry logic for flaky tests using NUnit Retry attribute</li>
-                            <li>Tag-based test categorisation (smoke, regression, e2e)</li>
+                            <li>Use Copilot to review your refactored code and suggest improvements</li>
+                            <li>Ask AI to explain why a test is flaky — then fix it yourself</li>
+                            <li>Prompt AI for parallel execution config, then implement and verify it</li>
+                            <li>Add NUnit Retry attribute for flaky test resilience</li>
+                            <li>Tag tests by category: smoke, regression, e2e</li>
+                            <li>Hook the suite into GitHub Actions — all tests green on push</li>
                         </ul>
                     </div>
+                </div>
+                <div class="drawer-note">
+                    <strong>The payoff:</strong> In Month 2 you used AI to build something you couldn't fully read. Now you can read, rewrite, and improve every line. AI has shifted from author to assistant — which is exactly where it belongs in a professional QA workflow.
                 </div>
             </div>
 
@@ -1057,8 +966,8 @@
 </main>
 
 <footer>
-    <span>C# · Playwright · NUnit · Report · AI</span>
-    &nbsp;·&nbsp; 12 weeks · 4 deliverables per month
+    <span>Manual QA · AI automation · Playwright .NET · C# · NUnit · GitHub Actions</span>
+    &nbsp;·&nbsp; 12 weeks · build → explore → understand
 </footer>
 
 <script>
@@ -1070,8 +979,6 @@
 
         if (openCard && openCard !== card) {
             openCard.classList.remove('open');
-        }
-        if (openCard && openCard !== card) {
             const prev = openCard.getAttribute('onclick').match(/'(\w+)'/)[1];
             document.getElementById(prev).classList.remove('visible');
         }
@@ -1081,18 +988,14 @@
         openCard = !isOpen ? card : null;
 
         if (!isOpen) {
-            setTimeout(() => drawer.scrollIntoView({behavior: 'smooth', block: 'nearest'}), 60);
+            setTimeout(() => drawer.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
         }
     }
 
     function close_drawer(id, e) {
         e.stopPropagation();
-        const drawer = document.getElementById(id);
-        drawer.classList.remove('visible');
-        if (openCard) {
-            openCard.classList.remove('open');
-            openCard = null;
-        }
+        document.getElementById(id).classList.remove('visible');
+        if (openCard) { openCard.classList.remove('open'); openCard = null; }
     }
 </script>
 </body>
