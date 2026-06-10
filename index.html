@@ -3,62 +3,312 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Roadmaps — Abimbola Olaide</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Learning Roadmaps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:        #0c0e14;
+            --surface:   #13161f;
+            --surface2:  #181c28;
+            --border:    rgba(255,255,255,0.07);
+            --border2:   rgba(255,255,255,0.13);
+            --text:      #e4e6ef;
+            --muted:     #7e8499;
+            --dim:       #454a5c;
+            --font: 'Inter', system-ui, sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+            --accent: #818cf8;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* ── NOISE TEXTURE overlay ── */
+        body::before {
+            content: '';
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            opacity: .4;
+        }
+
+        .container { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+        /* ── NAV ── */
+        nav {
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+            background: rgba(12,14,20,0.8);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .nav-inner {
+            max-width: 960px; margin: 0 auto; padding: 0 24px;
+            height: 60px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .nav-logo {
+            display: flex; align-items: center; gap: 10px;
+            text-decoration: none;
+        }
+        .nav-logo-mark {
+            width: 32px; height: 32px; border-radius: 8px;
+            background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 15px; font-weight: 600; color: #fff;
+            font-family: var(--mono);
+        }
+        .nav-name {
+            font-size: 14px; font-weight: 500; color: var(--text);
+            letter-spacing: -0.01em;
+        }
+        .nav-name span { color: var(--muted); font-weight: 400; }
+        .nav-tag {
+            font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
+            color: var(--muted); text-transform: uppercase;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            padding: 88px 0 72px;
+            text-align: center;
+            position: relative;
+        }
+        .hero-glow {
+            position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+            width: 600px; height: 400px; pointer-events: none;
+            background: radial-gradient(ellipse at center, rgba(99,102,241,0.12) 0%, transparent 70%);
+        }
+        .hero-eyebrow {
+            font-family: var(--mono); font-size: 12px; letter-spacing: .12em;
+            color: var(--muted); text-transform: uppercase; margin-bottom: 20px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .hero-eyebrow::before, .hero-eyebrow::after {
+            content: ''; display: block; width: 28px; height: 1px; background: var(--dim);
+        }
+        .hero h1 {
+            font-size: clamp(32px, 6vw, 54px); font-weight: 600;
+            letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 20px;
+        }
+        .hero h1 .name { color: var(--accent); }
+        .hero-sub {
+            font-size: 17px; color: var(--muted); max-width: 440px;
+            margin: 0 auto 44px; line-height: 1.65;
+        }
+        .hero-stats {
+            display: inline-flex; gap: 0; border: 1px solid var(--border2);
+            border-radius: 12px; overflow: hidden; background: var(--surface);
+        }
+        .stat {
+            padding: 14px 28px; text-align: center;
+            border-right: 1px solid var(--border);
+        }
+        .stat:last-child { border-right: none; }
+        .stat-num { font-family: var(--mono); font-size: 20px; font-weight: 500; color: var(--text); display: block; }
+        .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; display: block; }
+
+        /* ── SECTION ── */
+        .section { padding: 56px 0; }
+        .section-label {
+            font-family: var(--mono); font-size: 11px; letter-spacing: .1em;
+            text-transform: uppercase; color: var(--dim); margin-bottom: 28px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        /* ── ROADMAP CARDS ── */
+        .roadmap-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+        .roadmap-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 16px; padding: 28px; text-decoration: none; color: inherit;
+            display: flex; flex-direction: column; gap: 20px;
+            transition: border-color .2s, background .15s, transform .15s;
+            position: relative; overflow: hidden;
+        }
+        .roadmap-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+        }
+        .roadmap-card:hover {
+            border-color: var(--border2); background: var(--surface2);
+            transform: translateY(-2px);
+        }
+        .roadmap-card.disabled { opacity: .4; pointer-events: none; }
+
+        .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+        .card-icon {
+            width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center; font-size: 20px;
+        }
+        .card-icon.playwright { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); }
+        .card-icon.soon { background: rgba(255,255,255,0.04); border: 1px solid var(--border); }
+
+        .card-badge {
+            font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
+            text-transform: uppercase; padding: 4px 9px; border-radius: 20px;
+            font-weight: 500; flex-shrink: 0;
+        }
+        .badge-live { background: rgba(34,197,94,0.1); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
+        .badge-soon { background: rgba(255,255,255,0.05); color: var(--dim); border: 1px solid var(--border); }
+
+        .card-title { font-size: 16px; font-weight: 500; letter-spacing: -0.01em; color: var(--text); margin-bottom: 6px; }
+        .card-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+        .card-footer {
+            display: flex; align-items: center; justify-content: space-between;
+            padding-top: 16px; border-top: 1px solid var(--border);
+            margin-top: auto;
+        }
+        .card-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+        .cpill {
+            font-size: 11px; padding: 3px 8px; border-radius: 20px;
+            background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--border);
+        }
+        .card-arrow {
+            width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--border2);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--muted); font-size: 14px; transition: background .15s, color .15s;
+            flex-shrink: 0;
+        }
+        .roadmap-card:hover .card-arrow { background: rgba(129,140,248,0.15); color: var(--accent); border-color: rgba(129,140,248,0.3); }
+
+        /* ── COMING SOON GRID ── */
+        .soon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 16px; }
+        .soon-item {
+            background: var(--surface); border: 1px dashed var(--border);
+            border-radius: 12px; padding: 16px 18px;
+        }
+        .soon-item-title { font-size: 13px; font-weight: 500; color: var(--dim); margin-bottom: 3px; }
+        .soon-item-sub { font-size: 12px; color: var(--dim); opacity: .7; }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border); padding: 32px 0;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 12px;
+        }
+        .footer-left { font-size: 13px; color: var(--dim); }
+        .footer-left span { color: var(--muted); }
+        .footer-right { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: .06em; }
+
+        @media (max-width: 600px) {
+            .hero { padding: 56px 0 48px; }
+            .hero-stats { flex-direction: column; border-radius: 12px; }
+            .stat { border-right: none; border-bottom: 1px solid var(--border); }
+            .stat:last-child { border-bottom: none; }
+            nav .nav-tag { display: none; }
+            footer { flex-direction: column; align-items: flex-start; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .roadmap-card { transition: none; }
+        }
+    </style>
 </head>
+<body>
 
-<body class="bg-gray-50 text-gray-800">
-
-<!-- Header -->
-<header class="bg-white shadow-sm">
-    <div class="max-w-5xl mx-auto px-6 py-6 flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-gray-900">📚 Learning Roadmaps</h1>
-    </div>
-</header>
-
-<!-- Hero Section -->
-<section class="max-w-5xl mx-auto px-6 mt-12">
-    <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl p-10 shadow-lg">
-        <h2 class="text-3xl font-semibold mb-3">Your Central Roadmap Hub</h2>
-        <p class="text-lg opacity-90">
-            A single place for all your structured learning paths — automation, development, cloud, and more.
-        </p>
-    </div>
-</section>
-
-<!-- Roadmap Grid -->
-<section class="max-w-5xl mx-auto px-6 mt-12 mb-20">
-    <h3 class="text-xl font-semibold mb-6 text-gray-700">Available Roadmaps</h3>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-        <!-- Playwright C# Roadmap -->
-        <a href="./PlaywrightCs/index.html"
-           class="block bg-white p-6 rounded-xl shadow hover:shadow-lg transition border border-gray-100">
-            <h4 class="text-lg font-semibold text-blue-700 mb-2">Playwright C# Automation Tester</h4>
-            <p class="text-sm text-gray-600">
-                A complete 3‑month roadmap to master Playwright with C#, automation patterns, and frameworks.
-            </p>
+<nav>
+    <div class="nav-inner">
+        <a href="#" class="nav-logo">
+            <div class="nav-logo-mark">AO</div>
+            <div class="nav-name">Abimbola Olaide <span>/ roadmaps</span></div>
         </a>
+        <span class="nav-tag">QA Engineer</span>
+    </div>
+</nav>
 
-        <!-- Template for future roadmaps -->
-        <a href="#"
-           class="block bg-white p-6 rounded-xl shadow hover:shadow-lg transition border border-gray-100 opacity-50 cursor-not-allowed">
-            <h4 class="text-lg font-semibold text-gray-400 mb-2">Coming Soon</h4>
-            <p class="text-sm text-gray-500">More roadmaps will appear here as you add them.</p>
-        </a>
+<main>
+    <div class="container">
+
+        <section class="hero">
+            <div class="hero-glow"></div>
+            <p class="hero-eyebrow">Learning resources</p>
+            <h1>Structured paths to<br><span class="name">Software Engineering mastery</span></h1>
+            <p class="hero-sub">Carefully designed learning roadmaps — from manual testing fundamentals to advanced automation engineering.</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-num">1</span>
+                    <span class="stat-label">Live roadmap</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num">12</span>
+                    <span class="stat-label">Weeks covered</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num">4+</span>
+                    <span class="stat-label">Coming soon</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <p class="section-label">Available now</p>
+            <div class="roadmap-grid">
+
+                <a href="./PlaywrightCs/index.html" class="roadmap-card">
+                    <div class="card-top">
+                        <div class="card-icon playwright">🎭</div>
+                        <span class="card-badge badge-live">Live</span>
+                    </div>
+                    <div>
+                        <p class="card-title">Playwright + C# Automation</p>
+                        <p class="card-desc">A complete 3-month journey from manual testing basics to building a production-grade automation framework with Playwright and C#.</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-pills">
+                            <span class="cpill">C#</span>
+                            <span class="cpill">Playwright</span>
+                            <span class="cpill">NUnit</span>
+                            <span class="cpill">3 months</span>
+                        </div>
+                        <div class="card-arrow">→</div>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <section class="section" style="padding-top:0">
+            <p class="section-label">Coming soon</p>
+            <div class="soon-grid">
+                <div class="soon-item">
+                    <p class="soon-item-title">Selenium + Java</p>
+                    <p class="soon-item-sub">BDD with Cucumber</p>
+                </div>
+                <div class="soon-item">
+                    <p class="soon-item-title">API Testing</p>
+                    <p class="soon-item-sub">Postman + RestSharp</p>
+                </div>
+                <div class="soon-item">
+                    <p class="soon-item-title">CI/CD for QA</p>
+                    <p class="soon-item-sub">GitHub Actions pipelines</p>
+                </div>
+                <div class="soon-item">
+                    <p class="soon-item-title">Performance Testing</p>
+                    <p class="soon-item-sub">k6 + JMeter</p>
+                </div>
+                <div class="soon-item">
+                    <p class="soon-item-title">Mobile Testing</p>
+                    <p class="soon-item-sub">Appium + Android</p>
+                </div>
+            </div>
+        </section>
 
     </div>
-</section>
+</main>
 
-<!-- Footer -->
-<footer class="text-center py-6 text-gray-500 text-sm">
-    © <span id="year"></span> Roadmaps Collection
-</footer>
+<div class="container">
+    <footer>
+        <p class="footer-left">© <span id="year"></span> Abimbola Olaide</p>
+        <p class="footer-right">ROADMAPS COLLECTION</p>
+    </footer>
+</div>
 
 <script>
-    document.getElementById("year").textContent = new Date().getFullYear().toString();
+    document.getElementById('year').textContent = new Date().getFullYear();
 </script>
-
 </body>
 </html>
