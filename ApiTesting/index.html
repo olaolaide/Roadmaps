@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Testing Mastery — 3-Month Roadmap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+          rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0c0e14;
+            --surface: #13161f;
+            --surf2: #181c28;
+            --border: rgba(255, 255, 255, 0.07);
+            --bord2: rgba(255, 255, 255, 0.13);
+            --text: #e4e6ef;
+            --muted: #7e8499;
+            --dim: #454a5c;
+            --font: 'Inter', system-ui, sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+
+            /* Month palette */
+            --c1: #38bdf8;
+            --c1-bg: rgba(56, 189, 248, 0.07);
+            --c1-brd: rgba(56, 189, 248, 0.22);
+            --c2: #a78bfa;
+            --c2-bg: rgba(167, 139, 250, 0.07);
+            --c2-brd: rgba(167, 139, 250, 0.22);
+            --c3: #fb923c;
+            --c3-bg: rgba(251, 146, 60, 0.07);
+            --c3-brd: rgba(251, 146, 60, 0.22);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 15px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* NAV */
+        nav {
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(14px);
+            background: rgba(12, 14, 20, 0.85);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .nav-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+            letter-spacing: -.01em;
+        }
+
+        .nav-title span {
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        .nav-label {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: var(--dim);
+        }
+
+        /* HERO */
+        .hero {
+            padding: 80px 24px 60px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-glow {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse 700px 320px at 25% 60%, rgba(56, 189, 248, 0.07) 0%, transparent 65%),
+            radial-gradient(ellipse 600px 280px at 75% 40%, rgba(167, 139, 250, 0.07) 0%, transparent 65%),
+            radial-gradient(ellipse 400px 200px at 50% 10%, rgba(251, 146, 60, 0.05) 0%, transparent 70%);
+        }
+
+        .hero-eyebrow {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .13em;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .hero-eyebrow::before, .hero-eyebrow::after {
+            content: '';
+            display: block;
+            width: 32px;
+            height: 1px;
+            background: var(--dim);
+        }
+
+        .hero h1 {
+            font-size: clamp(30px, 5.5vw, 52px);
+            font-weight: 600;
+            letter-spacing: -.03em;
+            line-height: 1.1;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 16px;
+            color: var(--muted);
+            max-width: 500px;
+            margin: 0 auto 40px;
+            line-height: 1.65;
+        }
+
+        .hero-months {
+            display: inline-flex;
+            gap: 0;
+            border: 1px solid var(--bord2);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--surface);
+        }
+
+        .hm {
+            padding: 12px 24px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+        }
+
+        .hm:last-child {
+            border-right: none;
+        }
+
+        .hm-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin: 0 auto 6px;
+        }
+
+        .hm-label {
+            font-size: 12px;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .hm-sub {
+            font-size: 11px;
+            color: var(--muted);
+            display: block;
+        }
+
+        .hm-dot.c1, .hm-label.c1 {
+            background: var(--c1);
+            color: var(--c1);
+        }
+
+        .hm-label.c1 {
+            background: none;
+            color: var(--c1);
+        }
+
+        .hm-dot.c2, .hm-label.c2 {
+            background: var(--c2);
+            color: var(--c2);
+        }
+
+        .hm-label.c2 {
+            background: none;
+            color: var(--c2);
+        }
+
+        .hm-dot.c3, .hm-label.c3 {
+            background: var(--c3);
+            color: var(--c3);
+        }
+
+        .hm-label.c3 {
+            background: none;
+            color: var(--c3);
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* MONTH SECTION */
+        .month-sec {
+            padding: 60px 0 40px;
+        }
+
+        .month-sec + .month-sec {
+            border-top: 1px solid var(--border);
+        }
+
+        .month-hdr {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            margin-bottom: 36px;
+        }
+
+        .month-badge {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 6px;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .m1 .month-badge {
+            background: var(--c1-bg);
+            color: var(--c1);
+            border: 1px solid var(--c1-brd);
+        }
+
+        .m2 .month-badge {
+            background: var(--c2-bg);
+            color: var(--c2);
+            border: 1px solid var(--c2-brd);
+        }
+
+        .m3 .month-badge {
+            background: var(--c3-bg);
+            color: var(--c3);
+            border: 1px solid var(--c3-brd);
+        }
+
+        .month-meta h2 {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -.02em;
+            margin-bottom: 3px;
+        }
+
+        .month-meta p {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        /* PHASE GRID */
+        .phase-grid {
+            display: grid;
+            grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+            gap: 12px;
+        }
+
+        /* PHASE CARD */
+        .phase-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+            cursor: pointer;
+            transition: border-color .18s, background .15s, transform .12s;
+            position: relative;
+        }
+
+        .phase-card:hover {
+            border-color: var(--bord2);
+            background: var(--surf2);
+            transform: translateY(-1px);
+        }
+
+        .phase-card.open {
+            background: var(--surf2);
+        }
+
+        .m1 .phase-card.open {
+            border-color: var(--c1-brd);
+        }
+
+        .m2 .phase-card.open {
+            border-color: var(--c2-brd);
+        }
+
+        .m3 .phase-card.open {
+            border-color: var(--c3-brd);
+        }
+
+        .phase-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .phase-num {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .08em;
+            padding: 3px 9px;
+            border-radius: 20px;
+            flex-shrink: 0;
+        }
+
+        .m1 .phase-num {
+            background: var(--c1-bg);
+            color: var(--c1);
+            border: 1px solid var(--c1-brd);
+        }
+
+        .m2 .phase-num {
+            background: var(--c2-bg);
+            color: var(--c2);
+            border: 1px solid var(--c2-brd);
+        }
+
+        .m3 .phase-num {
+            background: var(--c3-bg);
+            color: var(--c3);
+            border: 1px solid var(--c3-brd);
+        }
+
+        .phase-title {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -.01em;
+            flex: 1;
+            line-height: 1.25;
+        }
+
+        .expand-btn {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dim);
+            font-size: 14px;
+            transition: transform .2s, color .15s, border-color .15s;
+            flex-shrink: 0;
+        }
+
+        .phase-card.open .expand-btn {
+            transform: rotate(45deg);
+            color: var(--text);
+            border-color: var(--bord2);
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-weight: 400;
+        }
+
+        .m1 .tag {
+            background: var(--c1-bg);
+            color: var(--c1);
+            border: 1px solid var(--c1-brd);
+        }
+
+        .m2 .tag {
+            background: var(--c2-bg);
+            color: var(--c2);
+            border: 1px solid var(--c2-brd);
+        }
+
+        .m3 .tag {
+            background: var(--c3-bg);
+            color: var(--c3);
+            border: 1px solid var(--c3-brd);
+        }
+
+        .deliverable {
+            font-size: 12px;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+            line-height: 1.5;
+        }
+
+        .deliverable strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* DRAWER */
+        .drawer {
+            display: none;
+            grid-column: 1/-1;
+            background: var(--surf2);
+            border: 1px solid var(--bord2);
+            border-radius: 14px;
+            padding: 22px;
+            animation: fadeIn .18s ease;
+        }
+
+        .drawer.visible {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px)
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .drawer-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .drawer-head h4 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .close-x {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .15s;
+        }
+
+        .close-x:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .drawer-cols {
+            display: grid;
+            grid-template-columns:1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .drawer-cols {
+                grid-template-columns:1fr;
+            }
+        }
+
+        .dcol h5 {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-bottom: 10px;
+        }
+
+        .dcol ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .dcol li {
+            font-size: 13px;
+            color: var(--muted);
+            display: flex;
+            gap: 9px;
+            line-height: 1.45;
+            align-items: flex-start;
+        }
+
+        .dcol li::before {
+            content: '—';
+            color: var(--dim);
+            font-size: 12px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* CHECKLIST items */
+        .checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .chk {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.45;
+        }
+
+        .chk-box {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            border: 1px solid var(--dim);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* CODE SNIPPET */
+        .code-block {
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: #94a3b8;
+            line-height: 1.65;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        .code-block .kw {
+            color: #818cf8;
+        }
+
+        .code-block .str {
+            color: #34d399;
+        }
+
+        .code-block .cm {
+            color: #475569;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 28px 0;
+            text-align: center;
+            font-size: 13px;
+            color: var(--dim);
+        }
+
+        footer span {
+            color: var(--muted);
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding: 52px 20px 44px;
+            }
+
+            .phase-grid {
+                grid-template-columns:1fr;
+            }
+
+            .month-hdr {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .hero-months {
+                flex-direction: column;
+                border-radius: 12px;
+            }
+
+            .hm {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .hm:last-child {
+                border-bottom: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .phase-card, .drawer {
+                transition: none;
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">
+            <div class="nav-mark">AO</div>
+            <div class="nav-title">API Testing <span>/ roadmaps</span></div>
+        </a>
+        <span class="nav-label">API Testing Mastery</span>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="hero-glow"></div>
+    <p class="hero-eyebrow">3-month curriculum</p>
+    <h1>API Testing <em>Mastery</em></h1>
+    <p class="hero-sub">From HTTP fundamentals to enterprise-grade C# RestSharp frameworks, BDD, GraphQL, and full
+        security testing coverage.</p>
+    <div class="hero-months">
+        <div class="hm">
+            <div class="hm-dot c1"></div>
+            <span class="hm-label c1">Month 1</span>
+            <span class="hm-sub">Foundations</span>
+        </div>
+        <div class="hm">
+            <div class="hm-dot c2"></div>
+            <span class="hm-label c2">Month 2</span>
+            <span class="hm-sub">Tooling & Security</span>
+        </div>
+        <div class="hm">
+            <div class="hm-dot c3"></div>
+            <span class="hm-label c3">Month 3</span>
+            <span class="hm-sub">Framework & BDD</span>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- ═══ MONTH 1 ═══ -->
+    <section class="month-sec m1">
+        <div class="month-hdr">
+            <span class="month-badge">Month 1</span>
+            <div class="month-meta">
+                <h2>Foundations — HTTP, REST & Postman</h2>
+                <p>Phases 01–03 · Tools: Postman, Newman, browser DevTools</p>
+            </div>
+        </div>
+
+        <div class="phase-grid">
+
+            <!-- P01 -->
+            <div class="phase-card" onclick="toggle('p01',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 01</span>
+                    <span class="phase-title">HTTP & Networking</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">Methods</span>
+                    <span class="tag">Status codes</span>
+                    <span class="tag">Headers</span>
+                    <span class="tag">CORS</span>
+                    <span class="tag">SSL/TLS</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> HTTP reference cheat sheet · 20 header test
+                    scenarios</p>
+            </div>
+
+            <!-- P02 -->
+            <div class="phase-card" onclick="toggle('p02',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 02</span>
+                    <span class="phase-title">REST API & CRUD</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">REST principles</span>
+                    <span class="tag">CRUD scenarios</span>
+                    <span class="tag">Pagination</span>
+                    <span class="tag">Filtering</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Full CRUD test checklist · 50 REST test cases</p>
+            </div>
+
+            <div class="drawer" id="p01">
+                <div class="drawer-head">
+                    <h4>Phase 01 — HTTP & Networking</h4>
+                    <button class="close-x" onclick="closeDrawer('p01',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>Core topics</h5>
+                        <ul>
+                            <li>HTTP methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS</li>
+                            <li>Status codes: 2xx success, 3xx redirect, 4xx client error, 5xx server error</li>
+                            <li>Critical headers: Content-Type, Accept, Authorization, Cache-Control, ETag,
+                                If-None-Match
+                            </li>
+                            <li>CORS — preflight requests, Access-Control-Allow-* headers, why it matters for API
+                                testing
+                            </li>
+                            <li>Cookies: Set-Cookie, HttpOnly, Secure, SameSite, session vs persistent</li>
+                            <li>SSL/TLS handshake, certificate validation, how to test with self-signed certs</li>
+                            <li>Request body formats: JSON, XML, form-urlencoded, multipart/form-data</li>
+                        </ul>
+                    </div>
+                    <div class="dcol">
+                        <h5>Practice tasks</h5>
+                        <ul>
+                            <li>Use browser DevTools Network tab — inspect every header on 5 real sites</li>
+                            <li>Send each HTTP method manually in Postman to a public API (JSONPlaceholder)</li>
+                            <li>Trigger and document a CORS error — understand the preflight flow</li>
+                            <li>Test with an expired SSL cert using a local proxy tool</li>
+                            <li>Write 20 test scenarios covering header validation (missing, malformed, unexpected
+                                values)
+                            </li>
+                            <li>Build an HTTP reference cheat sheet — methods, codes, headers, and their test impact
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="drawer" id="p02">
+                <div class="drawer-head">
+                    <h4>Phase 02 — REST API & CRUD</h4>
+                    <button class="close-x" onclick="closeDrawer('p02',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>REST architecture</h5>
+                        <ul>
+                            <li>6 REST constraints: stateless, uniform interface, layered system, cacheable,
+                                client-server, code on demand
+                            </li>
+                            <li>Resource naming conventions — nouns not verbs, plural collections</li>
+                            <li>Idempotency: GET, PUT, DELETE are idempotent — POST is not</li>
+                            <li>Pagination patterns: offset/limit, cursor-based, page/per_page — what to assert on
+                                each
+                            </li>
+                            <li>Filtering and sorting: query param conventions, test for injection via filters</li>
+                            <li>Content negotiation: Accept header, versioning via URL vs header</li>
+                        </ul>
+                    </div>
+                    <div class="dcol">
+                        <h5>Full CRUD test checklist</h5>
+                        <ul>
+                            <li>CREATE — valid body, required field missing, wrong data type, duplicate resource (409)
+                            </li>
+                            <li>READ — valid ID, non-existent ID (404), unauthorised (401/403), empty collection (200
+                                [])
+                            </li>
+                            <li>UPDATE (PUT) — full update, partial fields, immutable fields, version conflict (409)
+                            </li>
+                            <li>UPDATE (PATCH) — partial update, no-op patch, malformed patch body</li>
+                            <li>DELETE — valid delete, already deleted (404 or 204), cascade behaviour</li>
+                            <li>LIST — pagination boundaries, filter with no results, sort ordering, response envelope
+                                validation
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- P03 -->
+            <div class="phase-card" onclick="toggle('p03',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 03</span>
+                    <span class="phase-title">Postman</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">Collections</span>
+                    <span class="tag">JS scripting</span>
+                    <span class="tag">Token chaining</span>
+                    <span class="tag">Data-driven</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Postman collection with auth chaining</p>
+            </div>
+
+            <div class="drawer" id="p03">
+                <div class="drawer-head">
+                    <h4>Phase 03 — Postman</h4>
+                    <button class="close-x" onclick="closeDrawer('p03',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>Postman skills</h5>
+                        <ul>
+                            <li>Collections, folders, environments — variable scoping (global, collection, environment,
+                                local)
+                            </li>
+                            <li>Pre-request scripts: set dynamic headers, generate timestamps, compute HMAC signatures
+                            </li>
+                            <li>Test scripts: pm.test(), pm.expect(), pm.response.json(), status code assertions</li>
+                            <li>Token chaining: extract JWT from login response → store in variable → inject into next
+                                request
+                            </li>
+                            <li>OAuth 2.0 flows in Postman: Authorization Code, Client Credentials, PKCE</li>
+                            <li>Data-driven testing: CSV/JSON data file → Collection Runner → iterate per row</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══ MONTH 2 ═══ -->
+    <section class="month-sec m2">
+        <div class="month-hdr">
+            <span class="month-badge">Month 2</span>
+            <div class="month-meta">
+                <h2>Tooling & Security — OpenAPI, Auth & Security Testing</h2>
+                <p>Phases 04–05 · Tools: Swagger UI, OpenAPI Generator, Postman, OWASP ZAP</p>
+            </div>
+        </div>
+
+        <div class="phase-grid">
+
+            <!-- P04 -->
+            <div class="phase-card" onclick="toggle('p04',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 04</span>
+                    <span class="phase-title">OpenAPI & Swagger</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">Spec mastery</span>
+                    <span class="tag">Contract validation</span>
+                    <span class="tag">OpenAPI → C# DTOs</span>
+                    <span class="tag">BDD generation</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Generated C# DTOs + RestSharp methods from a real
+                    OpenAPI spec · BDD scenario templates</p>
+            </div>
+
+            <!-- P05 -->
+            <div class="phase-card" onclick="toggle('p05',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 05</span>
+                    <span class="phase-title">Security & Auth Testing</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">JWT</span>
+                    <span class="tag">OAuth 2.0</span>
+                    <span class="tag">OIDC</span>
+                    <span class="tag">RBAC</span>
+                    <span class="tag">OWASP</span>
+                </div>
+            </div>
+
+            <div class="drawer" id="p04">
+                <div class="drawer-head">
+                    <h4>Phase 04 — OpenAPI & Swagger</h4>
+                    <button class="close-x" onclick="closeDrawer('p04',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>Spec mastery & contract validation</h5>
+                        <ul>
+                            <li>OpenAPI 3.x structure: info, servers, paths, components, schemas, securitySchemes</li>
+                            <li>Schema types: string, integer, array, $ref, oneOf/anyOf/allOf</li>
+                            <li>Contract testing: assert response body matches OpenAPI schema — use Spectral or Pact
+                            </li>
+                            <li>Required vs optional fields: test API behaviour when optional fields are absent</li>
+                            <li>Enum validation: assert only documented enum values are returned</li>
+                            <li>Postman collection generation directly from OpenAPI spec import</li>
+                        </ul>
+                    </div>
+                    <div class="dcol">
+                        <h5>OpenAPI → C# pattern</h5>
+                        <ul>
+                            <li>Install OpenAPI Generator CLI or NSwag</li>
+                            <li>Generate C# DTOs: all request/response models as typed classes</li>
+                            <li>Generate RestSharp methods: one method per endpoint with typed parameters</li>
+                            <li>Validate generated models against live API responses as a contract test</li>
+                            <li>BDD template generation: for each endpoint in the spec, scaffold a Gherkin scenario
+                                (Given the API is running / When I POST to /users / Then the response is 201)
+                            </li>
+                            <li>Keep generated code in a Generated/ folder — regenerate on spec change, do not
+                                hand-edit
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="drawer" id="p05">
+                <div class="drawer-head">
+                    <h4>Phase 05 — Security & Auth Testing</h4>
+                    <button class="close-x" onclick="closeDrawer('p05',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>Auth concepts to master</h5>
+                        <ul>
+                            <li>JWT anatomy: header.payload.signature — decode and inspect on jwt.io</li>
+                            <li>JWT validation tests: expired token, tampered signature, missing claims, wrong
+                                audience
+                            </li>
+                            <li>Bearer token pattern: Authorization: Bearer {token} — test missing, malformed, revoked
+                            </li>
+                            <li>OAuth 2.0 flows: Authorization Code (web apps), PKCE (SPAs/mobile), Client Credentials
+                                (M2M)
+                            </li>
+                            <li>OpenID Connect: ID token vs access token, userinfo endpoint, scope: openid profile
+                                email
+                            </li>
+                            <li>RBAC: test each role against every endpoint — assert correct 403 on unauthorised
+                                actions
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dcol">
+                        <h5>Security test case checklist</h5>
+                        <ul>
+                            <li>No token → 401 Unauthorized</li>
+                            <li>Expired token → 401 with meaningful error body</li>
+                            <li>Token from different environment (prod token on staging) → 401</li>
+                            <li>Tampered payload (Base64 edit) → 401 signature invalid</li>
+                            <li>Privilege escalation: user A accesses user B's resource → 403</li>
+                            <li>Mass assignment: send admin:true in request body → verify it is ignored</li>
+                            <li>SQL injection via query params → no 500, no data leak</li>
+                            <li>Rate limiting: exceed threshold → 429 Too Many Requests</li>
+                            <li>Sensitive data in response: no passwords, no raw PII beyond scope</li>
+                            <li>CORS: cross-origin request without credentials → verify allowed origins</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══ MONTH 3 ═══ -->
+    <section class="month-sec m3">
+        <div class="month-hdr">
+            <span class="month-badge">Month 3</span>
+            <div class="month-meta">
+                <h2>Framework & BDD — RestSharp, GraphQL & Reqnroll</h2>
+                <p>Phases 06–08 · Tools: C#, RestSharp, Reqnroll, ExtentReports, GitHub Actions</p>
+            </div>
+        </div>
+
+        <div class="phase-grid">
+
+            <!-- P06 -->
+            <div class="phase-card" onclick="toggle('p06',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 06</span>
+                    <span class="phase-title">C# RestSharp Framework</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">BaseApiClient</span>
+                    <span class="tag">DI pattern</span>
+                    <span class="tag">Token manager</span>
+                    <span class="tag">Typed responses</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Enterprise API framework v1 with BaseApiClient, DI,
+                    token manager, typed response handling</p>
+            </div>
+
+            <!-- P07 -->
+            <div class="phase-card" onclick="toggle('p07',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 07</span>
+                    <span class="phase-title">GraphQL Testing</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">Queries</span>
+                    <span class="tag">Mutations</span>
+                    <span class="tag">Partial failure</span>
+                    <span class="tag">Introspection</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> 20 GraphQL test cases · introspection security
+                    checklist</p>
+            </div>
+
+            <div class="drawer" id="p06">
+                <div class="drawer-head">
+                    <h4>Phase 06 — C# RestSharp Enterprise Framework</h4>
+                    <button class="close-x" onclick="closeDrawer('p06',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>Framework architecture</h5>
+                        <ul>
+                            <li>APIFramework/ structure: Clients/, Models/, Services/, Config/, Helpers/, Tests/,
+                                Reports/, TestData/
+                            </li>
+                            <li>BaseApiClient: wraps RestClient, adds default headers, base URL, timeout, serialiser
+                                config
+                            </li>
+                            <li>Constructor injection: IConfigurationHelper → BaseApiClient → feature client classes
+                                (UserClient, OrderClient)
+                            </li>
+                            <li>TokenManager: handles login, caches JWT, refreshes on expiry — injected into
+                                BaseApiClient
+                            </li>
+                            <li>Typed response wrapper: ApiResponse&lt;T&gt; with StatusCode, Data, ErrorMessage — no
+                                raw RestResponse in tests
+                            </li>
+                            <li>Shared request builder: BuildRequest() attaches auth header, content-type, correlation
+                                ID from config
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dcol">
+                        <h5>Code pattern</h5>
+                        <div class="code-block"><span class="cm">// BaseApiClient.cs</span>
+                            <span class="kw">public class</span> BaseApiClient
+                            {
+                            <span class="kw">private readonly</span> RestClient _client;
+                            <span class="kw">private readonly</span> ITokenManager _tokens;
+
+                            <span class="kw">public</span> BaseApiClient(
+                            IConfigHelper cfg,
+                            ITokenManager tokens)
+                            {
+                            _client = <span class="kw">new</span> RestClient(cfg.BaseUrl);
+                            _tokens = tokens;
+                            }
+
+                            <span class="kw">protected async</span> Task&lt;ApiResponse&lt;T&gt;&gt;
+                            SendAsync&lt;T&gt;(RestRequest req)
+                            {
+                            req.AddHeader(<span class="str">"Authorization"</span>,
+                            <span class="str">$"Bearer {await _tokens.GetToken()}"</span>);
+                            <span class="kw">var</span> r = <span class="kw">await</span> _client.ExecuteAsync&lt;T&gt;(req);
+                            <span class="kw">return new</span> ApiResponse&lt;T&gt;(r);
+                            }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="drawer" id="p07">
+                <div class="drawer-head">
+                    <h4>Phase 07 — GraphQL Testing</h4>
+                    <button class="close-x" onclick="closeDrawer('p07',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>GraphQL test areas</h5>
+                        <ul>
+                            <li>Query testing: request only needed fields, assert no extra fields leak, test nested
+                                objects
+                            </li>
+                            <li>Mutation testing: create/update/delete via mutation — assert response + side-effect via
+                                query
+                            </li>
+                            <li>Partial failure: GraphQL returns 200 even on errors — must check errors[] array, not
+                                just status code
+                            </li>
+                            <li>Variables: test with null, wrong type, missing required variable</li>
+                            <li>Aliases and fragments: ensure test coverage handles aliased field names in response
+                                parsing
+                            </li>
+                            <li>Auth testing: unauthenticated query → errors[] contains auth error, not data leak</li>
+                        </ul>
+                    </div>
+                    <div class="dcol">
+                        <h5>Introspection & security risks</h5>
+                        <ul>
+                            <li>Introspection query exposes full schema — must be disabled in production</li>
+                            <li>Test: send __schema query → production should return 400 or empty; staging is
+                                acceptable
+                            </li>
+                            <li>Field-level auth: user without admin role queries adminOnlyField → expect null or error,
+                                not data
+                            </li>
+                            <li>Deeply nested queries (DoS risk): send query with 10 levels of nesting → server should
+                                limit depth
+                            </li>
+                            <li>Batch query attacks: send array of operations — assert rate limiting applies to batch
+                                requests
+                            </li>
+                            <li>Use GraphQL Playground or Altair for exploratory testing before automating</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- P08 — full width -->
+            <div class="phase-card" onclick="toggle('p08',this)" style="grid-column:1/-1">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 08</span>
+                    <span class="phase-title">BDD with Reqnroll / SpecFlow</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">Gherkin</span>
+                    <span class="tag">Step definitions</span>
+                    <span class="tag">ScenarioContext</span>
+                    <span class="tag">Hooks</span>
+                    <span class="tag">Create-user BDD example</span>
+                    <span class="tag">CI integration</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Full Reqnroll BDD framework integrated with
+                    RestSharp — complete create-user end-to-end BDD example with hooks, context sharing, and HTML report
+                </p>
+            </div>
+
+            <div class="drawer" id="p08" style="grid-column:1/-1">
+                <div class="drawer-head">
+                    <h4>Phase 08 — BDD with Reqnroll / SpecFlow</h4>
+                    <button class="close-x" onclick="closeDrawer('p08',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>Core BDD concepts</h5>
+                        <ul>
+                            <li>Gherkin: Feature, Background, Scenario, Scenario Outline, Given/When/Then/And/But</li>
+                            <li>Step definitions: binding a Gherkin step to a C# method via [Given], [When], [Then]
+                                attributes
+                            </li>
+                            <li>ScenarioContext: share state between steps — store response, tokens, created resource
+                                IDs
+                            </li>
+                            <li>Hooks: [BeforeScenario] for setup (get token), [AfterScenario] for teardown (delete
+                                created resource)
+                            </li>
+                            <li>[BeforeFeature] / [AfterFeature] for suite-level setup</li>
+                            <li>Tags: @smoke @regression @auth — run subsets via dotnet test --filter Category=smoke
+                            </li>
+                        </ul>
+                        <h5 style="margin-top:16px">Gherkin scenario — create user</h5>
+                        <div class="code-block"><span class="kw">Feature:</span> User Management
+
+                            <span class="kw">Background:</span>
+                            <span class="str">Given</span> I am authenticated as an admin
+
+                            <span class="kw">@smoke @regression</span>
+                            <span class="kw">Scenario:</span> Create a new user successfully
+                            <span class="str">Given</span> I have a valid user payload
+                            | field | value |
+                            | firstName | Abimbola |
+                            | lastName | Olaide |
+                            | email | a.olaide@test.com |
+                            | role | tester |
+                            <span class="str">When</span> I POST to <span class="str">"/api/users"</span>
+                            <span class="str">Then</span> the response status is <span class="str">201</span>
+                            <span class="str">And</span> the response contains a user id
+                            <span class="str">And</span> the email is <span class="str">"a.olaide@test.com"</span>
+
+                            <span class="kw">Scenario:</span> Reject duplicate email
+                            <span class="str">Given</span> a user with email <span
+                                    class="str">"a.olaide@test.com"</span> exists
+                            <span class="str">When</span> I POST to <span class="str">"/api/users"</span> with the same
+                            email
+                            <span class="str">Then</span> the response status is <span class="str">409</span>
+                            <span class="str">And</span> the error message is <span class="str">"Email already registered"</span>
+                        </div>
+                    </div>
+                    <div class="dcol">
+                        <h5>Step definitions — C# pattern</h5>
+                        <div class="code-block"><span class="cm">// CreateUserSteps.cs</span>
+                            [<span class="kw">Binding</span>]
+                            <span class="kw">public class</span> CreateUserSteps
+                            {
+                            <span class="kw">private readonly</span> ScenarioContext _ctx;
+                            <span class="kw">private readonly</span> UserClient _users;
+
+                            <span class="kw">public</span> CreateUserSteps(
+                            ScenarioContext ctx,
+                            UserClient users)
+                            {
+                            _ctx = ctx; _users = users;
+                            }
+
+                            [<span class="kw">When</span>(<span class="str">@"I POST to ""/api/users"""</span>)]
+                            <span class="kw">public async</span> Task PostUser()
+                            {
+                            <span class="kw">var</span> payload = _ctx.Get&lt;UserDto&gt;(<span
+                                    class="str">"payload"</span>);
+                            <span class="kw">var</span> resp = <span class="kw">await</span>
+                            _users.CreateAsync(payload);
+                            _ctx.Set(resp, <span class="str">"response"</span>);
+                            }
+
+                            [<span class="kw">Then</span>(<span class="str">@"the response status is (.*)"</span>)]
+                            <span class="kw">public void</span> AssertStatus(<span class="kw">int</span> expected)
+                            {
+                            <span class="kw">var</span> resp = _ctx.Get&lt;ApiResponse&lt;UserDto&gt;&gt;
+                            (<span class="str">"response"</span>);
+                            resp.StatusCode.Should().Be(expected);
+                            }
+                            }
+                        </div>
+                        <ul style="margin-top:12px">
+                            <li>Reqnroll handles DI via BoDi container — register UserClient in [BeforeScenario] hook
+                            </li>
+                            <li>ExtentReports or LivingDoc for BDD HTML output</li>
+                            <li>GitHub Actions: dotnet test → upload .html report as artifact on every push</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <span>HTTP · REST · Postman · OpenAPI · JWT · OAuth 2.0 · RestSharp · GraphQL · Reqnroll</span><br>
+    <span style="opacity:.5; margin-top:4px; display:block;">3 months · 8 phases · Abimbola Olaide</span>
+</footer>
+
+<script>
+    let activeCard = null;
+
+    function toggle(id, card) {
+        const drawer = document.getElementById(id);
+        const isOpen = drawer.classList.contains('visible');
+
+        if (activeCard && activeCard !== card) {
+            activeCard.classList.remove('open');
+            const prevId = activeCard.getAttribute('onclick').match(/'([^']+)'/)[1];
+            document.getElementById(prevId).classList.remove('visible');
+        }
+
+        drawer.classList.toggle('visible', !isOpen);
+        card.classList.toggle('open', !isOpen);
+        activeCard = !isOpen ? card : null;
+
+        if (!isOpen) {
+            setTimeout(() => drawer.scrollIntoView({behavior: 'smooth', block: 'nearest'}), 60);
+        }
+    }
+
+    function closeDrawer(id, e) {
+        e.stopPropagation();
+        document.getElementById(id).classList.remove('visible');
+        if (activeCard) {
+            activeCard.classList.remove('open');
+            activeCard = null;
+        }
+    }
+</script>
+</body>
+</html>
