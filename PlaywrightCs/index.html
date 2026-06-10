@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C# & Playwright Automation Tester — 3-Month Roadmap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+          rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0f1117;
+            --surface: #181c27;
+            --surface2: #1e2333;
+            --border: rgba(255, 255, 255, 0.08);
+            --border2: rgba(255, 255, 255, 0.13);
+            --text: #e8eaf0;
+            --muted: #8b90a0;
+            --dim: #555b6e;
+
+            --m1: #22c55e;
+            --m1-bg: rgba(34, 197, 94, 0.08);
+            --m1-border: rgba(34, 197, 94, 0.25);
+            --m2: #818cf8;
+            --m2-bg: rgba(129, 140, 248, 0.08);
+            --m2-border: rgba(129, 140, 248, 0.25);
+            --m3: #fb923c;
+            --m3-bg: rgba(251, 146, 60, 0.08);
+            --m3-border: rgba(251, 146, 60, 0.25);
+
+            --font: 'Inter', system-ui, sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 15px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            padding: 72px 24px 56px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 600px 300px at 20% 50%, rgba(129, 140, 248, 0.07) 0%, transparent 70%),
+            radial-gradient(ellipse 500px 250px at 80% 50%, rgba(34, 197, 94, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: .12em;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 span {
+            color: var(--m2);
+        }
+
+        .hero-sub {
+            font-size: 16px;
+            color: var(--muted);
+            max-width: 520px;
+            margin: 0 auto 36px;
+        }
+
+        .hero-pills {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--muted);
+        }
+
+        .pill .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+
+        .pill.m1 {
+            border-color: var(--m1-border);
+            color: var(--m1);
+            background: var(--m1-bg);
+        }
+
+        .pill.m2 {
+            border-color: var(--m2-border);
+            color: var(--m2);
+            background: var(--m2-bg);
+        }
+
+        .pill.m3 {
+            border-color: var(--m3-border);
+            color: var(--m3);
+            background: var(--m3-bg);
+        }
+
+        .pill.m1 .dot {
+            background: var(--m1);
+        }
+
+        .pill.m2 .dot {
+            background: var(--m2);
+        }
+
+        .pill.m3 .dot {
+            background: var(--m3);
+        }
+
+        /* ── LAYOUT ── */
+        .container {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── MONTH SECTION ── */
+        .month-section {
+            padding: 56px 0 40px;
+        }
+
+        .month-section + .month-section {
+            border-top: 1px solid var(--border);
+        }
+
+        .month-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 36px;
+        }
+
+        .month-number {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 6px;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .m1 .month-number {
+            background: var(--m1-bg);
+            color: var(--m1);
+            border: 1px solid var(--m1-border);
+        }
+
+        .m2 .month-number {
+            background: var(--m2-bg);
+            color: var(--m2);
+            border: 1px solid var(--m2-border);
+        }
+
+        .m3 .month-number {
+            background: var(--m3-bg);
+            color: var(--m3);
+            border: 1px solid var(--m3-border);
+        }
+
+        .month-meta h2 {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 4px;
+        }
+
+        .month-meta p {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        /* ── WEEK GRID ── */
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .week-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: border-color .18s, background .18s, transform .12s;
+            position: relative;
+        }
+
+        .week-card:hover {
+            border-color: var(--border2);
+            background: var(--surface2);
+            transform: translateY(-1px);
+        }
+
+        .week-card.open {
+            border-color: var(--border2);
+            background: var(--surface2);
+        }
+
+        .m1 .week-card.open {
+            border-color: var(--m1-border);
+        }
+
+        .m2 .week-card.open {
+            border-color: var(--m2-border);
+        }
+
+        .m3 .week-card.open {
+            border-color: var(--m3-border);
+        }
+
+        .week-label {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-bottom: 8px;
+        }
+
+        .week-card h3 {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 14px;
+        }
+
+        .tag {
+            font-size: 11px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--muted);
+            border: 1px solid var(--border);
+        }
+
+        .m1 .tag {
+            background: var(--m1-bg);
+            color: var(--m1);
+            border-color: var(--m1-border);
+        }
+
+        .m2 .tag {
+            background: var(--m2-bg);
+            color: var(--m2);
+            border-color: var(--m2-border);
+        }
+
+        .m3 .tag {
+            background: var(--m3-bg);
+            color: var(--m3);
+            border-color: var(--m3-border);
+        }
+
+        .deliverable {
+            font-size: 12px;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+            padding-top: 12px;
+            line-height: 1.5;
+        }
+
+        .deliverable strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .expand-icon {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: var(--dim);
+            transition: transform .2s, color .15s, border-color .15s;
+            flex-shrink: 0;
+        }
+
+        .week-card.open .expand-icon {
+            transform: rotate(45deg);
+            color: var(--text);
+            border-color: var(--border2);
+        }
+
+        /* ── DETAIL DRAWER ── */
+        .detail-drawer {
+            display: none;
+            grid-column: 1 / -1;
+            background: var(--surface2);
+            border: 1px solid var(--border2);
+            border-radius: 12px;
+            padding: 24px;
+            animation: slideDown .18s ease;
+        }
+
+        .detail-drawer.visible {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .drawer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .drawer-header h4 {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .15s, color .15s;
+        }
+
+        .close-btn:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .drawer-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .drawer-cols {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .drawer-col h5 {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-bottom: 12px;
+        }
+
+        .drawer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .drawer-col li {
+            font-size: 13px;
+            color: var(--muted);
+            display: flex;
+            gap: 10px;
+            line-height: 1.45;
+        }
+
+        .drawer-col li::before {
+            content: '—';
+            color: var(--dim);
+            flex-shrink: 0;
+            font-size: 12px;
+            margin-top: 1px;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 24px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--dim);
+        }
+
+        footer span {
+            color: var(--muted);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .hero {
+                padding: 48px 20px 40px;
+            }
+
+            .week-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .month-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .detail-drawer {
+                animation: none;
+            }
+
+            .week-card {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <p class="hero-eyebrow">0 → automation engineer · 12 weeks</p>
+    <h1>C# &amp; <span>Playwright</span><br>Automation Roadmap</h1>
+    <p class="hero-sub">A structured 3-month plan from manual testing fundamentals to building a production-ready
+        automation framework.</p>
+    <div class="hero-pills">
+        <span class="pill m1"><span class="dot"></span>Month 1 — Manual testing</span>
+        <span class="pill m2"><span class="dot"></span>Month 2 — C# programming</span>
+        <span class="pill m3"><span class="dot"></span>Month 3 — Playwright + framework</span>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- ── MONTH 1 ── -->
+    <section class="month-section m1">
+        <div class="month-header">
+            <span class="month-number">Month 1</span>
+            <div class="month-meta">
+                <h2>Manual testing &amp; QA fundamentals</h2>
+                <p>Weeks 1–4 &nbsp;·&nbsp; Tools: Excel, Azure DevOps, any web app (CRC Website)</p>
+            </div>
+        </div>
+
+        <div class="week-grid">
+
+            <div class="week-card" onclick="toggle('w1',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 1</p>
+                <h3>Software testing foundations</h3>
+                <div class="tag-row">
+                    <span class="tag">SDLC / STLC</span>
+                    <span class="tag">Agile &amp; Scrum</span>
+                    <span class="tag">Defect lifecycle</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Test plan · 20 test cases · 10 defect reports</p>
+            </div>
+
+            <div class="week-card" onclick="toggle('w2',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 2</p>
+                <h3>Functional testing types</h3>
+                <div class="tag-row">
+                    <span class="tag">Smoke / Sanity</span>
+                    <span class="tag">Regression</span>
+                    <span class="tag">Integration / UAT</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> 50 test cases · 15 bug reports in Jira</p>
+            </div>
+
+            <div class="detail-drawer" id="w1">
+                <div class="drawer-header">
+                    <h4>Week 1 — Software testing foundations</h4>
+                    <button class="close-btn" onclick="close_drawer('w1',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Topics to learn</h5>
+                        <ul>
+                            <li>SDLC phases: Requirements → Design → Build → Test → Deploy</li>
+                            <li>STLC phases: Planning → Analysis → Design → Execution → Closure</li>
+                            <li>Test Plan & Test Strategy</li>
+                            <li>Agile: sprints, user stories, acceptance criteria, definition of done</li>
+                            <li>Verification vs validation · QA vs QC</li>
+                            <li>Defect lifecycle: New → Assigned → Open → Fixed → Retest → Closed</li>
+                            <li>Severity vs priority</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Practice tasks</h5>
+                        <ul>
+                            <li>Pick a target site: Crc Website or Demo Web Shop</li>
+                            <li>Expand into 20 detailed test cases with steps and expected results</li>
+                            <li>Log 10 defect reports — include severity, priority, steps to reproduce, and expected vs
+                                actual
+                            </li>
+                            <li>Produce your first test plan document covering scope, approach, and exit criteria</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-drawer" id="w2">
+                <div class="drawer-header">
+                    <h4>Week 2 — Testing types</h4>
+                    <button class="close-btn" onclick="close_drawer('w2',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Testing types</h5>
+                        <ul>
+                            <li>Smoke testing — verify critical path before full regression</li>
+                            <li>Sanity testing — narrow focused check after a fix</li>
+                            <li>Regression testing — ensure nothing new broke existing features</li>
+                            <li>Retesting — explicitly verify the reported defect is fixed</li>
+                            <li>Integration testing — component interaction and data flow</li>
+                            <li>System testing — full end-to-end system behaviour</li>
+                            <li>UAT — end-user acceptance in production-like environment</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Practice: login page full coverage</h5>
+                        <ul>
+                            <li>Valid login with correct credentials</li>
+                            <li>Invalid login with wrong password</li>
+                            <li>Empty fields — username and/or password blank</li>
+                            <li>Password rules: length minimum, special characters</li>
+                            <li>Session timeout behaviour</li>
+                            <li>Write at least 30 test cases total across all login scenarios</li>
+                            <li>Log 15 bug reports in Jira with full detail</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="week-card" onclick="toggle('w3',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 3</p>
+                <h3>Test design techniques</h3>
+                <div class="tag-row">
+                    <span class="tag">Equivalence partitioning</span>
+                    <span class="tag">Boundary value</span>
+                    <span class="tag">Decision tables</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> 10 technique-based test cases</p>
+            </div>
+
+            <div class="week-card" onclick="toggle('w4',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 4</p>
+                <h3>Test management &amp; reporting</h3>
+                <div class="tag-row">
+                    <span class="tag">Azure For Testing</span>
+                    <span class="tag">Risk-based testing</span>
+                    <span class="tag">Metrics &amp; reporting</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Convert Your Test From Excel To Azure</p>
+            </div>
+
+            <div class="detail-drawer" id="w3">
+                <div class="drawer-header">
+                    <h4>Week 3 — Test design techniques</h4>
+                    <button class="close-btn" onclick="close_drawer('w3',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Techniques to master</h5>
+                        <ul>
+                            <li>Equivalence partitioning — group inputs into valid/invalid classes</li>
+                            <li>Boundary value analysis — test the edges of valid ranges</li>
+                            <li>Decision table testing — map condition combinations to outcomes</li>
+                            <li>State transition testing — follow object state changes</li>
+                            <li>Exploratory testing — structured ad-hoc discovery</li>
+                            <li>Error guessing — use experience to predict likely failures</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Practice tasks</h5>
+                        <ul>
+                            <li>Apply each technique to a real form or feature on your chosen site</li>
+                            <li>Write 30 test cases labelled by technique used</li>
+                            <li>Build a requirements traceability matrix (RTM) linking test cases to requirements</li>
+                            <li>Identify which technique gives the best defect yield for each feature type</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-drawer" id="w4">
+                <div class="drawer-header">
+                    <h4>Week 4 — Test management &amp; reporting</h4>
+                    <button class="close-btn" onclick="close_drawer('w4',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Topics to learn</h5>
+                        <ul>
+                            <li>Writing a test strategy: objectives, scope, approach, risks</li>
+                            <li>Risk-based testing — prioritise by likelihood × impact</li>
+                            <li>Test coverage metrics: pass rate, defect density, escape rate</li>
+                            <li>Defect density and how to track it over a sprint</li>
+                            <li>Sprint test summary report structure</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Deliverables</h5>
+                        <ul>
+                            <li>Complete test strategy document for your chosen site</li>
+                            <li>Consolidated defect log from weeks 1–4</li>
+                            <li>1-page sprint test summary report with pass/fail metrics</li>
+                            <li>Lessons learned notes — what you'd do differently</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ── MONTH 2 ── -->
+    <section class="month-section m2">
+        <div class="month-header">
+            <span class="month-number">Month 2</span>
+            <div class="month-meta">
+                <h2>C# for test automation</h2>
+                <p>Weeks 5–8 &nbsp;·&nbsp; Tools: Visual Studio / VS Code, .NET CLI</p>
+            </div>
+        </div>
+
+        <div class="week-grid">
+
+            <div class="week-card" onclick="toggle('w5',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 5</p>
+                <h3>C# fundamentals</h3>
+                <div class="tag-row">
+                    <span class="tag">Variables &amp; types</span>
+                    <span class="tag">Loops &amp; conditions</span>
+                    <span class="tag">Methods</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> 5 console applications</p>
+            </div>
+
+            <div class="week-card" onclick="toggle('w6',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 6</p>
+                <h3>Object-oriented programming</h3>
+                <div class="tag-row">
+                    <span class="tag">Classes &amp; objects</span>
+                    <span class="tag">Inheritance</span>
+                    <span class="tag">Polymorphism</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Mini employee management system</p>
+            </div>
+
+            <div class="detail-drawer" id="w5">
+                <div class="drawer-header">
+                    <h4>Week 5 — C# fundamentals</h4>
+                    <button class="close-btn" onclick="close_drawer('w5',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Core concepts</h5>
+                        <ul>
+                            <li>Variables: int, string, bool, double, decimal</li>
+                            <li>Operators: arithmetic, comparison, logical, ternary</li>
+                            <li>Conditions: if / else if / else / switch</li>
+                            <li>Loops: for, while, do-while, foreach</li>
+                            <li>Methods: parameters, return types, overloading</li>
+                            <li>String methods: Contains, Split, Replace, ToLower</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Build these apps</h5>
+                        <ul>
+                            <li>Calculator with add, subtract, multiply, divide</li>
+                            <li>Number checker: odd/even, prime, Fibonacci</li>
+                            <li>Grade calculator: score → letter grade</li>
+                            <li>FizzBuzz and number pattern printer</li>
+                            <li>Simple menu-driven console app</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-drawer" id="w6">
+                <div class="drawer-header">
+                    <h4>Week 6 — Object-oriented programming</h4>
+                    <button class="close-btn" onclick="close_drawer('w6',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>OOP principles</h5>
+                        <ul>
+                            <li>Class vs object — blueprint vs instance</li>
+                            <li>Constructors and constructor overloading</li>
+                            <li>Encapsulation: private fields, public properties</li>
+                            <li>Inheritance: base class → derived class</li>
+                            <li>Polymorphism: virtual and override keywords</li>
+                            <li>Abstraction: abstract classes and interfaces</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Build these models</h5>
+                        <ul>
+                            <li>Employee class with name, salary, role</li>
+                            <li>Manager : Employee (override GetDetails)</li>
+                            <li>Customer and Product classes</li>
+                            <li>IRepository&lt;T&gt; interface pattern</li>
+                            <li>Mini employee management CRUD console app</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="week-card" onclick="toggle('w7',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 7</p>
+                <h3>Collections, LINQ &amp; exceptions</h3>
+                <div class="tag-row">
+                    <span class="tag">List / Dictionary</span>
+                    <span class="tag">LINQ queries</span>
+                    <span class="tag">Try / catch</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> 50 coding exercises</p>
+            </div>
+
+            <div class="week-card" onclick="toggle('w8',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 8</p>
+                <h3>Advanced C# for automation</h3>
+                <div class="tag-row">
+                    <span class="tag">File I/O &amp; JSON</span>
+                    <span class="tag">Dependency injection</span>
+                    <span class="tag">Config &amp; logging</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Config-driven console app</p>
+            </div>
+
+            <div class="detail-drawer" id="w7">
+                <div class="drawer-header">
+                    <h4>Week 7 — Collections, LINQ &amp; exception handling</h4>
+                    <button class="close-btn" onclick="close_drawer('w7',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Collections &amp; LINQ</h5>
+                        <ul>
+                            <li>List&lt;T&gt; — Add, Remove, Contains, Count</li>
+                            <li>Dictionary&lt;K,V&gt; — key-value pairs and lookup</li>
+                            <li>HashSet&lt;T&gt; — unique item sets</li>
+                            <li>Queue&lt;T&gt; — FIFO with Enqueue / Dequeue</li>
+                            <li>LINQ: Where, Select, FirstOrDefault, Any, All</li>
+                            <li>LINQ: OrderBy, GroupBy, Count, Sum, Distinct</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Exceptions &amp; projects</h5>
+                        <ul>
+                            <li>try / catch / finally blocks</li>
+                            <li>throw and re-throw exceptions</li>
+                            <li>Custom exception classes</li>
+                            <li>Build: Student management system with LINQ filters</li>
+                            <li>Build: Product search app (filter by price/category)</li>
+                            <li>Complete 50 targeted coding exercises</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-drawer" id="w8">
+                <div class="drawer-header">
+                    <h4>Week 8 — Advanced C# for automation</h4>
+                    <button class="close-btn" onclick="close_drawer('w8',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Topics to learn</h5>
+                        <ul>
+                            <li>File.ReadAllText / WriteAllText / AppendAllText</li>
+                            <li>JSON serialisation with Newtonsoft.Json</li>
+                            <li>System.Text.Json (built-in .NET)</li>
+                            <li>appsettings.json + IConfiguration + IOptions&lt;T&gt;</li>
+                            <li>Dependency injection pattern (constructor injection)</li>
+                            <li>NLog or Serilog basics — log to file and console</li>
+                            <li>Asynchronous Programming</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Build: config-driven app</h5>
+                        <ul>
+                            <li>Read url, browser, environment from appsettings.json</li>
+                            <li>Support dev / staging / production config layers</li>
+                            <li>Inject config into services via constructor DI</li>
+                            <li>Log startup events and errors to a file</li>
+                            <li>This becomes the config layer of your Month 3 framework</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ── MONTH 3 ── -->
+    <section class="month-section m3">
+        <div class="month-header">
+            <span class="month-number">Month 3</span>
+            <div class="month-meta">
+                <h2>Playwright + automation framework</h2>
+                <p>Weeks 9–12 &nbsp;·&nbsp; Tools: Playwright .NET, NUnit / xUnit, ExtentReports, GitHub Actions</p>
+            </div>
+        </div>
+
+        <div class="week-grid">
+
+            <div class="week-card" onclick="toggle('w9',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 9</p>
+                <h3>Playwright fundamentals</h3>
+                <div class="tag-row">
+                    <span class="tag">Browser &amp; page</span>
+                    <span class="tag">Locators</span>
+                    <span class="tag">Assertions</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> 10 automated tests — login, search, logout flows
+                </p>
+            </div>
+
+            <div class="week-card" onclick="toggle('w10',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 10</p>
+                <h3>Playwright advanced</h3>
+                <div class="tag-row">
+                    <span class="tag">Waits &amp; frames</span>
+                    <span class="tag">Alerts &amp; dropdowns</span>
+                    <span class="tag">Tables</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> 20 end-to-end tests on e-commerce site</p>
+            </div>
+
+            <div class="detail-drawer" id="w9">
+                <div class="drawer-header">
+                    <h4>Week 9 — Playwright fundamentals</h4>
+                    <button class="close-btn" onclick="close_drawer('w9',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Setup &amp; core API</h5>
+                        <ul>
+                            <li>dotnet new nunit / dotnet add package Microsoft.Playwright</li>
+                            <li>playwright install — download Chromium, Firefox, WebKit</li>
+                            <li>IBrowser, IPage, IBrowserContext lifecycle</li>
+                            <li>page.GotoAsync(), page.TitleAsync(), page.ScreenshotAsync()</li>
+                            <li>Headless vs headed mode, slow-motion option</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Locators &amp; assertions</h5>
+                        <ul>
+                            <li>GetByRole(), GetByText(), GetByLabel()</li>
+                            <li>GetByPlaceholder(), GetByTestId(), Locator()</li>
+                            <li>ClickAsync(), FillAsync(), PressAsync()</li>
+                            <li>Expect(locator).ToBeVisibleAsync()</li>
+                            <li>ToHaveTextAsync(), ToHaveURLAsync(), ToBeEnabledAsync()</li>
+                            <li>Automate full login → search → logout flow</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-drawer" id="w10">
+                <div class="drawer-header">
+                    <h4>Week 10 — Playwright advanced</h4>
+                    <button class="close-btn" onclick="close_drawer('w10',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Advanced interactions</h5>
+                        <ul>
+                            <li>WaitForSelectorAsync / WaitForLoadStateAsync / WaitForURLAsync</li>
+                            <li>FrameLocator for iframes and embedded content</li>
+                            <li>New tab and popup handling via page events</li>
+                            <li>dialog.AcceptAsync() / DismissAsync() for browser alerts</li>
+                            <li>SelectOptionAsync for dropdowns</li>
+                            <li>Table row iteration using locator.AllAsync()</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>E-commerce test suite</h5>
+                        <ul>
+                            <li>Browse categories and apply filters</li>
+                            <li>Add to cart, update quantity, remove item</li>
+                            <li>Full checkout flow — guest and registered user</li>
+                            <li>Order confirmation page assertions</li>
+                            <li>20 end-to-end tests total, all passing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="week-card" onclick="toggle('w11',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 11</p>
+                <h3>Build the automation framework</h3>
+                <div class="tag-row">
+                    <span class="tag">Page Object Model</span>
+                    <span class="tag">Base page / test</span>
+                    <span class="tag">Reporting</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Framework v1 with full POM structure</p>
+            </div>
+
+            <div class="week-card" onclick="toggle('w12',this)">
+                <span class="expand-icon">+</span>
+                <p class="week-label">Week 12</p>
+                <h3>AI &amp; framework polish</h3>
+                <div class="tag-row">
+                    <span class="tag">GitHub CoPilot</span>
+                    <span class="tag">Test data mgmt</span>
+                    <span class="tag">Parallel runs</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Using AI to test</p>
+            </div>
+
+            <div class="detail-drawer" id="w11">
+                <div class="drawer-header">
+                    <h4>Week 11 — Build the automation framework</h4>
+                    <button class="close-btn" onclick="close_drawer('w11',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Framework structure</h5>
+                        <ul>
+                            <li>Pages/ — LoginPage, HomePage, CheckoutPage classes</li>
+                            <li>Tests/ — test classes organised by feature or user journey</li>
+                            <li>Utilities/ — extension methods, helpers, waits</li>
+                            <li>Config/ — appsettings.json + ConfigurationHelper singleton</li>
+                            <li>Reports/ — HTML report generation</li>
+                            <li>TestData/ — JSON data files for data-driven tests</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Patterns to implement</h5>
+                        <ul>
+                            <li>BasePage — shared navigation, wait, and assertion methods</li>
+                            <li>BaseTest — [SetUp] / [TearDown] with browser lifecycle</li>
+                            <li>Page Object Model — one class per page, no selectors in tests</li>
+                            <li>Data-driven tests reading from JSON test data files</li>
+                            <li>Screenshot captured automatically on any test failure</li>
+                            <li>Reports in HTML output with pass/fail per test</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-drawer" id="w12">
+                <div class="drawer-header">
+                    <h4>Week 12 — AI &amp; framework polish</h4>
+                    <button class="close-btn" onclick="close_drawer('w12',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="drawer-col">
+                        <h5>Fixing Test With AI</h5>
+                        <ul>
+                            <li>Use AI to analyse failing tests and identify root causes</li>
+                            <li>Automatically suggest fixes for flaky or brittle tests</li>
+                            <li>Improve selector stability for UI automation</li>
+                        </ul>
+                    </div>
+                    <div class="drawer-col">
+                        <h5>Final polish</h5>
+                        <ul>
+                            <li>Parallel test execution via NUnit parallelism config</li>
+                            <li>Retry logic for flaky tests using NUnit Retry attribute</li>
+                            <li>Tag-based test categorisation (smoke, regression, e2e)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <span>C# · Playwright · NUnit · ExtentReports · GitHub Actions</span>
+    &nbsp;·&nbsp; 12 weeks · 4 deliverables per month
+</footer>
+
+<script>
+    let openCard = null;
+
+    function toggle(id, card) {
+        const drawer = document.getElementById(id);
+        const isOpen = drawer.classList.contains('visible');
+
+        if (openCard && openCard !== card) {
+            openCard.classList.remove('open');
+        }
+        if (openCard && openCard !== card) {
+            const prev = openCard.getAttribute('onclick').match(/'(\w+)'/)[1];
+            document.getElementById(prev).classList.remove('visible');
+        }
+
+        drawer.classList.toggle('visible', !isOpen);
+        card.classList.toggle('open', !isOpen);
+        openCard = !isOpen ? card : null;
+
+        if (!isOpen) {
+            setTimeout(() => drawer.scrollIntoView({behavior: 'smooth', block: 'nearest'}), 60);
+        }
+    }
+
+    function close_drawer(id, e) {
+        e.stopPropagation();
+        const drawer = document.getElementById(id);
+        drawer.classList.remove('visible');
+        if (openCard) {
+            openCard.classList.remove('open');
+            openCard = null;
+        }
+    }
+</script>
+</body>
+</html>
