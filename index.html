@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Roadmaps — Abimbola Olaide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+<!-- Header -->
+<header class="bg-white shadow-sm">
+    <div class="max-w-5xl mx-auto px-6 py-6 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-gray-900">📚 Learning Roadmaps</h1>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="max-w-5xl mx-auto px-6 mt-12">
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl p-10 shadow-lg">
+        <h2 class="text-3xl font-semibold mb-3">Your Central Roadmap Hub</h2>
+        <p class="text-lg opacity-90">
+            A single place for all your structured learning paths — automation, development, cloud, and more.
+        </p>
+    </div>
+</section>
+
+<!-- Roadmap Grid -->
+<section class="max-w-5xl mx-auto px-6 mt-12 mb-20">
+    <h3 class="text-xl font-semibold mb-6 text-gray-700">Available Roadmaps</h3>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Playwright C# Roadmap -->
+        <a href="./PlaywrightCs/index.html"
+           class="block bg-white p-6 rounded-xl shadow hover:shadow-lg transition border border-gray-100">
+            <h4 class="text-lg font-semibold text-blue-700 mb-2">Playwright C# Automation Tester</h4>
+            <p class="text-sm text-gray-600">
+                A complete 3‑month roadmap to master Playwright with C#, automation patterns, and frameworks.
+            </p>
+        </a>
+
+        <!-- Template for future roadmaps -->
+        <a href="#"
+           class="block bg-white p-6 rounded-xl shadow hover:shadow-lg transition border border-gray-100 opacity-50 cursor-not-allowed">
+            <h4 class="text-lg font-semibold text-gray-400 mb-2">Coming Soon</h4>
+            <p class="text-sm text-gray-500">More roadmaps will appear here as you add them.</p>
+        </a>
+
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center py-6 text-gray-500 text-sm">
+    © <span id="year"></span> Roadmaps Collection
+</footer>
+
+<script>
+    document.getElementById("year").textContent = new Date().getFullYear().toString();
+</script>
+
+</body>
+</html>
