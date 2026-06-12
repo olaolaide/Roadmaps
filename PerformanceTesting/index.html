@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Testing Mastery — k6 & JMeter Roadmap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+          rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0c0e14;
+            --surface: #13161f;
+            --surf2: #181c28;
+            --border: rgba(255, 255, 255, 0.07);
+            --bord2: rgba(255, 255, 255, 0.13);
+            --text: #e4e6ef;
+            --muted: #7e8499;
+            --dim: #454a5c;
+            --font: 'Inter', system-ui, sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+
+            /* Month palette — rose / amber / emerald */
+            --c1: #f87171;
+            --c1-bg: rgba(248, 113, 113, 0.07);
+            --c1-brd: rgba(248, 113, 113, 0.22);
+            --c2: #fbbf24;
+            --c2-bg: rgba(251, 191, 36, 0.07);
+            --c2-brd: rgba(251, 191, 36, 0.22);
+            --c3: #34d399;
+            --c3-bg: rgba(52, 211, 153, 0.07);
+            --c3-brd: rgba(52, 211, 153, 0.22);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 15px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ── NAV ── */
+        nav {
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(14px);
+            background: rgba(12, 14, 20, 0.85);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #f87171, #fbbf24);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .nav-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+            letter-spacing: -.01em;
+        }
+
+        .nav-title span {
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        .nav-label {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: var(--dim);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            padding: 80px 24px 64px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-glow {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse 700px 320px at 20% 60%, rgba(248, 113, 113, 0.08) 0%, transparent 65%),
+            radial-gradient(ellipse 600px 280px at 78% 40%, rgba(251, 191, 36, 0.07) 0%, transparent 65%),
+            radial-gradient(ellipse 400px 200px at 50% 5%, rgba(52, 211, 153, 0.05) 0%, transparent 70%);
+        }
+
+        .hero-eyebrow {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .13em;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .hero-eyebrow::before, .hero-eyebrow::after {
+            content: '';
+            display: block;
+            width: 32px;
+            height: 1px;
+            background: var(--dim);
+        }
+
+        .hero h1 {
+            font-size: clamp(30px, 5.5vw, 52px);
+            font-weight: 600;
+            letter-spacing: -.03em;
+            line-height: 1.1;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(90deg, #f87171, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 16px;
+            color: var(--muted);
+            max-width: 540px;
+            margin: 0 auto 40px;
+            line-height: 1.65;
+        }
+
+        /* ── HERO DEFINITION BOX ── */
+        .def-box {
+            background: var(--surface);
+            border: 1px solid var(--bord2);
+            border-radius: 16px;
+            padding: 28px 32px;
+            max-width: 760px;
+            margin: 0 auto 40px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .def-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #f87171, #fbbf24, #34d399);
+        }
+
+        .def-box-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-bottom: 10px;
+        }
+
+        .def-box p {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .def-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .three-s {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .s-pill {
+            flex: 1;
+            min-width: 140px;
+            background: rgba(248, 113, 113, 0.07);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+            border-radius: 10px;
+            padding: 12px 16px;
+        }
+
+        .s-pill.sp {
+            background: rgba(251, 191, 36, 0.07);
+            border-color: rgba(251, 191, 36, 0.2);
+        }
+
+        .s-pill.ss {
+            background: rgba(52, 211, 153, 0.07);
+            border-color: rgba(52, 211, 153, 0.2);
+        }
+
+        .s-pill-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .s-pill.sr .s-pill-title {
+            color: #f87171;
+        }
+
+        .s-pill.sp .s-pill-title {
+            color: #fbbf24;
+        }
+
+        .s-pill.ss .s-pill-title {
+            color: #34d399;
+        }
+
+        .s-pill-sub {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        /* ── TESTING TYPES STRIP ── */
+        .types-strip {
+            max-width: 760px;
+            margin: 0 auto 0;
+        }
+
+        .types-grid {
+            display: grid;
+            grid-template-columns:repeat(auto-fill, minmax(155px, 1fr));
+            gap: 8px;
+            margin-top: 0;
+        }
+
+        .type-chip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 14px;
+        }
+
+        .type-chip-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .type-chip-sub {
+            font-size: 11px;
+            color: var(--dim);
+            line-height: 1.4;
+        }
+
+        /* ── HERO MONTHS BAR ── */
+        .hero-months {
+            display: inline-flex;
+            gap: 0;
+            border: 1px solid var(--bord2);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--surface);
+        }
+
+        .hm {
+            padding: 12px 24px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+        }
+
+        .hm:last-child {
+            border-right: none;
+        }
+
+        .hm-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin: 0 auto 6px;
+        }
+
+        .hm-label {
+            font-size: 12px;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .hm-sub {
+            font-size: 11px;
+            color: var(--muted);
+            display: block;
+        }
+
+        .hm-dot.c1 {
+            background: var(--c1);
+        }
+
+        .hm-label.c1 {
+            color: var(--c1);
+        }
+
+        .hm-dot.c2 {
+            background: var(--c2);
+        }
+
+        .hm-label.c2 {
+            color: var(--c2);
+        }
+
+        .hm-dot.c3 {
+            background: var(--c3);
+        }
+
+        .hm-label.c3 {
+            color: var(--c3);
+        }
+
+        /* ── CONTAINER ── */
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── MONTH SECTION ── */
+        .month-sec {
+            padding: 60px 0 40px;
+        }
+
+        .month-sec + .month-sec {
+            border-top: 1px solid var(--border);
+        }
+
+        .month-hdr {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            margin-bottom: 36px;
+        }
+
+        .month-badge {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 6px;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .m1 .month-badge {
+            background: var(--c1-bg);
+            color: var(--c1);
+            border: 1px solid var(--c1-brd);
+        }
+
+        .m2 .month-badge {
+            background: var(--c2-bg);
+            color: var(--c2);
+            border: 1px solid var(--c2-brd);
+        }
+
+        .m3 .month-badge {
+            background: var(--c3-bg);
+            color: var(--c3);
+            border: 1px solid var(--c3-brd);
+        }
+
+        .month-meta h2 {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -.02em;
+            margin-bottom: 3px;
+        }
+
+        .month-meta p {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        /* ── SECTION LABEL ── */
+        .section-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── PHASE GRID ── */
+        .phase-grid {
+            display: grid;
+            grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+            gap: 12px;
+        }
+
+        /* ── PHASE CARD ── */
+        .phase-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+            cursor: pointer;
+            transition: border-color .18s, background .15s, transform .12s;
+            position: relative;
+            user-select: none;
+        }
+
+        .phase-card:hover {
+            border-color: var(--bord2);
+            background: var(--surf2);
+            transform: translateY(-1px);
+        }
+
+        .phase-card.open {
+            background: var(--surf2);
+        }
+
+        .m1 .phase-card.open {
+            border-color: var(--c1-brd);
+        }
+
+        .m2 .phase-card.open {
+            border-color: var(--c2-brd);
+        }
+
+        .m3 .phase-card.open {
+            border-color: var(--c3-brd);
+        }
+
+        .phase-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .phase-num {
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: .08em;
+            padding: 3px 9px;
+            border-radius: 20px;
+            flex-shrink: 0;
+        }
+
+        .m1 .phase-num {
+            background: var(--c1-bg);
+            color: var(--c1);
+            border: 1px solid var(--c1-brd);
+        }
+
+        .m2 .phase-num {
+            background: var(--c2-bg);
+            color: var(--c2);
+            border: 1px solid var(--c2-brd);
+        }
+
+        .m3 .phase-num {
+            background: var(--c3-bg);
+            color: var(--c3);
+            border: 1px solid var(--c3-brd);
+        }
+
+        .phase-title {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -.01em;
+            flex: 1;
+            line-height: 1.25;
+        }
+
+        .expand-btn {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dim);
+            font-size: 14px;
+            transition: transform .2s, color .15s, border-color .15s;
+            flex-shrink: 0;
+        }
+
+        .phase-card.open .expand-btn {
+            transform: rotate(45deg);
+            color: var(--text);
+            border-color: var(--bord2);
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-weight: 400;
+        }
+
+        .m1 .tag {
+            background: var(--c1-bg);
+            color: var(--c1);
+            border: 1px solid var(--c1-brd);
+        }
+
+        .m2 .tag {
+            background: var(--c2-bg);
+            color: var(--c2);
+            border: 1px solid var(--c2-brd);
+        }
+
+        .m3 .tag {
+            background: var(--c3-bg);
+            color: var(--c3);
+            border: 1px solid var(--c3-brd);
+        }
+
+        .deliverable {
+            font-size: 12px;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+            line-height: 1.5;
+        }
+
+        .deliverable strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* ── DRAWER ── */
+        .drawer {
+            display: none;
+            grid-column: 1/-1;
+            background: var(--surf2);
+            border: 1px solid var(--bord2);
+            border-radius: 14px;
+            padding: 24px;
+            animation: fadeSlide .18s ease;
+        }
+
+        .drawer.visible {
+            display: block;
+        }
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-5px)
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .drawer-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .drawer-head h4 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .close-x {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .15s;
+        }
+
+        .close-x:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .drawer-cols {
+            display: grid;
+            grid-template-columns:1fr 1fr;
+            gap: 24px;
+        }
+
+        .drawer-cols.three {
+            grid-template-columns:1fr 1fr 1fr;
+        }
+
+        @media (max-width: 700px) {
+            .drawer-cols, .drawer-cols.three {
+                grid-template-columns:1fr;
+            }
+        }
+
+        .dcol h5 {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-bottom: 10px;
+        }
+
+        .dcol ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .dcol li {
+            font-size: 13px;
+            color: var(--muted);
+            display: flex;
+            gap: 9px;
+            line-height: 1.45;
+            align-items: flex-start;
+        }
+
+        .dcol li::before {
+            content: '—';
+            color: var(--dim);
+            font-size: 11px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* CODE */
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: #94a3b8;
+            line-height: 1.7;
+            overflow-x: auto;
+            margin-top: 8px;
+        }
+
+        .kw {
+            color: #f87171;
+        }
+
+        .fn {
+            color: #fbbf24;
+        }
+
+        .str {
+            color: #34d399;
+        }
+
+        .cm {
+            color: #475569;
+        }
+
+        .num {
+            color: #a78bfa;
+        }
+
+        /* METRIC TABLE */
+        .metric-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .metric-table th {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--dim);
+            text-align: left;
+            padding: 6px 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .metric-table td {
+            padding: 7px 10px;
+            color: var(--muted);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            vertical-align: top;
+            line-height: 1.45;
+        }
+
+        .metric-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .metric-table td:first-child {
+            color: var(--text);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* TEST TYPE CARDS inside drawer */
+        .type-cards {
+            display: grid;
+            grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .type-card {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 14px;
+        }
+
+        .type-card-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .type-card-desc {
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .type-card-when {
+            font-size: 10px;
+            color: var(--dim);
+            margin-top: 5px;
+            font-family: var(--mono);
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 28px 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 13px;
+            color: var(--dim);
+            margin-bottom: 4px;
+        }
+
+        footer span {
+            color: var(--muted);
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding: 52px 20px 44px;
+            }
+
+            .phase-grid {
+                grid-template-columns:1fr;
+            }
+
+            .month-hdr {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .hero-months {
+                flex-direction: column;
+                border-radius: 12px;
+            }
+
+            .hm {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .hm:last-child {
+                border-bottom: none;
+            }
+
+            .def-box {
+                padding: 20px;
+            }
+
+            .three-s {
+                flex-direction: column;
+            }
+
+            nav .nav-label {
+                display: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .phase-card, .drawer {
+                transition: none;
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">
+            <div class="nav-mark">AO</div>
+            <div class="nav-title">Software Engineer <span>/ roadmaps</span></div>
+        </a>
+        <span class="nav-label">Performance Testing Mastery</span>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+    <div class="hero-glow"></div>
+    <p class="hero-eyebrow">3-month curriculum</p>
+    <h1>Performance Testing <em>Mastery</em></h1>
+    <p class="hero-sub">From HTTP fundamentals and test type theory to scripting production-grade load tests with k6 and
+        JMeter — covering Speed, Scalability, and Stability.</p>
+
+    <div class="def-box">
+        <p class="def-box-label">What is performance testing?</p>
+        <p>Performance Testing is a subset of Performance Engineering. It is the process of evaluating a system's
+            behaviour under various conditions — monitoring and improving key indicators such as response time,
+            throughput, memory, and CPU utilisation.</p>
+        <p>The three objectives (<strong style="color:var(--text)">the three S</strong>) of performance testing:</p>
+        <div class="three-s">
+            <div class="s-pill sr">
+                <div class="s-pill-title">⚡ Speed</div>
+                <div class="s-pill-sub">How fast does the system respond under normal load?</div>
+            </div>
+            <div class="s-pill sp">
+                <div class="s-pill-title">📈 Scalability</div>
+                <div class="s-pill-sub">How well does performance hold as load increases?</div>
+            </div>
+            <div class="s-pill ss">
+                <div class="s-pill-title">🏔 Stability</div>
+                <div class="s-pill-sub">Does the system remain reliable over time and under stress?</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-months">
+        <div class="hm">
+            <div class="hm-dot c1"></div>
+            <span class="hm-label c1">Month 1</span>
+            <span class="hm-sub">Foundations</span>
+        </div>
+        <div class="hm">
+            <div class="hm-dot c2"></div>
+            <span class="hm-label c2">Month 2</span>
+            <span class="hm-sub">JMeter Mastery</span>
+        </div>
+        <div class="hm">
+            <div class="hm-dot c3"></div>
+            <span class="hm-label c3">Month 3</span>
+            <span class="hm-sub">k6 & CI/CD</span>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- ═══════════════════════════════════════
+         MONTH 1 — Foundations
+    ════════════════════════════════════════ -->
+    <section class="month-sec m1">
+        <div class="month-hdr">
+            <span class="month-badge">Month 1</span>
+            <div class="month-meta">
+                <h2>Foundations — Concepts, Metrics & JMeter Basics</h2>
+                <p>Phases 01–03 · Tools: JMeter, browser DevTools, spreadsheet for baselines</p>
+            </div>
+        </div>
+
+        <div class="phase-grid">
+
+            <!-- ── PHASE 01 ── -->
+            <div class="phase-card" onclick="toggle('p01',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 01</span>
+                    <span class="phase-title">Performance Testing Theory</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">7 test types</span>
+                    <span class="tag">KPIs</span>
+                    <span class="tag">SLA vs SLO</span>
+                    <span class="tag">Baselines</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Test type decision matrix · KPI baseline document
+                </p>
+            </div>
+
+            <!-- ── PHASE 02 ── -->
+            <div class="phase-card" onclick="toggle('p02',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 02</span>
+                    <span class="phase-title">Key Performance Metrics</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">Response time</span>
+                    <span class="tag">Throughput</span>
+                    <span class="tag">Error rate</span>
+                    <span class="tag">Percentiles</span>
+                    <span class="tag">CPU / Memory</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Metrics reference sheet · threshold definition
+                    template</p>
+            </div>
+
+            <!-- DRAWER 01 -->
+            <div class="drawer" id="p01">
+                <div class="drawer-head">
+                    <h4>Phase 01 — Performance Testing Theory</h4>
+                    <button class="close-x" onclick="closeDrawer('p01',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>7 test types</h5>
+                        <div class="type-cards">
+                            <div class="type-card">
+                                <div class="type-card-name">Load Testing</div>
+                                <div class="type-card-desc">Simulate expected concurrent users. Validate system meets
+                                    performance targets under normal load.
+                                </div>
+                                <div class="type-card-when">WHEN: before every major release</div>
+                            </div>
+                            <div class="type-card">
+                                <div class="type-card-name">Stress Testing</div>
+                                <div class="type-card-desc">Push beyond capacity limits to find the breaking point and
+                                    observe failure behaviour.
+                                </div>
+                                <div class="type-card-when">WHEN: capacity planning, new infrastructure</div>
+                            </div>
+                            <div class="type-card">
+                                <div class="type-card-name">Spike Testing</div>
+                                <div class="type-card-desc">Sudden massive traffic increase — flash sales, viral events.
+                                    Does the system recover?
+                                </div>
+                                <div class="type-card-when">WHEN: seasonal launches, marketing events</div>
+                            </div>
+                            <div class="type-card">
+                                <div class="type-card-name">Endurance Testing</div>
+                                <div class="type-card-desc">Sustained load over hours/days — detect memory leaks,
+                                    connection pool exhaustion, degrading response times.
+                                </div>
+                                <div class="type-card-when">WHEN: overnight soak runs</div>
+                            </div>
+                            <div class="type-card">
+                                <div class="type-card-name">Volume Testing</div>
+                                <div class="type-card-desc">Large data volumes in the database — millions of records.
+                                    Test query performance and pagination.
+                                </div>
+                                <div class="type-card-when">WHEN: data-heavy features, reporting APIs</div>
+                            </div>
+                            <div class="type-card">
+                                <div class="type-card-name">Scalability Testing</div>
+                                <div class="type-card-desc">Gradually increase load — measure how performance scales.
+                                    Identify the scaling ceiling.
+                                </div>
+                                <div class="type-card-when">WHEN: cloud auto-scaling validation</div>
+                            </div>
+                            <div class="type-card">
+                                <div class="type-card-name">Capacity Testing</div>
+                                <div class="type-card-desc">Determine maximum users/requests the system can handle while
+                                    still meeting SLAs.
+                                </div>
+                                <div class="type-card-when">WHEN: infrastructure sizing decisions</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dcol">
+                        <h5>SLA, SLO & SLI</h5>
+                        <ul>
+                            <li>SLA (Service Level Agreement) — contractual commitment: "API responds in &lt;500ms for
+                                99% of requests"
+                            </li>
+                            <li>SLO (Service Level Objective) — internal target, stricter than SLA: "&lt;300ms at p95"
+                            </li>
+                            <li>SLI (Service Level Indicator) — the measured metric: actual p95 latency from production
+                                APM
+                            </li>
+                            <li>Error budget: 100% - SLO availability target = allowable downtime per month</li>
+                            <li>Baseline: run performance tests against a stable build before introducing changes — this
+                                is your reference point
+                            </li>
+                        </ul>
+                        <h5 style="margin-top:16px">Test type decision matrix</h5>
+                        <ul>
+                            <li>Normal expected traffic → Load test</li>
+                            <li>Find system limits → Stress test</li>
+                            <li>Sudden traffic burst → Spike test</li>
+                            <li>Long-running stability → Endurance test</li>
+                            <li>Big data / DB queries → Volume test</li>
+                            <li>Cloud scaling validation → Scalability test</li>
+                            <li>Max user capacity → Capacity test</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DRAWER 02 -->
+            <div class="drawer" id="p02">
+                <div class="drawer-head">
+                    <h4>Phase 02 — Key Performance Metrics</h4>
+                    <button class="close-x" onclick="closeDrawer('p02',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>Core metrics reference</h5>
+                        <table class="metric-table">
+                            <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>What it tells you</th>
+                                <th>Typical threshold</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Response time (avg)</td>
+                                <td>Average end-to-end latency</td>
+                                <td>&lt; 2s (web), &lt; 500ms (API)</td>
+                            </tr>
+                            <tr>
+                                <td>p90 / p95 / p99</td>
+                                <td>Worst experience for 10%/5%/1% of users</td>
+                                <td>p95 &lt; 1s is a common SLO</td>
+                            </tr>
+                            <tr>
+                                <td>Throughput (RPS)</td>
+                                <td>Requests processed per second</td>
+                                <td>Target specific to load model</td>
+                            </tr>
+                            <tr>
+                                <td>Error rate</td>
+                                <td>% of failed requests (4xx/5xx)</td>
+                                <td>&lt; 1% under load, 0% at baseline</td>
+                            </tr>
+                            <tr>
+                                <td>Concurrent users (VUs)</td>
+                                <td>Simultaneous active virtual users</td>
+                                <td>Match expected peak from analytics</td>
+                            </tr>
+                            <tr>
+                                <td>CPU utilisation</td>
+                                <td>Server CPU under load</td>
+                                <td>&lt; 70% sustained, &lt; 85% peak</td>
+                            </tr>
+                            <tr>
+                                <td>Memory usage</td>
+                                <td>Heap/RAM consumption over time</td>
+                                <td>Flat line = no leak; upward drift = leak</td>
+                            </tr>
+                            <tr>
+                                <td>Apdex score</td>
+                                <td>User satisfaction index (0–1)</td>
+                                <td>&gt; 0.85 acceptable, &gt; 0.94 excellent</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="dcol">
+                        <h5>Why percentiles beat averages</h5>
+                        <ul>
+                            <li>Average is misleading: 100 fast requests + 1 slow request → average looks fine but 1% of
+                                users suffer
+                            </li>
+                            <li>p95 = 95% of requests are faster than this value — use as your primary SLO metric</li>
+                            <li>p99 = the "tail latency" — important for user-facing APIs where 1 in 100 slow requests
+                                destroys UX
+                            </li>
+                            <li>Always report p50, p95, p99 together — never just the average</li>
+                        </ul>
+                        <h5 style="margin-top:16px">Infrastructure metrics to monitor</h5>
+                        <ul>
+                            <li>CPU: watch for sustained &gt;70% — indicates under-provisioning</li>
+                            <li>Memory: a steady upward trend during endurance tests = memory leak</li>
+                            <li>DB connections: pool exhaustion causes cascading failures — set alerts</li>
+                            <li>GC pauses (JVM): long GC pauses appear as response time spikes</li>
+                            <li>Network I/O: bandwidth saturation causes packet loss and timeouts</li>
+                            <li>Tools: Grafana + Prometheus, Azure Monitor, AWS CloudWatch, New Relic</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── PHASE 03 ── -->
+            <div class="phase-card" style="grid-column:1/-1" onclick="toggle('p03',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 03</span>
+                    <span class="phase-title">JMeter — Installation, GUI & First Test Plan</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">Thread groups</span>
+                    <span class="tag">HTTP samplers</span>
+                    <span class="tag">Listeners</span>
+                    <span class="tag">Assertions</span>
+                    <span class="tag">CSV data sets</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> JMeter test plan for a public API — load, stress,
+                    and spike scenarios with HTML report</p>
+            </div>
+
+            <!-- DRAWER 03 -->
+            <div class="drawer" id="p03">
+                <div class="drawer-head">
+                    <h4>Phase 03 — JMeter: Installation, GUI & First Test Plan</h4>
+                    <button class="close-x" onclick="closeDrawer('p03',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>Core JMeter elements</h5>
+                        <ul>
+                            <li>Test Plan → Thread Group → Samplers → Listeners — understand this hierarchy first</li>
+                            <li>Thread Group: number of threads (VUs), ramp-up period, loop count</li>
+                            <li>HTTP Request Sampler: method, server, path, headers, body — your basic building block
+                            </li>
+                            <li>Config Elements: HTTP Header Manager, Cookie Manager, HTTP Cache Manager</li>
+                            <li>CSV Data Set Config: parameterise requests from a data file (usernames, tokens, IDs)
+                            </li>
+                            <li>Timers: Constant Timer, Gaussian Random Timer — add realistic think time between
+                                requests
+                            </li>
+                        </ul>
+                        <h5 style="margin-top:16px">Assertions</h5>
+                        <ul>
+                            <li>Response Assertion: check status code, response body text, response time</li>
+                            <li>JSON Extractor: pull a field from JSON response into a JMeter variable for chaining</li>
+                            <li>Duration Assertion: fail the sample if response exceeds N milliseconds</li>
+                            <li>Size Assertion: validate response body is not unexpectedly large or empty</li>
+                        </ul>
+                    </div>
+                    <div class="dcol">
+                        <h5>Listeners & reporting</h5>
+                        <ul>
+                            <li>View Results Tree: debug-only — disable in actual load tests (high memory cost)</li>
+                            <li>Summary Report: aggregated stats — avg, min, max, error%, throughput</li>
+                            <li>Aggregate Report: adds percentiles (p50, p90, p95, p99) — prefer this over Summary</li>
+                            <li>Response Time Graph: visualise latency over time — spot degradation patterns</li>
+                            <li>Generate HTML Dashboard Report: jmeter -g results.jtl -o ./report — share this</li>
+                        </ul>
+                        <h5 style="margin-top:16px">Practice test plan structure</h5>
+                        <ul>
+                            <li>Scenario 1 — Load: 50 VUs, 5 min ramp-up, 10 min sustained</li>
+                            <li>Scenario 2 — Stress: ramp 50 → 500 VUs in steps of 50, observe break point</li>
+                            <li>Scenario 3 — Spike: 10 VUs → 300 VUs instantly → back to 10 VUs</li>
+                            <li>Target API: JSONPlaceholder, Reqres.in, or your own staging environment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         MONTH 2 — JMeter Advanced + Distributed
+    ════════════════════════════════════════ -->
+    <section class="month-sec m2">
+        <div class="month-hdr">
+            <span class="month-badge">Month 2</span>
+            <div class="month-meta">
+                <h2>JMeter Advanced — Scripting, Distributed Testing & CI</h2>
+                <p>Phases 04–06 · Tools: JMeter, Groovy/JSR223, BlazeMeter / JMeter remote agents, Jenkins / GitHub
+                    Actions</p>
+            </div>
+        </div>
+
+        <div class="phase-grid">
+
+            <!-- ── PHASE 04 ── -->
+            <div class="phase-card" onclick="toggle('p04',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 04</span>
+                    <span class="phase-title">JMeter Scripting & Correlation</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">JSR223 / Groovy</span>
+                    <span class="tag">Regex extractor</span>
+                    <span class="tag">Token correlation</span>
+                    <span class="tag">Pre/post processors</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Data-driven JMeter script with auth token
+                    correlation and Groovy pre-processor</p>
+            </div>
+
+            <!-- ── PHASE 05 ── -->
+            <div class="phase-card" onclick="toggle('p05',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 05</span>
+                    <span class="phase-title">Distributed & Non-GUI Testing</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">CLI mode</span>
+                    <span class="tag">Remote agents</span>
+                    <span class="tag">BlazeMeter</span>
+                    <span class="tag">JMeter plugins</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Non-GUI JMeter run generating jtl results + HTML
+                    dashboard</p>
+            </div>
+
+            <!-- DRAWER 04 -->
+            <div class="drawer" id="p04">
+                <div class="drawer-head">
+                    <h4>Phase 04 — JMeter Scripting & Correlation</h4>
+                    <button class="close-x" onclick="closeDrawer('p04',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>Correlation — the most critical JMeter skill</h5>
+                        <ul>
+                            <li>Correlation = extracting dynamic values (tokens, session IDs, CSRF tokens) from
+                                responses and feeding them into subsequent requests
+                            </li>
+                            <li>Regular Expression Extractor: extract a value using regex — e.g. extract JWT from login
+                                response body
+                            </li>
+                            <li>JSON Path Extractor: $.access_token — cleaner than regex for JSON APIs</li>
+                            <li>Boundary Extractor: extract between known left and right boundaries — no regex needed
+                            </li>
+                            <li>Reference name: the JMeter variable name — use ${varName} in downstream requests</li>
+                            <li>Test correlation works: run 2 users — each must get their own unique token</li>
+                        </ul>
+                        <h5 style="margin-top:16px">Pre / Post processors</h5>
+                        <ul>
+                            <li>JSR223 PreProcessor: run Groovy before a request — generate random data, compute HMAC,
+                                build dynamic payloads
+                            </li>
+                            <li>JSR223 PostProcessor: parse a response, store values, trigger conditional logic</li>
+                            <li>BeanShell (legacy): prefer JSR223/Groovy — it is compiled and significantly faster</li>
+                        </ul>
+                    </div>
+                    <div class="dcol">
+                        <h5>Groovy scripting examples</h5>
+                        <div class="code-block"><span class="cm">// JSR223 PreProcessor — dynamic timestamp</span>
+                            <span class="fn">import</span> java.time.Instant
+
+                            <span class="kw">def</span> ts = Instant.now().toEpochMilli()
+                            vars.put(<span class="str">"timestamp"</span>, ts.toString())
+
+                            <span class="cm">// Use ${timestamp} in request body</span></div>
+                        <div class="code-block" style="margin-top:8px"><span class="cm">// JSR223 PostProcessor — extract + store</span>
+                            <span class="kw">def</span> resp = prev.getResponseDataAsString()
+                            <span class="kw">def</span> parsed = <span class="kw">new</span> groovy.json.JsonSlurper()
+                            .parseText(resp)
+
+                            vars.put(<span class="str">"userId"</span>, parsed.id.toString())
+                            vars.put(<span class="str">"token"</span>, parsed.access_token)
+                        </div>
+                        <ul style="margin-top:12px">
+                            <li>Always use vars.put() to pass data to subsequent samplers</li>
+                            <li>Use log.info() for debug output — check jmeter.log</li>
+                            <li>Groovy is 10–50× faster than BeanShell — always prefer it</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DRAWER 05 -->
+            <div class="drawer" id="p05">
+                <div class="drawer-head">
+                    <h4>Phase 05 — Distributed & Non-GUI Testing</h4>
+                    <button class="close-x" onclick="closeDrawer('p05',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>Non-GUI (CLI) mode — always use for real tests</h5>
+                        <ul>
+                            <li>GUI mode is for script creation only — it consumes too many resources to generate
+                                meaningful load
+                            </li>
+                            <li>Run: <code style="color:#fbbf24;font-family:var(--mono);font-size:11px">jmeter -n -t
+                                test.jmx -l results.jtl -e -o ./report</code></li>
+                            <li>-n = non-GUI, -t = test file, -l = results log, -e = generate report, -o = output
+                                folder
+                            </li>
+                            <li>Override properties at runtime: -Jthreads=200 -Jduration=300</li>
+                            <li>Parameterise test plans with ${__P(threads,50)} so CI can control load level via flags
+                            </li>
+                        </ul>
+                        <h5 style="margin-top:16px">JMeter plugins to install</h5>
+                        <ul>
+                            <li>JMeter Plugins Manager — install from jmeter-plugins.org</li>
+                            <li>3 Basic Graphs: Transactions/s, Response Times Over Time, Active Threads Over Time</li>
+                            <li>Custom Thread Groups: Stepping Thread Group (gradual ramp), Ultimate Thread Group
+                                (complex shapes)
+                            </li>
+                            <li>PerfMon: server-side CPU/memory monitoring from inside JMeter</li>
+                        </ul>
+                    </div>
+                    <div class="dcol">
+                        <h5>Distributed testing</h5>
+                        <ul>
+                            <li>One controller node + N slave/agent nodes — all run the same test plan simultaneously
+                            </li>
+                            <li>Controller aggregates all results from agents into a single report</li>
+                            <li>Use when single machine cannot generate enough load (e.g. 10,000+ VUs)</li>
+                            <li>BlazeMeter: cloud-hosted JMeter agents — upload your .jmx, select regions, run at
+                                scale
+                            </li>
+                            <li>Azure Load Testing: native cloud service that runs JMeter scripts — good for
+                                Azure-hosted apps
+                            </li>
+                        </ul>
+                        <h5 style="margin-top:16px">Results analysis checklist</h5>
+                        <ul>
+                            <li>p95 response time — did it breach the SLO threshold?</li>
+                            <li>Error rate — any errors under normal load is a defect</li>
+                            <li>Throughput vs VU graph — does RPS grow linearly with users?</li>
+                            <li>Memory / CPU graphs — flat lines = stable; upward drift = leak</li>
+                            <li>Identify the knee point: where throughput plateaus but latency rises sharply</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── PHASE 06 ── -->
+            <div class="phase-card" style="grid-column:1/-1" onclick="toggle('p06',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 06</span>
+                    <span class="phase-title">JMeter in CI/CD — Jenkins & GitHub Actions</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">GitHub Actions</span>
+                    <span class="tag">Performance gates</span>
+                    <span class="tag">Threshold enforcement</span>
+                    <span class="tag">HTML report artifact</span>
+                    <span class="tag">Trending dashboards</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> GitHub Actions workflow that runs JMeter, enforces
+                    p95 &lt; 1s threshold, and publishes HTML report as artifact</p>
+            </div>
+
+            <!-- DRAWER 06 -->
+            <div class="drawer" id="p06">
+                <div class="drawer-head">
+                    <h4>Phase 06 — JMeter in CI/CD</h4>
+                    <button class="close-x" onclick="closeDrawer('p06',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>GitHub Actions workflow</h5>
+                        <div class="code-block"><span class="cm"># .github/workflows/perf.yml</span>
+                            <span class="kw">name:</span> Performance Tests
+                            <span class="kw">on:</span>
+                            workflow_dispatch:
+                            schedule:
+                            - cron: <span class="str">'0 2 * * 1'</span> <span class="cm"># Weekly Monday 2am</span>
+
+                            <span class="kw">jobs:</span>
+                            <span class="fn">jmeter:</span>
+                            runs-on: ubuntu-latest
+                            steps:
+                            - uses: actions/checkout@v4
+
+                            - <span class="kw">name:</span> Install JMeter
+                            <span class="kw">run:</span> |
+                            wget https://downloads.apache.org/jmeter/
+                            binaries/apache-jmeter-5.6.3.tgz
+                            tar -xzf apache-jmeter-5.6.3.tgz
+
+                            - <span class="kw">name:</span> Run tests
+                            <span class="kw">run:</span> |
+                            ./apache-jmeter-5.6.3/bin/jmeter \
+                            -n -t tests/load-test.jmx \
+                            -Jthreads=<span class="num">50</span> -Jduration=<span class="num">120</span> \
+                            -l results.jtl -e -o ./report
+
+                            - <span class="kw">name:</span> Upload report
+                            uses: actions/upload-artifact@v4
+                            <span class="kw">with:</span>
+                            name: jmeter-report
+                            path: ./report
+                        </div>
+                    </div>
+                    <div class="dcol">
+                        <h5>Performance gates — fail the build</h5>
+                        <ul>
+                            <li>Parse results.jtl after the run and assert p95 &lt; 1000ms, error rate &lt; 1%</li>
+                            <li>Use jmeter-results-analyser or a custom Python/bash script to read the JTL and exit 1 on
+                                breach
+                            </li>
+                            <li>Performance gate script example: read aggregate.csv from JMeter report, check 90th pct
+                                column
+                            </li>
+                            <li>Never block the main branch pipeline with long endurance tests — schedule them
+                                separately
+                            </li>
+                        </ul>
+                        <h5 style="margin-top:16px">Trending & dashboards</h5>
+                        <ul>
+                            <li>Grafana + InfluxDB: configure JMeter Backend Listener → send real-time results to
+                                InfluxDB → visualise in Grafana
+                            </li>
+                            <li>Track p95 trend across sprints — a rising p95 over 3 sprints is an early warning sign
+                            </li>
+                            <li>Store jtl files as build artifacts to compare runs over time</li>
+                            <li>Jenkins Performance Plugin: parses JTL and renders trend charts natively in Jenkins UI
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         MONTH 3 — k6 Mastery
+    ════════════════════════════════════════ -->
+    <section class="month-sec m3">
+        <div class="month-hdr">
+            <span class="month-badge">Month 3</span>
+            <div class="month-meta">
+                <h2>k6 Mastery — Code-First Performance Testing</h2>
+                <p>Phases 07–09 · Tools: k6, Grafana Cloud k6, GitHub Actions, Grafana dashboards</p>
+            </div>
+        </div>
+
+        <div class="phase-grid">
+
+            <!-- ── PHASE 07 ── -->
+            <div class="phase-card" onclick="toggle('p07',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 07</span>
+                    <span class="phase-title">k6 Fundamentals</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">Virtual users</span>
+                    <span class="tag">Scenarios</span>
+                    <span class="tag">Checks</span>
+                    <span class="tag">Thresholds</span>
+                    <span class="tag">Metrics</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> 5 k6 scripts covering load, stress, spike, soak,
+                    and stepped ramp scenarios</p>
+            </div>
+
+            <!-- ── PHASE 08 ── -->
+            <div class="phase-card" onclick="toggle('p08',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 08</span>
+                    <span class="phase-title">k6 Advanced Scripting</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">Custom metrics</span>
+                    <span class="tag">Groups</span>
+                    <span class="tag">Data parameterisation</span>
+                    <span class="tag">Auth flows</span>
+                    <span class="tag">k6 extensions</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Modular k6 framework with shared auth, custom
+                    metrics, and data-driven iteration</p>
+            </div>
+
+            <!-- DRAWER 07 -->
+            <div class="drawer" id="p07">
+                <div class="drawer-head">
+                    <h4>Phase 07 — k6 Fundamentals</h4>
+                    <button class="close-x" onclick="closeDrawer('p07',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>k6 core concepts</h5>
+                        <ul>
+                            <li>k6 is code-first: tests are JavaScript (ES6) — no GUI, version-controlled alongside your
+                                app code
+                            </li>
+                            <li>Virtual Users (VUs): each VU runs your script in a loop — simulates one concurrent
+                                user
+                            </li>
+                            <li>Checks: assertions in k6 — check(res, {"status is 200": r => r.status === 200}) — do NOT
+                                fail the test, just count pass/fail
+                            </li>
+                            <li>Thresholds: fail the test programmatically — http_req_duration['p(95)'] &lt; 1000 causes
+                                non-zero exit
+                            </li>
+                            <li>Metrics: built-in (http_req_duration, http_reqs, vus, iterations) + custom</li>
+                        </ul>
+                        <h5 style="margin-top:16px">Executor types for every test scenario</h5>
+                        <ul>
+                            <li>constant-vus: fixed VU count for a duration → baseline load test</li>
+                            <li>ramping-vus: ramp up then down → classic load and stress test shape</li>
+                            <li>constant-arrival-rate: fixed RPS regardless of VU count → throughput test</li>
+                            <li>ramping-arrival-rate: ramp RPS gradually → scalability and capacity test</li>
+                            <li>per-vu-iterations: each VU runs N iterations → soak / endurance test</li>
+                        </ul>
+                    </div>
+                    <div class="dcol">
+                        <h5>k6 script anatomy</h5>
+                        <div class="code-block"><span class="fn">import</span> http <span class="fn">from</span> <span
+                                class="str">'k6/http'</span>;
+                            <span class="fn">import</span> { check, sleep } <span class="fn">from</span> <span
+                                    class="str">'k6'</span>;
+
+                            <span class="kw">export const</span> options = {
+                            scenarios: {
+                            load_test: {
+                            executor: <span class="str">'ramping-vus'</span>,
+                            stages: [
+                            { duration: <span class="str">'2m'</span>, target: <span class="num">50</span> }, <span
+                                    class="cm">// ramp up</span>
+                            { duration: <span class="str">'5m'</span>, target: <span class="num">50</span> }, <span
+                                    class="cm">// sustain</span>
+                            { duration: <span class="str">'1m'</span>, target: <span class="num">0</span> }, <span
+                                    class="cm">// ramp down</span>
+                            ],
+                            },
+                            },
+                            thresholds: {
+                            <span class="str">'http_req_duration'</span>: [<span class="str">'p(95)<1000'</span>],
+                            <span class="str">'http_req_failed'</span>: [<span class="str">'rate<0.01'</span> ],
+                            },
+                            };
+
+                            <span class="kw">export default function</span> () {
+                            <span class="kw">const</span> res = http.get(<span class="str">'https://api.example.com/users'</span>);
+                            check(res, {
+                            <span class="str">'status 200'</span>: r => r.status === <span class="num">200</span>,
+                            <span class="str">'body not empty'</span>: r => r.body.length > <span class="num">0</span>,
+                            });
+                            sleep(<span class="num">1</span>);
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DRAWER 08 -->
+            <div class="drawer" id="p08">
+                <div class="drawer-head">
+                    <h4>Phase 08 — k6 Advanced Scripting</h4>
+                    <button class="close-x" onclick="closeDrawer('p08',event)">×</button>
+                </div>
+                <div class="drawer-cols">
+                    <div class="dcol">
+                        <h5>Advanced patterns</h5>
+                        <ul>
+                            <li>setup() / teardown(): run once before/after all VUs — ideal for creating test data or
+                                obtaining a shared token
+                            </li>
+                            <li>groups(): logically name sections of a script — get per-group metrics in the report</li>
+                            <li>SharedArray: load a CSV/JSON data file once into shared memory — all VUs read from it
+                                without duplicating data per VU
+                            </li>
+                            <li>Custom metrics: new Counter(), new Gauge(), new Trend(), new Rate() — track anything not
+                                built-in
+                            </li>
+                            <li>Tags: tag requests by endpoint, region, or user type — filter metrics in Grafana</li>
+                        </ul>
+                        <h5 style="margin-top:16px">Auth flow in k6</h5>
+                        <div class="code-block"><span class="kw">export function</span> setup() {
+                            <span class="kw">const</span> res = http.post(
+                            <span class="str">'https://api.example.com/auth/login'</span>,
+                            JSON.stringify({ username: <span class="str">'test'</span>, password: <span class="str">'pass'</span>
+                            }),
+                            { headers: { <span class="str">'Content-Type'</span>: <span
+                                    class="str">'application/json'</span> } }
+                            );
+                            <span class="kw">return</span> { token: res.json(<span class="str">'access_token'</span>) };
+                            }
+
+                            <span class="kw">export default function</span> (data) {
+                            <span class="kw">const</span> headers = {
+                            Authorization: <span class="str">`Bearer ${data.token}`</span>
+                            };
+                            http.get(<span class="str">'https://api.example.com/orders'</span>, { headers });
+                            }
+                        </div>
+                    </div>
+                    <div class="dcol">
+                        <h5>Data-driven with SharedArray</h5>
+                        <div class="code-block"><span class="fn">import</span> { SharedArray } <span
+                                class="fn">from</span> <span class="str">'k6/data'</span>;
+                            <span class="fn">import</span> papaparse <span class="fn">from</span> <span class="str">'https://jslib.k6.io/papaparse/5.1.1/index.js'</span>;
+
+                            <span class="kw">const</span> users = <span class="kw">new</span> SharedArray(<span
+                                    class="str">'users'</span>, <span class="kw">function</span>() {
+                            <span class="kw">return</span> papaparse.parse(
+                            open(<span class="str">'./data/users.csv'</span>), { header: <span class="kw">true</span> }
+                            ).data;
+                            });
+
+                            <span class="kw">export default function</span>() {
+                            <span class="kw">const</span> user = users[__VU % users.length];
+                            <span class="cm">// each VU picks a different user row</span>
+                            http.post(<span class="str">'/login'</span>, { username: user.email });
+                            }
+                        </div>
+                        <ul style="margin-top:10px">
+                            <li>k6 extensions: xk6-browser (Playwright-style browser testing), xk6-kafka, xk6-sql —
+                                install via k6 build
+                            </li>
+                            <li>k6 Cloud / Grafana Cloud k6: run distributed tests without managing agents</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── PHASE 09 ── -->
+            <div class="phase-card" style="grid-column:1/-1" onclick="toggle('p09',this)">
+                <div class="phase-top">
+                    <span class="phase-num">Phase 09</span>
+                    <span class="phase-title">k6 in CI/CD, Grafana Dashboards & Full Framework</span>
+                    <span class="expand-btn">+</span>
+                </div>
+                <div class="tag-row">
+                    <span class="tag">GitHub Actions</span>
+                    <span class="tag">InfluxDB output</span>
+                    <span class="tag">Grafana dashboard</span>
+                    <span class="tag">Threshold gates</span>
+                    <span class="tag">JMeter vs k6 comparison</span>
+                    <span class="tag">Final framework</span>
+                </div>
+                <p class="deliverable"><strong>Deliverable:</strong> Portfolio-ready k6 performance framework — GitHub
+                    repo with CI pipeline, Grafana dashboard, threshold gates, and a full test suite covering all 7
+                    performance test types</p>
+            </div>
+
+            <!-- DRAWER 09 -->
+            <div class="drawer" id="p09">
+                <div class="drawer-head">
+                    <h4>Phase 09 — CI/CD, Grafana & Final Framework</h4>
+                    <button class="close-x" onclick="closeDrawer('p09',event)">×</button>
+                </div>
+                <div class="drawer-cols three">
+                    <div class="dcol">
+                        <h5>GitHub Actions — k6</h5>
+                        <div class="code-block"><span class="cm"># .github/workflows/k6.yml</span>
+                            <span class="kw">name:</span> k6 Performance
+                            <span class="kw">on:</span> [push, workflow_dispatch]
+
+                            <span class="kw">jobs:</span>
+                            <span class="fn">k6:</span>
+                            runs-on: ubuntu-latest
+                            steps:
+                            - uses: actions/checkout@v4
+
+                            - <span class="kw">name:</span> Run k6
+                            uses: grafana/k6-action@v0.3.1
+                            <span class="kw">with:</span>
+                            filename: tests/load.js
+                            flags: --out json=results.json
+
+                            - <span class="kw">name:</span> Upload results
+                            uses: actions/upload-artifact@v4
+                            <span class="kw">with:</span>
+                            name: k6-results
+                            path: results.json
+                        </div>
+                        <ul style="margin-top:10px">
+                            <li>k6 exits non-zero if any threshold is breached — pipeline fails automatically</li>
+                            <li>Use workflow_dispatch for on-demand runs; schedule for nightly soaks</li>
+                        </ul>
+                    </div>
+                    <div class="dcol">
+                        <h5>Grafana real-time dashboard</h5>
+                        <ul>
+                            <li>k6 --out influxdb=http://localhost:8086/k6 → sends metrics to InfluxDB in real time</li>
+                            <li>Import k6 Grafana dashboard (ID 2587) — instant p95, RPS, VUs, error rate panels</li>
+                            <li>Grafana Cloud k6: built-in dashboard, no InfluxDB needed — just k6 cloud run script.js
+                            </li>
+                            <li>Alert rules in Grafana: notify Slack when p95 exceeds threshold during a run</li>
+                            <li>Store baseline snapshots — compare this sprint vs last sprint in same dashboard</li>
+                        </ul>
+                        <h5 style="margin-top:16px">JMeter vs k6 — when to use each</h5>
+                        <table class="metric-table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>JMeter</th>
+                                <th>k6</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Script format</td>
+                                <td>XML GUI</td>
+                                <td>JavaScript</td>
+                            </tr>
+                            <tr>
+                                <td>Version control</td>
+                                <td>Poor (XML diff)</td>
+                                <td>Excellent</td>
+                            </tr>
+                            <tr>
+                                <td>CI/CD fit</td>
+                                <td>Good</td>
+                                <td>Excellent</td>
+                            </tr>
+                            <tr>
+                                <td>Protocol support</td>
+                                <td>Very broad</td>
+                                <td>HTTP, WS, gRPC</td>
+                            </tr>
+                            <tr>
+                                <td>Learning curve</td>
+                                <td>Medium</td>
+                                <td>Low (dev-friendly)</td>
+                            </tr>
+                            <tr>
+                                <td>Enterprise use</td>
+                                <td>Very common</td>
+                                <td>Growing fast</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="dcol">
+                        <h5>Final framework structure</h5>
+                        <div class="code-block">PerformanceFramework/
+                            ├── tests/
+                            │ ├── load-test.js
+                            │ ├── stress-test.js
+                            │ ├── spike-test.js
+                            │ ├── soak-test.js
+                            │ └── capacity-test.js
+                            ├── lib/
+                            │ ├── auth.js <span class="cm"># token helper</span>
+                            │ ├── clients/
+                            │ │ ├── users.js
+                            │ │ └── orders.js
+                            │ └── metrics.js <span class="cm"># custom metrics</span>
+                            ├── data/
+                            │ └── users.csv
+                            ├── config/
+                            │ ├── thresholds.js
+                            │ └── environments.js
+                            ├── jmeter/
+                            │ ├── test-plan.jmx
+                            │ └── data/
+                            ├── .github/
+                            │ └── workflows/
+                            │ ├── k6.yml
+                            │ └── jmeter.yml
+                            └── README.md
+                        </div>
+                        <ul style="margin-top:10px">
+                            <li>environments.js: export BASE_URL based on __ENV.ENVIRONMENT — dev, staging, prod</li>
+                            <li>thresholds.js: centralised threshold config — import into every test script</li>
+                            <li>README: how to run locally, how to run in CI, how to read results</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <p><span>Load · Stress · Spike · Endurance · Volume · Scalability · Capacity</span></p>
+        <p style="margin-top:4px;opacity:.5;font-size:12px">k6 · JMeter · Grafana · InfluxDB · GitHub Actions &nbsp;·&nbsp;
+            3 months · 9 phases</p>
+    </div>
+</footer>
+
+<script>
+    let activeCard = null;
+
+    function toggle(id, card) {
+        const drawer = document.getElementById(id);
+        const isOpen = drawer.classList.contains('visible');
+
+        if (activeCard && activeCard !== card) {
+            activeCard.classList.remove('open');
+            const prevId = activeCard.getAttribute('onclick').match(/'([^']+)'/)[1];
+            document.getElementById(prevId).classList.remove('visible');
+        }
+
+        drawer.classList.toggle('visible', !isOpen);
+        card.classList.toggle('open', !isOpen);
+        activeCard = !isOpen ? card : null;
+
+        if (!isOpen) {
+            setTimeout(() => drawer.scrollIntoView({behavior: 'smooth', block: 'nearest'}), 60);
+        }
+    }
+
+    function closeDrawer(id, e) {
+        e.stopPropagation();
+        document.getElementById(id).classList.remove('visible');
+        if (activeCard) {
+            activeCard.classList.remove('open');
+            activeCard = null;
+        }
+    }
+</script>
+</body>
+</html>
