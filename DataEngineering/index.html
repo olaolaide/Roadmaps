@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Stack Azure Data Engineer Roadmap — AO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+          rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08080f;
+            --surface: #10101c;
+            --card: #16162a;
+            --border: #252540;
+            --border-bright: #3a3a60;
+            --violet: #7c6fff;
+            --violet-dim: rgba(124, 111, 255, 0.13);
+            --teal: #00d4aa;
+            --teal-dim: rgba(0, 212, 170, 0.12);
+            --orange: #ff6b35;
+            --orange-dim: rgba(255, 107, 53, 0.12);
+            --gold: #ffd700;
+            --gold-dim: rgba(255, 215, 0, 0.12);
+            --pink: #ff4d9e;
+            --pink-dim: rgba(255, 77, 158, 0.12);
+            --green: #4ade80;
+            --green-dim: rgba(74, 222, 128, 0.1);
+            --text: #e2e2f0;
+            --muted: #6a6a90;
+            --font: 'Inter', sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            font-size: 15px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* NOISE */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.35;
+        }
+
+        /* BANNER */
+        .principles-banner {
+            background: linear-gradient(90deg, #0d0d20, #12102a 50%, #0d0d20);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .principles-banner::before, .principles-banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            z-index: 2;
+        }
+
+        .principles-banner::before {
+            left: 0;
+            background: linear-gradient(90deg, #08080f, transparent);
+        }
+
+        .principles-banner::after {
+            right: 0;
+            background: linear-gradient(-90deg, #08080f, transparent);
+        }
+
+        .banner-track {
+            display: flex;
+            animation: scrollBanner 70s linear infinite;
+            width: max-content;
+        }
+
+        .banner-item {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            padding: 0 28px;
+            white-space: nowrap;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .banner-item span {
+            color: var(--violet);
+            margin-right: 8px;
+        }
+
+        @keyframes scrollBanner {
+            from {
+                transform: translateX(0)
+            }
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(8, 8, 15, .93);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+            gap: 16px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .nav-logo {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--violet), var(--teal));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono);
+            font-weight: 600;
+            font-size: 13px;
+            color: white;
+        }
+
+        .nav-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: .02em;
+            white-space: nowrap;
+        }
+
+        .nav-title span {
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        .nav-phases {
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-phases::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-phase-btn {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+            background: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all .2s;
+            letter-spacing: .05em;
+        }
+
+        .nav-phase-btn:hover {
+            color: var(--violet);
+            border-color: var(--border-bright);
+        }
+
+        .nav-phase-btn.active {
+            color: var(--violet);
+            border-color: var(--violet);
+            background: var(--violet-dim);
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            padding: 90px 48px 70px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+        }
+
+        .hero-orb-1 {
+            width: 600px;
+            height: 400px;
+            background: rgba(124, 111, 255, .1);
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hero-orb-2 {
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 212, 170, .07);
+            top: 50px;
+            left: 10%;
+        }
+
+        .hero-orb-3 {
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 107, 53, .05);
+            top: 50px;
+            right: 10%;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--teal);
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 5vw, 62px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -.03em;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 .line1 {
+            display: block;
+        }
+
+        .hero h1 .line2 {
+            display: block;
+            background: linear-gradient(90deg, var(--violet), var(--teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat .num {
+            font-size: 30px;
+            font-weight: 800;
+            font-family: var(--mono);
+            background: linear-gradient(135deg, var(--violet), var(--teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stat .label {
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* MAIN */
+        .main-wrap {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 32px 120px;
+        }
+
+        /* STAGE HEADER */
+        .stage-header {
+            margin: 60px 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stage-header .line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .stage-pill {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            padding: 7px 18px;
+            border-radius: 20px;
+            white-space: nowrap;
+            font-weight: 600;
+            border: 1px solid;
+        }
+
+        .stage-pill.s1 {
+            color: #4ade80;
+            border-color: rgba(74, 222, 128, .4);
+            background: rgba(74, 222, 128, .08);
+        }
+
+        .stage-pill.s2 {
+            color: var(--teal);
+            border-color: rgba(0, 212, 170, .4);
+            background: var(--teal-dim);
+        }
+
+        .stage-pill.s3 {
+            color: var(--violet);
+            border-color: rgba(124, 111, 255, .4);
+            background: var(--violet-dim);
+        }
+
+        .stage-pill.s4 {
+            color: var(--orange);
+            border-color: rgba(255, 107, 53, .4);
+            background: var(--orange-dim);
+        }
+
+        .stage-pill.s5 {
+            color: var(--pink);
+            border-color: rgba(255, 77, 158, .4);
+            background: var(--pink-dim);
+        }
+
+        .stage-pill.s6 {
+            color: var(--gold);
+            border-color: rgba(255, 215, 0, .4);
+            background: var(--gold-dim);
+        }
+
+        .stage-title {
+            font-size: 13px;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        /* PHASE CARD */
+        .phase-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: border-color .2s;
+            position: relative;
+        }
+
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--phase-color, var(--violet)), transparent);
+            border-radius: 3px 0 0 3px;
+        }
+
+        .phase-card:hover {
+            border-color: var(--border-bright);
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 22px 26px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .phase-num-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+            gap: 6px;
+        }
+
+        .phase-number {
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 6px;
+            border: 1px solid;
+            letter-spacing: .06em;
+            white-space: nowrap;
+        }
+
+        .diff-badge {
+            font-family: var(--mono);
+            font-size: 9px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .diff-beginner {
+            background: rgba(74, 222, 128, .1);
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, .3);
+        }
+
+        .diff-intermediate {
+            background: var(--teal-dim);
+            color: var(--teal);
+            border: 1px solid rgba(0, 212, 170, .3);
+        }
+
+        .diff-advanced {
+            background: var(--orange-dim);
+            color: var(--orange);
+            border: 1px solid rgba(255, 107, 53, .3);
+        }
+
+        .diff-expert {
+            background: var(--pink-dim);
+            color: var(--pink);
+            border: 1px solid rgba(255, 77, 158, .3);
+        }
+
+        .phase-header-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .phase-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -.01em;
+        }
+
+        .phase-subtitle {
+            font-size: 12px;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .phase-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .phase-duration {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: .04em;
+        }
+
+        .phase-chevron {
+            color: var(--muted);
+            transition: transform .3s;
+            font-size: 16px;
+        }
+
+        .phase-card.open .phase-chevron {
+            transform: rotate(180deg);
+        }
+
+        .phase-body {
+            display: none;
+            padding: 4px 26px 26px;
+            border-top: 1px solid var(--border);
+        }
+
+        .phase-card.open .phase-body {
+            display: block;
+        }
+
+        /* WHY ORDER NOTE */
+        .why-note {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            background: rgba(0, 212, 170, .06);
+            border: 1px solid rgba(0, 212, 170, .2);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin: 18px 0 0;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .why-note .why-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .why-note .why-text {
+            color: var(--muted);
+        }
+
+        .why-note .why-text strong {
+            color: var(--teal);
+        }
+
+        /* PREREQS */
+        .prereq-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 16px 0 0;
+            padding: 12px 16px;
+            background: rgba(124, 111, 255, .06);
+            border: 1px solid rgba(124, 111, 255, .2);
+            border-radius: 8px;
+        }
+
+        .prereq-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--violet);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .prereq-tag {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 9px;
+        }
+
+        /* TOPICS */
+        .topic-section {
+            margin-top: 22px;
+        }
+
+        .topic-section-title {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            padding-bottom: 7px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .topic-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .tag {
+            font-family: var(--mono);
+            font-size: 12px;
+            padding: 4px 11px;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            color: var(--text);
+            background: var(--surface);
+            letter-spacing: .02em;
+            transition: all .2s;
+            cursor: default;
+        }
+
+        .tag:hover {
+            border-color: var(--border-bright);
+        }
+
+        .tag.violet {
+            border-color: rgba(124, 111, 255, .4);
+            color: var(--violet);
+            background: var(--violet-dim);
+        }
+
+        .tag.teal {
+            border-color: rgba(0, 212, 170, .4);
+            color: var(--teal);
+            background: var(--teal-dim);
+        }
+
+        .tag.orange {
+            border-color: rgba(255, 107, 53, .4);
+            color: var(--orange);
+            background: var(--orange-dim);
+        }
+
+        .tag.gold {
+            border-color: rgba(255, 215, 0, .3);
+            color: var(--gold);
+            background: var(--gold-dim);
+        }
+
+        /* PROJECTS */
+        .projects-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px 20px;
+            position: relative;
+            transition: border-color .2s, transform .2s;
+        }
+
+        .project-card:hover {
+            border-color: var(--border-bright);
+            transform: translateY(-1px);
+        }
+
+        .project-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 9px;
+        }
+
+        .project-name {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: -.01em;
+        }
+
+        .project-badges {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+
+        .badge {
+            font-family: var(--mono);
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 4px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            border: 1px solid;
+        }
+
+        .badge-faang {
+            background: var(--gold-dim);
+            color: var(--gold);
+            border-color: rgba(255, 215, 0, .3);
+        }
+
+        .badge-streaming {
+            background: var(--teal-dim);
+            color: var(--teal);
+            border-color: rgba(0, 212, 170, .3);
+        }
+
+        .badge-batch {
+            background: var(--violet-dim);
+            color: var(--violet);
+            border-color: rgba(124, 111, 255, .3);
+        }
+
+        .badge-tool {
+            background: var(--orange-dim);
+            color: var(--orange);
+            border-color: rgba(255, 107, 53, .3);
+        }
+
+        .badge-arch {
+            background: var(--pink-dim);
+            color: var(--pink);
+            border-color: rgba(255, 77, 158, .3);
+        }
+
+        .project-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 11px;
+        }
+
+        .project-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .stack-tag {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 7px;
+        }
+
+        /* MINDSET */
+        .mindset-callout {
+            background: linear-gradient(135deg, rgba(124, 111, 255, .07), rgba(0, 212, 170, .04));
+            border: 1px solid var(--border-bright);
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin-top: 20px;
+        }
+
+        .mindset-callout .mc-title {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--violet);
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .mc-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .mc-q {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            padding: 5px 11px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: var(--surface);
+        }
+
+        /* CAPSTONE */
+        .capstone-wrap {
+            background: linear-gradient(135deg, rgba(124, 111, 255, .12), rgba(0, 212, 170, .08) 50%, rgba(255, 107, 53, .05));
+            border: 1px solid var(--border-bright);
+            border-radius: 20px;
+            padding: 48px;
+            margin-top: 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .capstone-wrap::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 300px;
+            background: radial-gradient(ellipse, rgba(124, 111, 255, .14), transparent 70%);
+            pointer-events: none;
+        }
+
+        .capstone-eyebrow {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--gold);
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .capstone-wrap h2 {
+            font-size: 30px;
+            font-weight: 900;
+            letter-spacing: -.02em;
+            margin-bottom: 16px;
+        }
+
+        .capstone-wrap p {
+            color: var(--muted);
+            font-size: 15px;
+            max-width: 640px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+
+        .capstone-features {
+            display: grid;
+            grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+            text-align: left;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .cap-feature {
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 13px;
+        }
+
+        .cap-feature .cf-title {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .cap-feature .cf-items {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* MANIFESTO */
+        .manifesto {
+            margin-top: 80px;
+            border-top: 1px solid var(--border);
+            padding-top: 60px;
+            text-align: center;
+        }
+
+        .manifesto h2 {
+            font-size: 12px;
+            font-family: var(--mono);
+            color: var(--muted);
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+        }
+
+        .manifesto-grid {
+            display: grid;
+            grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            max-width: 900px;
+            margin: 0 auto 60px;
+        }
+
+        .manifesto-item {
+            background: var(--card);
+            padding: 22px;
+            text-align: left;
+        }
+
+        .manifesto-item .mi-num {
+            font-family: var(--mono);
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--violet), var(--teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .manifesto-item .mi-text {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .manifesto-item .mi-sub {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 28px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .footer-text strong {
+            color: var(--text);
+        }
+
+        .footer-tagline {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--violet);
+            letter-spacing: .1em;
+        }
+
+        /* PROGRESS */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--violet), var(--teal));
+            z-index: 200;
+            transition: width .1s;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 20px 48px;
+            }
+
+            .main-wrap {
+                padding: 0 16px 80px;
+            }
+
+            nav {
+                padding: 0 16px;
+            }
+
+            .nav-phases {
+                display: none;
+            }
+
+            .phase-header {
+                flex-wrap: wrap;
+            }
+
+            .phase-subtitle {
+                white-space: normal;
+            }
+
+            .capstone-wrap {
+                padding: 32px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="reading-progress" id="progressBar"></div>
+
+<div class="principles-banner">
+    <div class="banner-track">
+        <span class="banner-item"><span>✦</span>Always Be Architecting</span><span class="banner-item"><span>✦</span>Plan For Failure</span><span
+            class="banner-item"><span>✦</span>Architect For Scalability</span><span class="banner-item"><span>✦</span>Build Loosely Coupled Systems</span><span
+            class="banner-item"><span>✦</span>Make Reversible Decisions</span><span class="banner-item"><span>✦</span>Prioritize Security</span><span
+            class="banner-item"><span>✦</span>Embrace FinOps</span><span class="banner-item"><span>✦</span>Favor Managed Services</span><span
+            class="banner-item"><span>✦</span>Be Smart With State</span><span class="banner-item"><span>✦</span>Design For Automation</span><span
+            class="banner-item"><span>✦</span>Defense In Depth</span><span class="banner-item"><span>✦</span>Practice Zero Trust</span><span
+            class="banner-item"><span>✦</span>Architecture Is Leadership</span>
+        <span class="banner-item"><span>✦</span>Always Be Architecting</span><span class="banner-item"><span>✦</span>Plan For Failure</span><span
+            class="banner-item"><span>✦</span>Architect For Scalability</span><span class="banner-item"><span>✦</span>Build Loosely Coupled Systems</span><span
+            class="banner-item"><span>✦</span>Make Reversible Decisions</span><span class="banner-item"><span>✦</span>Prioritize Security</span><span
+            class="banner-item"><span>✦</span>Embrace FinOps</span><span class="banner-item"><span>✦</span>Favor Managed Services</span><span
+            class="banner-item"><span>✦</span>Be Smart With State</span><span class="banner-item"><span>✦</span>Design For Automation</span><span
+            class="banner-item"><span>✦</span>Defense In Depth</span><span class="banner-item"><span>✦</span>Practice Zero Trust</span><span
+            class="banner-item"><span>✦</span>Architecture Is Leadership</span>
+    </div>
+</div>
+
+<nav>
+    <a href="#" class="nav-brand">
+        <div class="nav-logo">AO</div>
+        <span class="nav-title">Azure Data Engineer Roadmap <span>· 36 Months</span></span>
+    </a>
+    <div class="nav-phases" id="navPhases"></div>
+</nav>
+
+<header class="hero">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+    <p class="hero-eyebrow">Abimbola Olaide · Full Stack Data Engineering</p>
+    <h1>
+        <span class="line1">Zero to</span>
+        <span class="line2">FAANG-Scale Data Engineer</span>
+    </h1>
+    <p class="hero-desc">A 36-month structured roadmap from absolute beginner to staff-level Azure Data Engineer. Every
+        topic is ordered so each phase builds on real foundations — no phase assumes knowledge you haven't learned
+        yet.</p>
+    <div class="hero-stats">
+        <div class="hero-stat">
+            <div class="num">19</div>
+            <div class="label">Phases</div>
+        </div>
+        <div class="hero-stat">
+            <div class="num">36</div>
+            <div class="label">Months</div>
+        </div>
+        <div class="hero-stat">
+            <div class="num">65+</div>
+            <div class="label">Projects</div>
+        </div>
+        <div class="hero-stat">
+            <div class="num">130+</div>
+            <div class="label">Topics</div>
+        </div>
+    </div>
+</header>
+
+<main class="main-wrap">
+    <div id="phasesContainer"></div>
+
+    <div class="capstone-wrap">
+        <p class="capstone-eyebrow">★ Final Boss · Phase 19</p>
+        <h2>FAANG-Level Capstone Platform</h2>
+        <p>Build one massive, production-grade Global E-Commerce Data Platform integrating every skill from the roadmap.
+            This is your portfolio centrepiece — what you demo at Principal/Staff Engineer interviews.</p>
+        <div class="capstone-features">
+            <div class="cap-feature">
+                <div class="cf-title">📥 Ingestion</div>
+                <div class="cf-items">ADF · Kafka · Webhooks · REST APIs · IoT Hub · SFTP · CDC · Debezium</div>
+            </div>
+            <div class="cap-feature">
+                <div class="cf-title">🗄️ Storage</div>
+                <div class="cf-items">ADLS Gen2 · Delta Lake · Iceberg · Hot/Cold/Archive · BLOB · Block Storage</div>
+            </div>
+            <div class="cap-feature">
+                <div class="cf-title">⚙️ Processing</div>
+                <div class="cf-items">Databricks · Spark · dbt · Spark SQL · Stream + Batch · DAGs</div>
+            </div>
+            <div class="cap-feature">
+                <div class="cf-title">🏛️ Warehouse</div>
+                <div class="cf-items">Synapse Analytics · Snowflake · Star Schema + Data Vault 2.0</div>
+            </div>
+            <div class="cap-feature">
+                <div class="cf-title">📊 Serving</div>
+                <div class="cf-items">Power BI · REST API · SSRS · GraphQL · gRPC · Data Sharing</div>
+            </div>
+            <div class="cap-feature">
+                <div class="cf-title">🛡️ Governance</div>
+                <div class="cf-items">Microsoft Purview · RBAC · RLS · CLS · Lineage · GDPR · SOC2</div>
+            </div>
+            <div class="cap-feature">
+                <div class="cf-title">🚀 DataOps</div>
+                <div class="cf-items">GitHub Actions · Azure DevOps · Terraform · Bicep · GitOps</div>
+            </div>
+            <div class="cap-feature">
+                <div class="cf-title">📡 Observability</div>
+                <div class="cf-items">Grafana · Prometheus · OpenTelemetry · SLOs · Runbooks · Alerting</div>
+            </div>
+            <div class="cap-feature">
+                <div class="cf-title">💰 Scale</div>
+                <div class="cf-items">10M+ records/day · Multi-region · FinOps · Auto-scaling · DR</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="manifesto">
+        <h2>The Staff Engineer Mindset</h2>
+        <div class="manifesto-grid">
+            <div class="manifesto-item">
+                <div class="mi-num">01</div>
+                <div class="mi-text">How will this fail?</div>
+                <div class="mi-sub">Design for failure modes before they happen. Chaos engineering, fault injection,
+                    runbooks.
+                </div>
+            </div>
+            <div class="manifesto-item">
+                <div class="mi-num">02</div>
+                <div class="mi-text">How will it scale 100×?</div>
+                <div class="mi-sub">Partitioning, sharding, caching, async processing. Never build for today only.</div>
+            </div>
+            <div class="manifesto-item">
+                <div class="mi-num">03</div>
+                <div class="mi-text">How much will it cost?</div>
+                <div class="mi-sub">FinOps at every decision. Reserved capacity, lifecycle policies, right-sizing.</div>
+            </div>
+            <div class="manifesto-item">
+                <div class="mi-num">04</div>
+                <div class="mi-text">How will it be monitored?</div>
+                <div class="mi-sub">Observability first. Metrics, logs, traces. SLOs and alerting from day one.</div>
+            </div>
+            <div class="manifesto-item">
+                <div class="mi-num">05</div>
+                <div class="mi-text">How will it be secured?</div>
+                <div class="mi-sub">Zero Trust, least privilege, encryption at rest and in transit. Defense in depth.
+                </div>
+            </div>
+            <div class="manifesto-item">
+                <div class="mi-num">06</div>
+                <div class="mi-text">How will schema evolve?</div>
+                <div class="mi-sub">Schema registry, Avro evolution, backward/forward compatibility by default.</div>
+            </div>
+            <div class="manifesto-item">
+                <div class="mi-num">07</div>
+                <div class="mi-text">How is quality enforced?</div>
+                <div class="mi-sub">dbt tests, null/duplicate/freshness checks and data quality gates in every
+                    pipeline.
+                </div>
+            </div>
+            <div class="manifesto-item">
+                <div class="mi-num">08</div>
+                <div class="mi-text">How does DR work?</div>
+                <div class="mi-sub">RTO/RPO defined. Geo-replication, backup strategies, failover tested quarterly.
+                </div>
+            </div>
+            <div class="manifesto-item">
+                <div class="mi-num">09</div>
+                <div class="mi-text">How is compliance proven?</div>
+                <div class="mi-sub">Audit logs, lineage, GDPR/ISO27001/SOC2 controls documented and tested.</div>
+            </div>
+            <div class="manifesto-item">
+                <div class="mi-num">10</div>
+                <div class="mi-text">How can it be automated?</div>
+                <div class="mi-sub">IaC for everything. No manual clicks in production. GitOps, Terraform, CI/CD.</div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div style="display:flex;align-items:center;gap:12px">
+        <div class="nav-logo">AO</div>
+        <div>
+            <div class="footer-text"><strong>Abimbola Olaide</strong> · Azure Data Engineer Roadmap</div>
+            <div class="footer-text" style="font-size:12px">36 months · 19 phases · Beginner → FAANG-level · Correctly
+                ordered for real learning
+            </div>
+        </div>
+    </div>
+    <div class="footer-tagline">Always Be Architecting. ✦</div>
+</footer>
+
+<script>
+    const stages = [
+        {
+            label: 'Stage 1 — Absolute Foundations',
+            cls: 's1',
+            subtitle: 'Months 0 – 6 · Start here with zero experience',
+        },
+        {
+            label: 'Stage 2 — Data Engineering Core',
+            cls: 's2',
+            subtitle: 'Months 6 – 12 · Building real pipelines',
+        },
+        {
+            label: 'Stage 3 — Cloud & Azure',
+            cls: 's3',
+            subtitle: 'Months 12 – 18 · Taking your skills to the cloud',
+        },
+        {
+            label: 'Stage 4 — Advanced Data Engineering',
+            cls: 's4',
+            subtitle: 'Months 18 – 27 · Enterprise-grade systems',
+        },
+        {
+            label: 'Stage 5 — Specialist & Architecture',
+            cls: 's5',
+            subtitle: 'Months 27 – 33 · Senior / Staff level thinking',
+        },
+        {
+            label: 'Stage 6 — Mastery & Capstone',
+            cls: 's6',
+            subtitle: 'Months 33 – 36 · FAANG-level portfolio',
+        },
+    ];
+
+    const phases = [
+        // ── STAGE 1 ──────────────────────────────────────────────────────────
+        {
+            id: 'p0', stage: 0,
+            number: 'PHASE 0', title: 'Dev Environment, Git & Terminal',
+            subtitle: 'Terminal · Git · VS Code · Docker basics · SSH · Environment setup',
+            duration: 'Month 0 – 1', color: '#4ade80', difficulty: 'beginner',
+            why: 'You cannot do anything without a working environment and version control. This is the unsexy foundation that every beginner skips and then regrets. Do it first.',
+            prereqs: ['None — this is day one'],
+            topics: {
+                'Terminal & Shell': ['Bash / Zsh basics', 'Navigation (cd, ls, grep, find, cat)', 'File permissions (chmod, chown)', 'Piping & redirection', 'Environment variables', 'Shell scripting basics', 'ssh & scp'],
+                'Git & GitHub': ['Init, clone, add, commit, push, pull', 'Branching & merging', 'Pull Requests & code review workflow', 'Git rebase vs merge', 'Resolving merge conflicts', '.gitignore', 'GitHub Actions (first look)', 'Semantic commits'],
+                'VS Code & IDEs': ['Extensions for Python, SQL, Docker', 'Linting & formatting (Black, Ruff)', 'Integrated terminal', 'Debugger', 'Remote SSH development'],
+                'Docker Basics': ['What is a container vs VM', 'docker run, build, ps, exec, logs', 'Dockerfile basics', 'docker-compose basics', 'Volumes & port mapping', 'When to use containers'],
+                'Package Management': ['pip & venv', 'pyenv (Python version management)', 'Poetry basics', 'Node.js / npm (for tooling)'],
+            },
+            projects: [
+                {
+                    name: 'Dotfiles & Dev Environment Setup', badges: ['tool'],
+                    desc: 'Build and document a complete reproducible dev environment: dotfiles repo, shell aliases, VS Code settings, automatic tool installation script. Anyone should be able to clone your repo and have your setup in minutes.',
+                    stack: ['Bash', 'Git', 'VS Code', 'Docker', 'Makefile']
+                },
+                {
+                    name: 'Git Workflow Simulation', badges: ['tool'],
+                    desc: 'Create a team Git workflow simulation: branching strategy, PR templates, pre-commit hooks (Black, Ruff, pytest), and automated CI that runs on every push.',
+                    stack: ['Git', 'GitHub Actions', 'pre-commit', 'Python']
+                },
+            ],
+        },
+        {
+            id: 'p1', stage: 0,
+            number: 'PHASE 1', title: 'Python Fundamentals',
+            subtitle: 'Syntax · Functions · OOP · File I/O · Error handling · Testing',
+            duration: 'Month 1 – 3', color: '#4ade80', difficulty: 'beginner',
+            why: 'Python is the primary language of data engineering. Learn the language before you learn algorithms — you need the tool before you can understand how to sharpen it.',
+            prereqs: ['Phase 0 — Dev Environment & Git'],
+            topics: {
+                'Core Syntax': ['Variables & data types', 'Lists, dicts, sets, tuples', 'Control flow (if/for/while)', 'Functions & scope', '*args & **kwargs', 'Lambda, map, filter', 'List/dict/set comprehensions', 'f-strings & string formatting'],
+                'Object-Oriented Python': ['Classes & instances', 'Inheritance & polymorphism', 'Dunder methods', 'Properties & descriptors', 'Abstract base classes', 'Dataclasses', 'Design patterns (Factory, Strategy, Singleton)'],
+                'Intermediate Python': ['Modules & packages', 'Error handling (try/except/finally)', 'Context managers (with)', 'Decorators', 'Generators & iterators', 'Type hints & mypy', 'Virtual environments & dependencies'],
+                'File I/O & Data': ['Reading/writing text & CSV files', 'JSON parsing', 'Working with paths (pathlib)', 'os & sys modules', 'Working with APIs (requests)', 'Environment variables (python-dotenv)'],
+                'Testing': ['pytest basics', 'Test structure (Arrange/Act/Assert)', 'Fixtures & parametrize', 'Mocking (unittest.mock)', 'Code coverage', 'TDD mindset'],
+            },
+            projects: [
+                {
+                    name: 'CLI Data Processing Tool', badges: ['tool', 'batch'],
+                    desc: 'Build a command-line tool that reads CSVs, applies transformations (filter, sort, aggregate, join), and outputs to JSON/CSV. No pandas — use pure Python to truly understand what libraries do for you.',
+                    stack: ['Python', 'Click', 'pathlib', 'pytest', 'csv module']
+                },
+                {
+                    name: 'REST API Client Library', badges: ['tool'],
+                    desc: 'Build a typed Python client library for a public API (weather, finance, sports). Includes retry logic, rate limiting, response caching, error handling, and full test coverage.',
+                    stack: ['Python', 'requests', 'pydantic', 'pytest', 'python-dotenv']
+                },
+            ],
+        },
+        {
+            id: 'p2', stage: 0,
+            number: 'PHASE 2', title: 'SQL & Relational Databases',
+            subtitle: 'SQL fundamentals · PostgreSQL · SQL Server · T-SQL · Query design',
+            duration: 'Month 2 – 4', color: '#4ade80', difficulty: 'beginner',
+            why: 'SQL is the universal language of data. Learn it with Python already in hand so you can immediately write scripts that query databases — a much more practical foundation than learning SQL in isolation.',
+            prereqs: ['Phase 1 — Python Fundamentals'],
+            topics: {
+                'SQL Fundamentals': ['SELECT, FROM, WHERE, ORDER BY, LIMIT', 'JOINs (INNER, LEFT, RIGHT, FULL)', 'GROUP BY & HAVING', 'Subqueries & correlated subqueries', 'UNION & INTERSECT', 'INSERT, UPDATE, DELETE', 'Transactions & COMMIT/ROLLBACK'],
+                'Intermediate SQL': ['Window functions (ROW_NUMBER, RANK, LAG, LEAD, SUM OVER)', 'Common Table Expressions (CTEs)', 'Recursive CTEs', 'CASE expressions', 'NULL handling', 'Date & string functions', 'Pivoting data'],
+                'T-SQL & SQL Server': ['SQL Server vs PostgreSQL differences', 'Stored procedures', 'User-defined functions', 'Triggers', 'Execution plans & EXPLAIN', 'Indexes (clustered, non-clustered, covering)', 'Columnstore indexes (intro)'],
+                'Database Tools': ['SQL Server Management Studio (SSMS)', 'Azure Data Studio', 'DBeaver', 'psql CLI', 'SQLAlchemy Core (querying from Python)'],
+                'Schema Design Basics': ['Primary & foreign keys', 'Constraints (NOT NULL, UNIQUE, CHECK)', 'Normalisation basics (1NF, 2NF, 3NF)', 'When to denormalise', 'ERD diagrams'],
+            },
+            projects: [
+                {
+                    name: 'SQL Querying Challenge Set', badges: ['batch'],
+                    desc: 'Work through 50+ progressively harder SQL challenges covering window functions, recursive CTEs, advanced joins, and performance optimisation. Build a GitHub repo documenting each solution with the query plan analysis.',
+                    stack: ['PostgreSQL', 'T-SQL', 'SQL Server', 'SSMS', 'Azure Data Studio']
+                },
+                {
+                    name: 'Python + SQL Analytics Dashboard', badges: ['tool', 'batch'],
+                    desc: 'Build a Python CLI that connects to PostgreSQL, runs parameterised queries, and generates HTML analytics reports. Covers SQLAlchemy, connection pooling, and query optimisation for a 5M row dataset.',
+                    stack: ['Python', 'SQLAlchemy', 'PostgreSQL', 'Pandas', 'Jinja2', 'pytest']
+                },
+            ],
+        },
+        {
+            id: 'p3', stage: 0,
+            number: 'PHASE 3', title: 'Computer Science Foundations',
+            subtitle: 'Data Structures · Algorithms · Complexity · Networking · OS concepts',
+            duration: 'Month 3 – 5', color: '#4ade80', difficulty: 'beginner',
+            why: 'Now that you know Python and SQL, you can implement and understand data structures meaningfully. DSA without a language is just abstract theory — with Python you can run and benchmark everything immediately.',
+            prereqs: ['Phase 1 — Python Fundamentals', 'Phase 2 — SQL Basics'],
+            topics: {
+                'Data Structures (implement in Python)': ['Arrays & Dynamic Arrays', 'Hash Maps & Hash Tables', 'Linked Lists (singly & doubly)', 'Stacks & Queues', 'Binary Trees & BSTs', 'Heaps (min/max)', 'Graphs (adjacency list/matrix)', 'Tries', 'Bloom Filters (probabilistic intro)'],
+                'Algorithms': ['Sorting (Quick, Merge, Heap, Counting)', 'Binary Search & variants', 'BFS & DFS (graphs & trees)', 'Dynamic Programming (memoisation, tabulation)', 'Greedy Algorithms', 'Sliding Window', 'Two Pointers', 'Recursion & backtracking'],
+                'Complexity Analysis': ['Big-O notation', 'O(1) Constant · O(log n) · O(n) · O(n log n) · O(n²)', 'Space complexity', 'Amortised analysis', 'Why this matters in DE: choosing the right data structure for pipelines'],
+                'Networking Fundamentals': ['OSI model (7 layers)', 'TCP/IP — how data actually travels', 'DNS resolution', 'HTTP/1.1 vs HTTP/2 vs HTTP/3', 'HTTPS & TLS handshake', 'Load balancers & reverse proxies', 'CDN basics', 'NAT & VPN concepts', 'Ports & sockets'],
+                'OS & Systems Concepts': ['Processes vs threads', 'Concurrency vs parallelism', 'Memory: stack vs heap', 'File descriptors', 'I/O: blocking vs non-blocking', 'Caching fundamentals', 'Why this matters: diagnosing Spark and pipeline performance'],
+            },
+            projects: [
+                {
+                    name: 'Custom Cache Engine', badges: ['tool'],
+                    desc: 'Build a Redis-like in-memory cache with LRU eviction, TTL expiry, and a pub/sub mechanism. Implement using hash maps + doubly linked list. Benchmark against Python dict for 1M ops.',
+                    stack: ['Python', 'Hash Maps', 'Linked Lists', 'Benchmarking', 'pytest']
+                },
+                {
+                    name: 'API Gateway with Rate Limiting', badges: ['tool'],
+                    desc: 'Build a reverse proxy in Python using asyncio and raw sockets. Implements route-based forwarding, token bucket rate limiting, circuit breaker pattern, and request logging. Deploy via Docker.',
+                    stack: ['Python', 'asyncio', 'Docker', 'TCP/IP', 'Nginx concepts']
+                },
+            ],
+        },
+        // ── STAGE 2 ──────────────────────────────────────────────────────────
+        {
+            id: 'p4', stage: 1,
+            number: 'PHASE 4', title: 'Advanced Python Engineering',
+            subtitle: 'Async · Multiprocessing · ETL frameworks · Data quality · Polars · PySpark intro',
+            duration: 'Month 5 – 7', color: '#00d4aa', difficulty: 'intermediate',
+            why: 'You now know basic Python and CS concepts. This phase pushes your Python to engineering-grade: async, concurrency, and the libraries that are the daily tools of a Data Engineer.',
+            prereqs: ['Phase 1 — Python Fundamentals', 'Phase 3 — CS Foundations'],
+            topics: {
+                'Concurrency & Performance': ['asyncio deep dive (event loop, coroutines, tasks)', 'Threading vs Multiprocessing (GIL explained)', 'concurrent.futures', 'Profiling & optimisation (cProfile, line_profiler)', 'Memory management & garbage collection', 'Generators for large data processing'],
+                'Data Libraries': ['Pandas (advanced: groupby, merge, pivot, memory optimisation)', 'Polars (lazy evaluation, expressions, performance)', 'PySpark intro (RDDs → DataFrames)', 'SQLAlchemy ORM', 'Pydantic (data validation & settings)', 'httpx (async HTTP)'],
+                'Engineering Patterns': ['Config-driven architecture (YAML/JSON)', 'Retry with exponential backoff & jitter', 'Idempotent pipelines', 'Dead Letter Queues', 'Structured logging (structlog)', 'Audit trail design', 'Strategy pattern for pluggable connectors', 'Dependency injection'],
+            },
+            projects: [
+                {
+                    name: 'Mini Airflow — Config-Driven ETL Framework', badges: ['tool', 'faang', 'batch'],
+                    desc: 'Build a production ETL framework: YAML-config pipelines, DAG dependency resolution, retry logic, audit tables, pluggable connectors (SQL, REST, SFTP). Package as a pip-installable library with full test coverage.',
+                    stack: ['Python', 'asyncio', 'SQLAlchemy', 'Pydantic', 'Docker', 'PostgreSQL', 'pytest']
+                },
+                {
+                    name: 'Data Quality Framework', badges: ['tool', 'faang'],
+                    desc: 'Build a Great Expectations-style framework: null checks, duplicate detection, freshness validation, range checks, statistical drift detection. Generates HTML reports and fires Slack alerts.',
+                    stack: ['Python', 'Pandas', 'Polars', 'Jinja2', 'SQLAlchemy', 'Slack API']
+                },
+                {
+                    name: 'Polars vs Pandas vs PySpark Benchmark', badges: ['tool'],
+                    desc: 'CLI tool benchmarking all three frameworks across groupby, join, sort, filter at 1MB → 10GB. Generates an interactive HTML performance dashboard.',
+                    stack: ['Python', 'Polars', 'Pandas', 'PySpark', 'Click', 'Plotly']
+                },
+            ],
+        },
+        {
+            id: 'p5', stage: 1,
+            number: 'PHASE 5', title: 'Data Formats & Serialisation',
+            subtitle: 'CSV · JSON · Parquet · Avro · ORC · Iceberg · Hudi · Arrow · Schema evolution · Hot vs Cold data',
+            duration: 'Month 7 – 9', color: '#00d4aa', difficulty: 'intermediate',
+            why: 'You have Python and SQL — now you need to understand the containers data lives in. Every pipeline decision (speed, cost, compatibility) depends on format choice. Learn this before cloud so you can make informed storage decisions.',
+            prereqs: ['Phase 1 — Python', 'Phase 2 — SQL', 'Phase 4 — Advanced Python'],
+            topics: {
+                'Row-Based Formats': ['CSV (delimiters, quoting, edge cases, encoding)', 'JSON (nested, streaming, JSON Lines)', 'XML & XSD Schemas', 'NDJSON / JSON-L'],
+                'Columnar & Binary Formats': ['Parquet (row groups, column chunks, statistics, encodings)', 'ORC (stripes, ACID support)', 'Avro (binary, schema-first, schema evolution)', 'Apache Arrow (in-memory columnar, zero-copy)', 'Format comparison: when to use each'],
+                'Open Table Formats': ['Apache Iceberg (hidden partitioning, time travel, schema evolution)', 'Apache Hudi (COW vs MOR, upserts, incremental pull, CDC)', 'Delta Lake (ACID, DML, Change Data Feed)', 'Choosing between Iceberg, Hudi, and Delta Lake'],
+                'Serialisation Concepts': ['Schema Registry (Confluent)', 'Backward / Forward / Full compatibility', 'Schema evolution strategies', 'Compression algorithms (Snappy, GZIP, Zstd, LZ4, Brotli)', 'Encoding (RLE, dictionary encoding, delta encoding)', 'Serialisation performance benchmarks'],
+                'Data Storage Lifecycle & Tiering': ['Hot vs Warm vs Cold vs Archive data', 'Access patterns and cost trade-offs', 'When to move data between tiers', 'Data Retention Policies', 'Legal Hold & Compliance requirements', 'TTL (Time-to-Live) on data'],
+            },
+            projects: [
+                {
+                    name: 'Format Benchmark Tool', badges: ['tool', 'faang'],
+                    desc: 'CLI benchmark: read/write 1GB, 10GB, 100GB across CSV, JSON, Avro, Parquet, ORC. Measure read/write speed, file size, compression ratio, filter pushdown. Publish as interactive HTML dashboard.',
+                    stack: ['Python', 'PyArrow', 'Pandas', 'Polars', 'Avro', 'Click', 'Plotly']
+                },
+                {
+                    name: 'Schema Evolution Test Suite', badges: ['tool'],
+                    desc: 'Test suite validating schema evolution scenarios: adding nullable fields, removing fields, type widening across Avro, Parquet, and Iceberg tables against a Schema Registry.',
+                    stack: ['Python', 'Confluent Schema Registry', 'Avro', 'Iceberg', 'Pytest']
+                },
+                {
+                    name: 'Data Lifecycle Manager', badges: ['tool'],
+                    desc: 'Build a tool that classifies files as Hot/Warm/Cold based on access frequency and age, then generates lifecycle policy JSON ready to deploy. Simulates cost savings on a sample data lake.',
+                    stack: ['Python', 'PyArrow', 'Parquet', 'Pandas', 'Click', 'Jinja2']
+                },
+            ],
+        },
+        {
+            id: 'p6', stage: 1,
+            number: 'PHASE 6', title: 'Database Design & NoSQL',
+            subtitle: 'Normalisation · Data Vault · OLTP vs OLAP · NoSQL · CAP Theorem · Indexing · Materialised Views',
+            duration: 'Month 8 – 10', color: '#00d4aa', difficulty: 'intermediate',
+            why: 'You have SQL fundamentals. Now go deeper: design multi-table systems, understand why NoSQL exists, and learn the theory (CAP Theorem, normalisation) that underpins every architecture decision you will ever make.',
+            prereqs: ['Phase 2 — SQL & Relational Databases', 'Phase 3 — CS Foundations'],
+            topics: {
+                'Advanced Database Design': ['OLTP vs OLAP design differences', 'Normal forms deep dive (1NF → BCNF)', 'When to denormalise (and why)', 'Surrogate vs Natural Keys', 'Slowly Changing Dimensions (SCD Type 1/2/3/4/6)', 'Fact & Dimension Table design', 'Star Schema', 'Snowflake Schema', 'Data Vault 2.0 (Hubs, Links, Satellites)'],
+                'Indexing & Performance': ['B-Tree vs Hash indexes', 'Clustered vs Non-clustered', 'Covering indexes', 'Index selectivity & statistics', 'Execution plan reading', 'Query hints', 'Partitioning strategies (range, list, hash)', 'Materialised Views (design, refresh, trade-offs)', 'Query caching'],
+                'NoSQL Databases': ['Document stores (MongoDB) — when and why', 'Key-Value (Redis) — caching, sessions, pub/sub', 'Columnar (Cassandra) — wide-column, partition key design', 'Graph (Neo4j) — traversals, Cypher', 'Time-Series (InfluxDB)', 'Choosing NoSQL vs SQL — decision framework'],
+                'Distributed Database Theory': ['CAP Theorem (Consistency, Availability, Partition Tolerance)', 'PACELC model', 'Eventual consistency patterns', 'ACID vs BASE', 'Distributed transactions (2PC, Saga)', 'Consensus basics (Raft)'],
+                'Federation & Query Virtualisation': ['What is query virtualisation', 'Logical Data Warehouse concept', 'PolyBase & external tables', 'Elastic Query', 'Trade-offs: virtualise vs materialise'],
+            },
+            projects: [
+                {
+                    name: 'Enterprise Retail Warehouse — Full Design', badges: ['faang', 'batch'],
+                    desc: 'Design a full OLAP warehouse with Sales, Inventory, Customers, Products. Implement Star Schema + SCD Type 2 + Data Vault 2.0. Add partitioning, columnstore indexes, materialised views, and execution plan analysis. Include SSRS reporting layer.',
+                    stack: ['SQL Server', 'T-SQL', 'SSIS', 'SSRS', 'PostgreSQL', 'Star Schema', 'Data Vault']
+                },
+                {
+                    name: 'Uber-Scale Database Architecture', badges: ['faang', 'arch'],
+                    desc: 'Design the database architecture for an Uber-like platform at 100M users: drivers, trips, geolocation writes, surge pricing, payments. Document every trade-off — OLTP/OLAP split, sharding, read replicas, NoSQL for geo-queries.',
+                    stack: ['PostgreSQL', 'Redis', 'Cassandra', 'Neo4j', 'CAP Theorem', 'Architecture ADRs']
+                },
+                {
+                    name: 'Social Media Platform — NoSQL Backend', badges: ['faang'],
+                    desc: 'Build the multi-database backend for a social platform: MongoDB (posts), Neo4j (social graph), Redis (sessions + feeds), Cassandra (activity timeline). Design for 100M users with sub-10ms reads.',
+                    stack: ['MongoDB', 'Neo4j', 'Redis', 'Cassandra', 'Docker Compose', 'Python']
+                },
+            ],
+        },
+        // ── STAGE 3 ──────────────────────────────────────────────────────────
+        {
+            id: 'p7', stage: 2,
+            number: 'PHASE 7', title: 'Cloud Fundamentals, Azure Core & Networking',
+            subtitle: 'Azure fundamentals · ADLS · Networking · VNET · Key Vault · RBAC · Storage types · IaC intro',
+            duration: 'Month 10 – 13', color: '#7c6fff', difficulty: 'intermediate',
+            why: 'You now have real local skills. Moving to the cloud is natural here — you have things to put on it. Networking is more meaningful once you have HTTP, APIs, and databases as concrete context.',
+            prereqs: ['Phase 2 — SQL', 'Phase 3 — CS/Networking', 'Phase 5 — Data Formats'],
+            topics: {
+                'Cloud Fundamentals': ['IaaS vs PaaS vs SaaS', 'Public vs Private vs Hybrid cloud', 'Regions, Availability Zones & Geo-pairs', 'Subscription & resource hierarchy', 'Azure Portal, CLI & REST API', 'Cost Management & Budgets', 'Azure Free Tier & cost traps'],
+                'Azure Storage': ['Blob Storage (Block / Page / Append)', 'ADLS Gen2 — hierarchical namespace, POSIX ACLs', 'Hot / Cool / Cold / Archive tiers & lifecycle policies', 'Azure Files (NFS / SMB)', 'Azure Queues & Table Storage', 'Data Lake zones: Raw / Bronze / Silver / Gold', 'Storage replication (LRS / ZRS / GRS / GZRS)'],
+                'Azure Networking': ['Virtual Networks (VNET) & Subnets', 'Network Security Groups (NSG)', 'Private Endpoints & Private Link', 'Service Endpoints', 'Azure Load Balancer vs App Gateway vs Front Door', 'Azure DNS', 'VPN Gateway & ExpressRoute', 'Hub & Spoke topology'],
+                'Azure Security': ['Azure Key Vault (secrets, keys, certificates)', 'Managed Identity (system & user assigned)', 'Azure AD, RBAC & IAM', 'Service Principals & App Registrations', 'Defender for Cloud', 'Microsoft Sentinel basics', 'Zero Trust principles in Azure'],
+                'Storage Architecture': ['Block vs File vs Object storage', 'NFS vs SMB', 'SAN vs NAS', 'Network-attached vs Cloud-native storage', 'Storage for streaming vs batch workloads'],
+                'Infrastructure as Code Intro': ['Terraform basics (providers, resources, state)', 'Azure Bicep intro', 'Why IaC matters — no manual clicks', 'Remote state management'],
+            },
+            projects: [
+                {
+                    name: 'Enterprise Data Lake — Raw to Gold', badges: ['faang', 'arch'],
+                    desc: 'Provision a full medallion data lake: Raw, Bronze, Silver, Gold with RBAC, private endpoints, managed identity, lifecycle policies, and network isolation. Everything deployed via Terraform — zero portal clicks.',
+                    stack: ['ADLS Gen2', 'Key Vault', 'Managed Identity', 'RBAC', 'Terraform', 'Bicep']
+                },
+                {
+                    name: 'Storage Tier Cost Optimiser', badges: ['tool'],
+                    desc: 'Build a tool analysing ADLS access logs to recommend automated lifecycle transitions (Hot → Cool → Archive). Estimates monthly savings and generates deployment-ready policy JSON.',
+                    stack: ['Python', 'Azure SDK', 'Blob Storage', 'Azure Monitor Logs', 'Pandas']
+                },
+            ],
+        },
+        {
+            id: 'p8', stage: 2,
+            number: 'PHASE 8', title: 'Azure Data Stack — ADF, SSIS & dbt',
+            subtitle: 'Azure Data Factory · SSIS · dbt · ETL vs ELT · CDC · Ingestion patterns · DAGs',
+            duration: 'Month 12 – 15', color: '#7c6fff', difficulty: 'intermediate',
+            why: 'Cloud is now your environment. ADF, SSIS and dbt are the core orchestration and transformation tools of the Azure data world. This is where you go from "I understand data" to "I build data pipelines".',
+            prereqs: ['Phase 2 — SQL', 'Phase 4 — Python Engineering', 'Phase 7 — Azure Core'],
+            topics: {
+                'Azure Data Factory': ['Pipelines, Activities & Linked Services', 'Triggers (Schedule / Tumbling Window / Event-based)', 'Parameters, Variables & Expressions', 'Integration Runtimes (Azure / Self-hosted / SSIS-IR)', 'CI/CD for ADF with Git & Azure DevOps', 'Monitoring, alerts & SLA', 'Mapping Data Flows (no-code transforms)', 'Copy Activity patterns'],
+                'SSIS': ['Control Flow & Data Flow Task', 'Connection Managers', 'Package Configurations', 'Error handling & row redirection', 'Project vs Package deployment model', 'Migrating SSIS → ADF strategy'],
+                'dbt': ['Models (SQL + Python models)', 'Generic & singular tests', 'Snapshots (SCD Type 2)', 'Macros & Jinja templating', 'dbt Sources, Seeds & Exposures', 'dbt Docs & lineage graph', 'dbt Cloud vs dbt Core', 'Materialisations (table, view, incremental, ephemeral)'],
+                'ETL & Ingestion Patterns': ['ETL vs ELT — why ELT won in the cloud era', 'Full Load vs Incremental vs CDC', 'Watermarking patterns', 'Upserts (MERGE statement)', 'Idempotent pipeline design', 'Backfill strategies', 'Synchronous vs Asynchronous ingestion', 'Batch vs Micro-batch vs Streaming', 'Late-arriving data handling', 'Data migration strategies'],
+                'DAGs & Orchestration': ['What is a DAG', 'Topological sort & dependency resolution', 'Airflow concepts (intro)', 'ADF pipeline dependencies', 'Retry & failure strategies in DAGs'],
+            },
+            projects: [
+                {
+                    name: 'Metadata-Driven ADF Framework (200+ pipelines)', badges: ['faang', 'batch'],
+                    desc: 'Build a metadata-driven ingestion framework where new sources are onboarded via a config table — zero new pipeline code. Handles 200+ tables with dynamic watermarking, retry policies, audit logging, and a monitoring dashboard.',
+                    stack: ['ADF', 'Azure SQL', 'Logic Apps', 'Azure Monitor', 'Bicep', 'dbt']
+                },
+                {
+                    name: 'Legacy SSIS → Azure Migration', badges: ['faang', 'batch'],
+                    desc: 'Migrate an on-premises SQL Server warehouse (SSIS + SSRS) to Azure. Lift-and-shift via Self-hosted IR, then re-architect to ELT with ADF + dbt. Produce a documented migration runbook.',
+                    stack: ['SSIS', 'ADF', 'SQL Server', 'Azure SQL', 'dbt', 'SSRS', 'Power BI']
+                },
+                {
+                    name: 'dbt Production Transformation Layer', badges: ['faang', 'batch'],
+                    desc: 'Build a production dbt project: 50+ models, Kimball dimensional modelling, SCD Type 2 snapshots, dbt-expectations, and CI/CD that blocks merges on test failure.',
+                    stack: ['dbt', 'Azure SQL', 'GitHub Actions', 'dbt-expectations', 'dbt Docs']
+                },
+            ],
+        },
+        {
+            id: 'p9', stage: 2,
+            number: 'PHASE 9', title: 'Databricks & Spark Engineering',
+            subtitle: 'RDD · DataFrames · Catalyst · Tungsten · Delta Lake · Unity Catalog · Spark SQL',
+            duration: 'Month 14 – 18', color: '#7c6fff', difficulty: 'advanced',
+            why: 'Spark is the engine behind most big data processing. Databricks is the most-used platform in Azure DE. This phase requires Python, SQL, cloud, and ADF knowledge — without those, Spark is confusing. With them, it clicks immediately.',
+            prereqs: ['Phase 4 — Python Engineering', 'Phase 7 — Azure Cloud', 'Phase 8 — ADF & dbt'],
+            topics: {
+                'Apache Spark Core': ['RDDs — what they are and why DataFrames replaced them', 'DataFrames & Datasets', 'Catalyst Optimiser & logical/physical plans', 'Tungsten execution engine', 'Lazy evaluation', 'Partitioning strategies', 'Broadcast vs shuffle joins', 'Data skew — detection & handling', 'Adaptive Query Execution (AQE)', 'Checkpointing'],
+                'Spark SQL': ['Creating and querying tables', 'Views & temp views', 'explain() and reading query plans', 'Window functions at scale', 'Lateral view & explode', 'Dynamic partition pruning', 'Z-ordering & data skipping'],
+                'Databricks Platform': ['Cluster configuration & auto-scaling', 'Unity Catalog (metastore, data lineage, access control)', 'Delta Lake (ACID, DML, time travel, CDF, liquid clustering)', 'Auto Loader (incremental ingestion)', 'Databricks Workflows & Jobs', 'Repos & Git integration', 'Databricks Asset Bundles', 'Photon engine', 'MLflow basics'],
+                'PySpark Patterns': ['Schema inference vs enforcement', 'Streaming with Structured Streaming', 'Streaming joins & watermarking', 'Stateful stream processing', 'foreachBatch pattern', 'Writing production PySpark'],
+            },
+            projects: [
+                {
+                    name: 'Netflix-Scale Analytics Platform (10TB)', badges: ['faang', 'batch', 'streaming'],
+                    desc: 'Process 10TB of simulated streaming/viewing data: Kafka ingest → Delta Lake storage → dbt transformations → Spark ML recommendation baseline → Power BI serving layer. Optimise with Z-ordering, liquid clustering, and Photon.',
+                    stack: ['Databricks', 'PySpark', 'Delta Lake', 'Kafka', 'dbt', 'Power BI', 'Unity Catalog']
+                },
+                {
+                    name: 'Lakehouse Platform — Full Medallion Architecture', badges: ['faang', 'arch'],
+                    desc: 'Bronze (Auto Loader raw ingest), Silver (DQ-checked, cleansed), Gold (aggregated, SQL Warehouse served). Unity Catalog governance, column-level security, automated workflow orchestration.',
+                    stack: ['Databricks', 'Delta Lake', 'Auto Loader', 'Unity Catalog', 'Workflows', 'dbt', 'Terraform']
+                },
+                {
+                    name: 'Spark Performance Optimisation Toolkit', badges: ['tool'],
+                    desc: 'Tool that analyses Spark query plans, identifies anti-patterns (skew, cartesian joins, missing partitioning), and suggests fixes. Outputs HTML report with before/after metrics.',
+                    stack: ['PySpark', 'Spark UI', 'Python', 'Pandas', 'Click']
+                },
+            ],
+        },
+        // ── STAGE 4 ──────────────────────────────────────────────────────────
+        {
+            id: 'p10', stage: 3,
+            number: 'PHASE 10', title: 'Data Warehousing at Scale',
+            subtitle: 'Synapse Analytics · Kimball · Inmon · Data Vault · T-SQL at scale · Federation · SSRS',
+            duration: 'Month 17 – 20', color: '#ff6b35', difficulty: 'advanced',
+            why: 'You have built pipelines and processed data. Now you need to serve it correctly. Warehouse design patterns (Kimball, Inmon, Data Vault) are the backbone of every analytics system at scale.',
+            prereqs: ['Phase 6 — Database Design', 'Phase 8 — ADF & dbt', 'Phase 9 — Databricks'],
+            topics: {
+                'Warehouse Methodologies': ['Kimball (dimensional modelling, bottom-up)', 'Inmon (3NF enterprise DW, top-down)', 'Data Vault 2.0 (Hubs, Links, Satellites, PIT tables)', 'Hybrid Kimball + Data Vault', 'Choosing the right methodology for the business'],
+                'Azure Synapse Analytics': ['Dedicated SQL Pool (MPP architecture, distributions)', 'Serverless SQL Pool (cost model, use cases)', 'Synapse Spark Pools', 'Synapse Pipelines vs ADF', 'Synapse Link for Cosmos DB', 'Synapse vs Databricks vs Fabric — when to choose what'],
+                'Advanced Synapse SQL': ['Distribution strategies (hash / round-robin / replicated)', 'Columnstore indexes (clustered vs non-clustered)', 'Materialised views in Synapse', 'Result set caching', 'Workload management & concurrency slots', 'PolyBase & COPY statement', 'External tables & data virtualisation'],
+                'Federation & Query Virtualisation': ['PolyBase cross-source queries', 'Elastic Query (Azure SQL)', 'Trino/Presto concepts', 'Logical Data Warehouse patterns', 'Semantic layer (dbt Semantic Layer)', 'Virtualisation vs materialisation trade-offs'],
+                'Reporting': ['SSRS — report design, parameterised reports, subscriptions', 'SSRS → Power BI migration', 'Paginated reports in Power BI Premium'],
+            },
+            projects: [
+                {
+                    name: 'Global Enterprise Data Warehouse', badges: ['faang', 'batch', 'arch'],
+                    desc: 'Build a global enterprise DW on Synapse: Kimball star schema + Data Vault 2.0 hybrid, 5 source systems via CDC, dbt transformation layer, SSRS + Power BI reporting, workload management groups, materialised views, cost governance.',
+                    stack: ['Synapse Analytics', 'dbt', 'T-SQL', 'ADF', 'Data Vault 2.0', 'Power BI', 'SSRS']
+                },
+                {
+                    name: 'Data Virtualisation Federation Layer', badges: ['tool', 'arch'],
+                    desc: 'Federation layer for SQL queries across Synapse, Azure SQL, Cosmos DB, and ADLS Parquet files — unified logical data model without moving data. Benchmark virtualised vs materialised performance.',
+                    stack: ['Synapse Serverless', 'PolyBase', 'Elastic Query', 'T-SQL', 'Azure SQL', 'Cosmos DB']
+                },
+            ],
+        },
+        {
+            id: 'p11', stage: 3,
+            number: 'PHASE 11', title: 'Microsoft Fabric & Power BI',
+            subtitle: 'Fabric Lakehouse · OneLake · Real-Time Analytics · KQL · Power BI · DAX · Direct Lake',
+            duration: 'Month 20 – 22', color: '#ff6b35', difficulty: 'advanced',
+            why: 'Microsoft Fabric is the future direction of the Azure data stack. Power BI is non-negotiable — data engineers who can also deliver self-service analytics are exponentially more valuable.',
+            prereqs: ['Phase 8 — ADF & dbt', 'Phase 9 — Databricks', 'Phase 10 — Synapse'],
+            topics: {
+                'Microsoft Fabric': ['OneLake — one copy of data, everywhere', 'Fabric Lakehouse vs Fabric Warehouse', 'Real-Time Analytics (KQL database, eventstream)', 'Fabric Data Factory', 'Fabric Notebooks (Spark)', 'Shortcuts & Mirroring', 'Fabric Pipelines', 'Git integration', 'Fabric vs Databricks vs Synapse decision matrix'],
+                'Power BI Advanced': ['Data modelling (star schema enforcement, DAX best practices)', 'DAX deep dive (CALCULATE, context transition, iterators, time intelligence)', 'DirectQuery vs Import vs Direct Lake', 'Row-Level Security (RLS) implementation', 'Power BI Dataflows Gen2', 'Deployment Pipelines (Dev/Test/Prod)', 'Power BI Embedded', 'Power BI REST API for automation'],
+                'SSRS & Paginated Reports': ['Full report design & parameterisation', 'Subscriptions & snapshots', 'Data-driven subscriptions', 'Paginated reports in Power BI Premium'],
+            },
+            projects: [
+                {
+                    name: 'Fabric End-to-End Analytics Platform', badges: ['faang', 'arch'],
+                    desc: 'Full Fabric platform: Pipeline ingestion → OneLake (Delta) → Fabric Spark transformations → Fabric Warehouse → KQL real-time DB → Power BI DirectLake reports. Full Git-integrated DevOps deployment.',
+                    stack: ['Microsoft Fabric', 'OneLake', 'Power BI', 'KQL', 'Delta Lake', 'Fabric Pipelines']
+                },
+                {
+                    name: 'Power BI Governance & Monitoring Tool', badges: ['tool'],
+                    desc: 'Power BI REST API tool auditing workspace usage: stale reports, unused datasets, missing RLS policies, memory-exceeding datasets. Outputs a governance scorecard report.',
+                    stack: ['Power BI REST API', 'Python', 'Pandas', 'Power BI Embedded', 'Azure AD']
+                },
+            ],
+        },
+        {
+            id: 'p12', stage: 3,
+            number: 'PHASE 12', title: 'Streaming Systems & Event-Driven Architecture',
+            subtitle: 'Kafka · Azure Event Hubs · Service Bus · Flink · Spark Streaming · CQRS · Event Sourcing · Queues',
+            duration: 'Month 21 – 24', color: '#ff6b35', difficulty: 'advanced',
+            why: 'Streaming is where batch ends and real-time begins. This phase comes after you understand batch thoroughly — streaming patterns make much more sense when you have the batch comparison point.',
+            prereqs: ['Phase 4 — Python Engineering', 'Phase 9 — Spark & Databricks', 'Phase 3 — Networking'],
+            topics: {
+                'Apache Kafka': ['Producers & Consumers', 'Topics, Partitions & Offsets', 'Consumer Groups & rebalancing', 'Kafka Connect (source & sink connectors)', 'Kafka Streams', 'Schema Registry', 'Exactly-once semantics', 'Log compaction', 'Retention & TTL policies', 'Debezium (CDC via Kafka)'],
+                'Azure Messaging': ['Azure Event Hubs (Kafka-compatible, Capture to ADLS)', 'Azure Service Bus (Queues vs Topics/Subscriptions)', 'Dead Letter Queue (DLQ)', 'Message Lock & Competing Consumers', 'Scheduled messages & sessions', 'Event Grid vs Service Bus vs Event Hubs — decision guide'],
+                'Apache Flink': ['Stateful stream processing', 'Event time vs Processing time vs Ingestion time', 'Watermarks & late data strategies', 'Windowing (tumbling, sliding, session, global)', 'Flink SQL', 'Checkpointing & exactly-once', 'Flink vs Spark Streaming'],
+                'Streaming Patterns & Architecture': ['Lambda Architecture (batch + stream layers)', 'Kappa Architecture (stream only)', 'CQRS (Command Query Responsibility Segregation)', 'Event Sourcing', 'Outbox Pattern', 'Saga Pattern (distributed transactions)', 'Backpressure handling', 'Schema evolution in streams', 'Consumer push vs pull trade-offs', 'Late-arriving data strategies', 'Compression in streaming (Snappy, LZ4, Zstd)', 'Caching in streaming pipelines', 'Message ordering guarantees'],
+            },
+            projects: [
+                {
+                    name: 'Real-Time Fraud Detection Platform', badges: ['faang', 'streaming'],
+                    desc: 'Transactions: Kafka → Spark Structured Streaming → feature engineering → rule engine + ML scoring → Delta Lake → Power BI real-time dashboard. Implements exactly-once, DLQ, schema registry, Grafana alerting.',
+                    stack: ['Kafka', 'Spark Streaming', 'Databricks', 'Delta Lake', 'Power BI', 'Grafana', 'Event Hubs']
+                },
+                {
+                    name: 'Event-Driven Platform — Kappa Architecture', badges: ['faang', 'streaming', 'arch'],
+                    desc: 'Replace a batch pipeline with Kappa architecture: single streaming layer handles real-time serving and historical reprocessing via Kafka replay. CDC from SQL Server via Debezium.',
+                    stack: ['Kafka', 'Debezium', 'Flink', 'Azure Event Hubs', 'Spark', 'Delta Lake', 'Iceberg']
+                },
+                {
+                    name: 'Custom Dead Letter Queue Manager', badges: ['tool'],
+                    desc: 'UI + API for inspecting, replaying, and archiving dead letter messages across Kafka and Azure Service Bus. Supports filtering, bulk replay, and failure analytics dashboard.',
+                    stack: ['Python', 'FastAPI', 'Kafka', 'Azure Service Bus', 'HTML/JS', 'Docker']
+                },
+            ],
+        },
+        {
+            id: 'p13', stage: 3,
+            number: 'PHASE 13', title: 'APIs, Web Scraping & Data Integration',
+            subtitle: 'REST · GraphQL · gRPC · Webhooks · RPC · Web scraping · Reverse ETL · Data sharing',
+            duration: 'Month 23 – 26', color: '#ff6b35', difficulty: 'advanced',
+            why: 'Data engineers are increasingly responsible for serving data as well as processing it. Building APIs for other teams and consuming external data sources is a core modern skill.',
+            prereqs: ['Phase 1 — Python', 'Phase 2 — SQL', 'Phase 3 — Networking', 'Phase 4 — Python Engineering'],
+            topics: {
+                'API Design & Consumption': ['REST (OpenAPI/Swagger, resource design, versioning)', 'GraphQL (queries, mutations, subscriptions, schema design)', 'gRPC & Protocol Buffers (streaming RPCs, performance)', 'JSON-RPC & XML-RPC', 'Webhooks (inbound & outbound, signature verification)', 'Pagination patterns (cursor, offset, keyset)', 'Authentication (OAuth2, JWT, API Keys, mTLS)', 'Rate limiting, throttling & quotas', 'API Gateway patterns & management'],
+                'Building Data APIs': ['FastAPI (async, auto-docs, dependency injection)', 'Data-as-a-Product API design', 'API contract testing (Pact)', 'SDK generation from OpenAPI', 'Internal data platform API design', 'Versioning strategies for data APIs'],
+                'Web Scraping & Data Sources': ['Requests + BeautifulSoup (static pages)', 'Scrapy (spiders, pipelines, middleware)', 'Playwright / Selenium (dynamic JS pages)', 'Ethical scraping & robots.txt', 'Anti-bot strategies (proxies, headers, rate limiting)', 'Structured data (JSON-LD, Schema.org)', 'Public APIs & open data sources', 'Scraping to Parquet/ADLS pipeline'],
+                'Reverse ETL & Data Sharing': ['Reverse ETL concept (warehouse → operational systems)', 'Sync patterns: full vs incremental', 'Conflict resolution strategies', 'Operational systems: Salesforce, HubSpot, Mailchimp', 'Azure Data Share', 'Delta Sharing', 'Iceberg REST Catalog sharing'],
+            },
+            projects: [
+                {
+                    name: 'Data Platform API Layer', badges: ['tool', 'faang', 'arch'],
+                    desc: 'REST + GraphQL API on top of the data warehouse: query data, trigger pipelines, subscribe to change events via webhooks, manage data sharing. OpenAPI docs, SDK generation, JWT auth, rate limiting, audit logging.',
+                    stack: ['FastAPI', 'Strawberry GraphQL', 'Azure API Management', 'JWT', 'Swagger', 'PostgreSQL']
+                },
+                {
+                    name: 'Reverse ETL Platform: Warehouse → CRM', badges: ['tool', 'faang'],
+                    desc: 'Reverse ETL tool syncing customer segments from Synapse → Salesforce + HubSpot + Mailchimp. Config-driven, incremental sync, conflict resolution, sync status dashboard.',
+                    stack: ['Python', 'Synapse', 'Salesforce API', 'REST', 'Pydantic', 'PostgreSQL']
+                },
+                {
+                    name: 'Universal Data Scraping Pipeline', badges: ['tool', 'batch'],
+                    desc: 'Distributed scraping: Scrapy + Playwright for JS-heavy sites, ADLS Parquet output, auto-schema detection, pagination, auth handling, proxy rotation, deduplication, and a scheduling UI.',
+                    stack: ['Scrapy', 'Playwright', 'Python', 'ADLS', 'Parquet', 'Redis', 'Docker']
+                },
+            ],
+        },
+        // ── STAGE 5 ──────────────────────────────────────────────────────────
+        {
+            id: 'p14', stage: 4,
+            number: 'PHASE 14', title: 'Snowflake & Multi-Cloud',
+            subtitle: 'Snowpipe · Streams · Tasks · Dynamic Tables · Snowpark · Multi-Cloud strategy',
+            duration: 'Month 26 – 28', color: '#ff4d9e', difficulty: 'advanced',
+            why: 'Snowflake is the dominant cloud warehouse outside the Azure ecosystem and often coexists with it. Understanding multi-cloud data architectures is a senior-level skill.',
+            prereqs: ['Phase 10 — Data Warehousing', 'Phase 5 — Data Formats', 'Phase 7 — Azure Cloud'],
+            topics: {
+                'Snowflake Core': ['Virtual Warehouses & credit model', 'Snowpipe (continuous loading)', 'Streams (CDC on tables)', 'Tasks (DAG scheduling in Snowflake)', 'Dynamic Tables (materialised streaming results)', 'Time travel & Fail-safe', 'Micro-partitions & clustering keys', 'Zero-copy cloning', 'Data Sharing & Marketplace'],
+                'Advanced Snowflake': ['Snowpark (Python/Java/Scala in Snowflake)', 'External functions & integrations', 'Cortex AI (LLM functions in SQL)', 'Iceberg Tables in Snowflake', 'SnowCD & network policies', 'Query profiling & optimisation', 'Cost governance & resource monitors'],
+                'Multi-Cloud Strategy': ['Snowflake on Azure', 'Cross-cloud replication', 'Data sharing across Snowflake accounts', 'Snowflake + Azure Data Share patterns', 'Cross-cloud DR strategy', 'Cost comparison: Synapse vs Fabric vs Snowflake vs Databricks'],
+            },
+            projects: [
+                {
+                    name: 'Multi-Cloud Platform: Azure + Snowflake', badges: ['faang', 'arch'],
+                    desc: 'Azure is the operational hub (ADF, ADLS, Event Hubs) and Snowflake is the analytical serving layer. Snowpipe for continuous loading, Streams + Tasks for CDC, Dynamic Tables for reporting, Snowpark for ML feature engineering.',
+                    stack: ['Snowflake', 'Azure', 'ADLS', 'ADF', 'Snowpipe', 'Snowpark', 'dbt', 'Terraform']
+                },
+            ],
+        },
+        {
+            id: 'p15', stage: 4,
+            number: 'PHASE 15', title: 'Data Architecture Patterns',
+            subtitle: 'CAP Theorem deep dive · Data Mesh · Lakehouse · Lambda/Kappa · CQRS · Event Sourcing · Federation',
+            duration: 'Month 27 – 30', color: '#ff4d9e', difficulty: 'expert',
+            why: 'You have built the components. Now you design systems from scratch. Architecture patterns are how senior engineers think — this phase codifies all the design instincts you have been building throughout the roadmap.',
+            prereqs: ['Phase 6 — DB Design & CAP', 'Phase 9 — Databricks', 'Phase 12 — Streaming', 'Phase 13 — APIs'],
+            topics: {
+                'Distributed Systems Theory': ['CAP Theorem deep dive with real examples', 'PACELC model', 'Eventual consistency & convergence', 'Consensus algorithms (Raft, Paxos — concepts)', 'Distributed transactions (2PC, SAGA patterns)', 'Idempotency & at-least-once vs exactly-once'],
+                'Architecture Patterns': ['Lambda Architecture (pros/cons, when to use)', 'Kappa Architecture (stream-first)', 'Lakehouse Architecture (Delta/Iceberg on cloud storage)', 'Data Mesh (domain ownership, data-as-a-product, self-serve platform, federated governance)', 'Data Fabric (AI-assisted, automated)', 'Medallion Architecture', 'Hub & Spoke vs Mesh topology'],
+                'Application-Level Patterns': ['CQRS — separating read and write models', 'Event Sourcing — append-only event log as source of truth', 'Outbox Pattern — reliable event publishing', 'Saga Pattern — distributed transaction management', 'Strangler Fig — incremental legacy migration', 'Sidecar Pattern — infrastructure concerns separated'],
+                'Advanced Federation': ['Data Virtualisation', 'Trino/Presto — federated query engine', 'Logical Data Warehouse', 'Semantic layer (dbt Semantic Layer, AtScale)', 'Data contracts — formal API between producers and consumers'],
+            },
+            projects: [
+                {
+                    name: 'Netflix-Scale Architecture Document (100+ pages)', badges: ['faang', 'arch'],
+                    desc: 'Produce a full architecture design document for a Netflix-scale streaming data platform: ingestion (multi-source), storage (multi-format), processing (batch + stream), serving (multiple consumers), governance, security, DR, cost model, migration plan. Use C4 model diagrams.',
+                    stack: ['Miro / Lucidchart', 'C4 Model', 'ADR Documents', 'Architecture Frameworks']
+                },
+                {
+                    name: 'Data Mesh Proof of Concept', badges: ['faang', 'arch'],
+                    desc: 'Data Mesh across 3 domains (Orders, Products, Customers). Each domain owns its data product (Iceberg tables + API). Central governance via Unity Catalog/Purview. Self-serve discovery, data contracts, SLA monitoring.',
+                    stack: ['Databricks', 'Unity Catalog', 'Iceberg', 'FastAPI', 'Purview', 'dbt', 'Terraform']
+                },
+            ],
+        },
+        {
+            id: 'p16', stage: 4,
+            number: 'PHASE 16', title: 'DataOps, MLOps & Infrastructure as Code',
+            subtitle: 'CI/CD · GitHub Actions · Azure DevOps · Terraform · Bicep · Observability · Grafana · OpenTelemetry',
+            duration: 'Month 29 – 32', color: '#ff4d9e', difficulty: 'expert',
+            why: 'Senior engineers own the reliability, repeatability, and observability of their platforms. DataOps is the glue between building data systems and running them in production with confidence.',
+            prereqs: ['Phase 7 — Azure Cloud & IaC intro', 'Phase 8 — ADF/dbt', 'Phase 9 — Databricks'],
+            topics: {
+                'DataOps & CI/CD': ['Git branching for data (trunk-based, Gitflow)', 'CI/CD for ADF, dbt, and Databricks', 'Automated data quality gates in CI', 'Environment promotion (Dev/Test/Prod)', 'Feature flags for pipelines', 'DataOps vs DevOps — similarities and differences', 'Blue/Green deployments for data pipelines'],
+                'Infrastructure as Code': ['Terraform deep dive (state management, modules, workspaces, remote state)', 'Azure Bicep (modules, parameters, conditions, deployment stacks)', 'IaC for: ADLS, ADF, Databricks, Synapse, Key Vault, Networking', 'Drift detection', 'Azure Policy as code (OPA, Sentinel)', 'Pulumi overview'],
+                'Observability & Monitoring': ['Grafana + Prometheus stack setup', 'Azure Monitor & Log Analytics Workspaces', 'OpenTelemetry — instrumentation for data pipelines', 'Custom pipeline metrics (rows processed, latency, error rate)', 'SLOs, SLIs, SLAs for data systems', 'Data observability (freshness, volume, schema, distribution)', 'Runbooks & incident response procedures', 'On-call best practices'],
+                'MLOps Foundations': ['MLflow (experiment tracking, model registry)', 'Feature stores (basics — Feast)', 'Model serving patterns', 'Monitoring model drift', 'Integrating ML pipelines into DataOps workflows'],
+            },
+            projects: [
+                {
+                    name: 'Zero-Click Platform Deployment', badges: ['faang', 'tool', 'arch'],
+                    desc: 'Provision an entire data platform (ADLS, ADF, Databricks, Synapse, Key Vault, Networking) from a single terraform apply. Module library, remote state, Dev/Test/Prod environments, drift alerting, rollback capability.',
+                    stack: ['Terraform', 'Azure', 'GitHub Actions', 'Azure DevOps', 'Bicep', 'Azure Policy']
+                },
+                {
+                    name: 'Data Observability Platform', badges: ['tool', 'faang'],
+                    desc: 'Instrument dbt, ADF, and Databricks with OpenTelemetry. Grafana dashboards for pipeline health, data freshness anomaly detection, volume trend analysis, and SLO burn-rate alerts with PagerDuty integration.',
+                    stack: ['OpenTelemetry', 'Grafana', 'Prometheus', 'Azure Monitor', 'Python', 'dbt', 'Terraform']
+                },
+            ],
+        },
+        // ── STAGE 6 ──────────────────────────────────────────────────────────
+        {
+            id: 'p17', stage: 5,
+            number: 'PHASE 17', title: 'Data Security & Governance',
+            subtitle: 'Microsoft Purview · RBAC · RLS · CLS · Encryption · GDPR · ISO27001 · SOC2 · Data lineage',
+            duration: 'Month 31 – 33', color: '#ffd700', difficulty: 'expert',
+            why: 'Governance and security cannot be bolted on after the fact — but they are also much easier to understand once you have built real platforms to govern. This phase makes security concrete, not theoretical.',
+            prereqs: ['Phase 7 — Azure Security', 'Phase 10 — Warehousing', 'Phase 15 — Architecture'],
+            topics: {
+                'Data Governance': ['Microsoft Purview (scanning, classification, catalog, lineage)', 'Data ownership & stewardship models', 'Business glossary & data dictionary', 'End-to-end + column-level lineage', 'Data quality governance', 'Policy enforcement automation'],
+                'Access Control': ['RBAC deep dive (Azure + Databricks + Synapse)', 'Row-Level Security (RLS) implementation patterns', 'Column-Level Security (CLS) & Dynamic Data Masking', 'Attribute-Based Access Control (ABAC)', 'Object-level security in Synapse', 'Unity Catalog permission model'],
+                'Data Security': ['Encryption at rest (SSE, CMK, TDE)', 'Encryption in transit (TLS, certificate management)', 'Always Encrypted (SQL Server)', 'PII detection (Microsoft Presidio)', 'Tokenisation vs Masking strategies', 'Private Endpoints for all services', 'Azure Defender for SQL', 'Penetration testing concepts for DE'],
+                'Compliance & Regulations': ['GDPR (right to erasure, data residency, consent)', 'UK GDPR vs EU GDPR', 'ICO requirements', 'ISO 27001 control mapping', 'SOC 2 Type II', 'Data retention schedules', 'Audit log design (immutable, tamper-evident)', 'Compliance-as-code (Azure Policy, OPA)'],
+            },
+            projects: [
+                {
+                    name: 'Enterprise Governance Platform', badges: ['faang', 'arch'],
+                    desc: 'Full enterprise governance: Purview scanning all sources, automated PII classification, column-level security in Synapse + Databricks, RLS policies, GDPR right-to-erasure workflow, audit trail, compliance dashboard showing ISO27001 control coverage.',
+                    stack: ['Microsoft Purview', 'Synapse', 'Databricks', 'Unity Catalog', 'Azure Policy', 'Terraform']
+                },
+                {
+                    name: 'PII Detection & Masking Pipeline', badges: ['tool'],
+                    desc: 'Automated PII detection pipeline: scan incoming data with Presidio, classify PII types, apply masking/tokenisation per policy, log all decisions. Integrates with ADF and Databricks. Generates compliance reports.',
+                    stack: ['Python', 'Microsoft Presidio', 'ADF', 'Databricks', 'Azure Key Vault', 'Purview']
+                },
+            ],
+        },
+        {
+            id: 'p18', stage: 5,
+            number: 'PHASE 18', title: 'Hadoop, Big Data Internals & Apache Ecosystem',
+            subtitle: 'HDFS · YARN · MapReduce · Hive · HBase · Zookeeper · Docker cluster · Legacy & Modern comparison',
+            duration: 'Month 33 – 35', color: '#ffd700', difficulty: 'expert',
+            why: 'Hadoop is largely being replaced by cloud-native solutions — but understanding its internals makes you a far better data engineer. HDFS explains why Parquet and Iceberg are designed the way they are. MapReduce explains why Spark\'s DAG model is revolutionary.',
+            prereqs: ['Phase 5 — Data Formats', 'Phase 9 — Spark (Spark replaced MapReduce)', 'Phase 15 — Architecture'],
+            topics: {
+                'Hadoop Core (Understand Deeply)': ['HDFS (NameNode, DataNode, blocks, replication, rack awareness)', 'YARN (ResourceManager, NodeManager, ApplicationMaster)', 'MapReduce (map, shuffle, sort, reduce, combiners, partitioners)', 'Why Hadoop was revolutionary — and why it is being replaced', 'When Hadoop still makes sense (on-prem, cost constraints)'],
+                'Apache Ecosystem': ['Hive (HQL, metastore, SerDe, file format evolution)', 'HBase (columnar, row key design, compaction)', 'Sqoop (RDBMS → Hadoop migration)', 'Oozie (workflow scheduling)', 'Zookeeper (distributed coordination, watches, leader election)', 'Ambari (cluster management)'],
+                'Modern vs Legacy Mapping': ['Spark replacing MapReduce — why and how', 'Kafka as the new Flume/Sqoop', 'Flink for stateful streaming vs Storm', 'Iceberg/Hudi replacing Hive tables', 'S3/ADLS replacing HDFS — architecture comparison', 'Trino replacing Hive for interactive queries'],
+                'Docker for Data Engineering': ['Docker multi-stage builds', 'Docker Compose for data stacks', 'Container networking & service discovery', 'Kubernetes basics for DE (pods, deployments, services)', 'Helm charts for data tools (Kafka, Spark, Flink)', 'Container security best practices'],
+            },
+            projects: [
+                {
+                    name: 'Docker-Based Mini Hadoop Cluster', badges: ['tool', 'faang'],
+                    desc: 'Fully functional Hadoop cluster via Docker Compose: HDFS (1 NameNode + 3 DataNodes), YARN, MapReduce, Hive, HBase. Run a custom MapReduce job on 10GB dataset. Document Spark vs MapReduce performance comparison with profiling data.',
+                    stack: ['Docker', 'Docker Compose', 'Hadoop', 'HDFS', 'YARN', 'Hive', 'HBase', 'MapReduce']
+                },
+                {
+                    name: 'Full Apache Stack Local Dev Environment', badges: ['tool'],
+                    desc: 'One-command Docker Compose environment: Kafka, Flink, Spark, Hudi, Iceberg, Trino, MinIO (S3-compatible). Complete local big data platform for experimentation and learning.',
+                    stack: ['Docker', 'Kafka', 'Flink', 'Spark', 'Hudi', 'Iceberg', 'Trino', 'MinIO']
+                },
+            ],
+        },
+    ];
+
+    // ─── BUILD UI ───────────────────────────────────────
+    const container = document.getElementById('phasesContainer');
+    const navPhases = document.getElementById('navPhases');
+    let currentStage = -1;
+
+    const badgeMap = {
+        faang: 'badge-faang',
+        streaming: 'badge-streaming',
+        batch: 'badge-batch',
+        tool: 'badge-tool',
+        arch: 'badge-arch'
+    };
+    const badgeLabel = {faang: '★ FAANG', streaming: '⚡ Streaming', batch: '⬛ Batch', tool: '🔧 Build', arch: '🏛 Arch'};
+    const diffLabel = {beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced', expert: 'Expert'};
+
+    function hexToRgb(h) {
+        const r = parseInt(h.slice(1, 3), 16), g = parseInt(h.slice(3, 5), 16), b = parseInt(h.slice(5, 7), 16);
+        return `${r},${g},${b}`;
+    }
+
+    phases.forEach((phase, idx) => {
+        // Stage header
+        if (phase.stage !== currentStage) {
+            currentStage = phase.stage;
+            const st = stages[phase.stage];
+            const sh = document.createElement('div');
+            sh.className = 'stage-header';
+            sh.innerHTML = `<div class="line"></div><span class="stage-pill ${st.cls}">${st.label}</span><span class="stage-title">${st.subtitle}</span><div class="line"></div>`;
+            container.appendChild(sh);
+        }
+
+        // Nav btn
+        const btn = document.createElement('button');
+        btn.className = 'nav-phase-btn';
+        btn.textContent = `P${idx}`;
+        btn.title = phase.title;
+        btn.onclick = () => document.getElementById(phase.id)?.scrollIntoView({behavior: 'smooth', block: 'start'});
+        navPhases.appendChild(btn);
+
+        // Topics
+        let topicsHtml = '';
+        for (const [sec, items] of Object.entries(phase.topics)) {
+            topicsHtml += `<div class="topic-section"><div class="topic-section-title">${sec}</div><div class="topic-grid">${items.map(t => `<span class="tag">${t}</span>`).join('')}</div></div>`;
+        }
+
+        // Projects
+        let projectsHtml = '<div class="projects-grid">';
+        phase.projects.forEach(p => {
+            const badges = p.badges.map(b => `<span class="badge ${badgeMap[b]}">${badgeLabel[b]}</span>`).join('');
+            const stack = p.stack.map(s => `<span class="stack-tag">${s}</span>`).join('');
+            projectsHtml += `<div class="project-card"><div class="project-top"><div class="project-name">${p.name}</div><div class="project-badges">${badges}</div></div><div class="project-desc">${p.desc}</div><div class="project-stack">${stack}</div></div>`;
+        });
+        projectsHtml += '</div>';
+
+        const prereqTags = phase.prereqs.map(r => `<span class="prereq-tag">${r}</span>`).join('');
+        const c = `rgba(${hexToRgb(phase.color)},0.12)`;
+        const cb = `rgba(${hexToRgb(phase.color)},0.3)`;
+
+        const card = document.createElement('div');
+        card.className = 'phase-card';
+        card.id = phase.id;
+        card.style.setProperty('--phase-color', phase.color);
+
+        card.innerHTML = `
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-num-block">
+        <div class="phase-number" style="background:${c};color:${phase.color};border-color:${cb}">${phase.number}</div>
+        <div class="diff-badge diff-${phase.difficulty}">${diffLabel[phase.difficulty]}</div>
+      </div>
+      <div class="phase-header-text">
+        <div class="phase-title">${phase.title}</div>
+        <div class="phase-subtitle">${phase.subtitle}</div>
+      </div>
+      <div class="phase-meta">
+        <span class="phase-duration">${phase.duration}</span>
+        <span class="phase-chevron">▾</span>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="why-note"><span class="why-icon">💡</span><div class="why-text"><strong>Why this order?</strong> ${phase.why}</div></div>
+      <div class="prereq-bar"><span class="prereq-label">Prerequisites</span>${prereqTags}</div>
+      <div class="topic-section"><div class="topic-section-title">Core Topics</div>${topicsHtml}</div>
+      <div class="topic-section"><div class="topic-section-title">Projects</div>${projectsHtml}</div>
+      <div class="mindset-callout">
+        <div class="mc-title">Staff Engineer Mindset — Ask For Every Project</div>
+        <div class="mc-list">
+          ${['How will this fail?', 'How will it scale 100×?', 'How much will it cost?', 'How will it be monitored?', 'How will it be secured?', 'How can it be automated?'].map(q => `<span class="mc-q">${q}</span>`).join('')}
+        </div>
+      </div>
+    </div>`;
+        container.appendChild(card);
+    });
+
+    function togglePhase(header) {
+        header.closest('.phase-card').classList.toggle('open');
+    }
+
+    // Reading progress
+    window.addEventListener('scroll', () => {
+        const d = document.documentElement;
+        document.getElementById('progressBar').style.width = (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+    });
+
+    // Active nav
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const i = phases.findIndex(p => p.id === e.target.id);
+                if (i >= 0) document.querySelectorAll('.nav-phase-btn').forEach((b, j) => b.classList.toggle('active', i === j));
+            }
+        });
+    }, {threshold: 0.2});
+    phases.forEach(p => {
+        const el = document.getElementById(p.id);
+        if (el) obs.observe(el);
+    });
+
+    // Open first phase
+    document.querySelector('.phase-card')?.classList.add('open');
+</script>
+</body>
+</html>
