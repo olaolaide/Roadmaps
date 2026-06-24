@@ -1,0 +1,2095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Stack AWS Data Engineer Roadmap — AO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+          rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08080f;
+            --surface: #10101c;
+            --card: #15141f;
+            --border: #242438;
+            --border-bright: #383855;
+            --aws: #FF9900;
+            --aws-dim: rgba(255, 153, 0, 0.13);
+            --aws-glow: rgba(255, 153, 0, 0.35);
+            --teal: #00d4aa;
+            --teal-dim: rgba(0, 212, 170, 0.12);
+            --violet: #7c6fff;
+            --violet-dim: rgba(124, 111, 255, 0.13);
+            --orange: #ff6b35;
+            --orange-dim: rgba(255, 107, 53, 0.12);
+            --gold: #ffd700;
+            --gold-dim: rgba(255, 215, 0, 0.12);
+            --pink: #ff4d9e;
+            --pink-dim: rgba(255, 77, 158, 0.12);
+            --green: #4ade80;
+            --green-dim: rgba(74, 222, 128, 0.10);
+            --sky: #38bdf8;
+            --sky-dim: rgba(56, 189, 248, 0.10);
+            --text: #e2e2f0;
+            --muted: #6a6a90;
+            --font: 'Inter', sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            font-size: 15px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.35;
+        }
+
+        /* ── BANNER ── */
+        .banner {
+            background: linear-gradient(90deg, #0b0b14, #12101e 50%, #0b0b14);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .banner::before, .banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            z-index: 2;
+        }
+
+        .banner::before {
+            left: 0;
+            background: linear-gradient(90deg, #08080f, transparent);
+        }
+
+        .banner::after {
+            right: 0;
+            background: linear-gradient(-90deg, #08080f, transparent);
+        }
+
+        .banner-track {
+            display: flex;
+            animation: scroll 70s linear infinite;
+            width: max-content;
+        }
+
+        .banner-item {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            padding: 0 28px;
+            white-space: nowrap;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .banner-item span {
+            color: var(--aws);
+            margin-right: 8px;
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0)
+            }
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(8, 8, 15, .94);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+            gap: 16px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .nav-logo {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--aws), #ff6b35);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono);
+            font-weight: 700;
+            font-size: 13px;
+            color: #0d0d0d;
+        }
+
+        .nav-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: .02em;
+            white-space: nowrap;
+        }
+
+        .nav-title span {
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        .nav-phases {
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-phases::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-phase-btn {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+            background: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all .2s;
+            letter-spacing: .05em;
+        }
+
+        .nav-phase-btn:hover {
+            color: var(--aws);
+            border-color: var(--border-bright);
+        }
+
+        .nav-phase-btn.active {
+            color: var(--aws);
+            border-color: var(--aws);
+            background: var(--aws-dim);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            padding: 90px 48px 70px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 400px;
+            background: rgba(255, 153, 0, .09);
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 212, 170, .07);
+            top: 60px;
+            left: 8%;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 107, 53, .05);
+            top: 60px;
+            right: 8%;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--aws);
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 5vw, 62px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -.03em;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 .l1 {
+            display: block;
+        }
+
+        .hero h1 .l2 {
+            display: block;
+            background: linear-gradient(90deg, var(--aws), var(--teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            max-width: 720px;
+            margin: 0 auto 40px;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat .num {
+            font-size: 30px;
+            font-weight: 800;
+            font-family: var(--mono);
+            background: linear-gradient(135deg, var(--aws), var(--teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stat .lbl {
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* ── MAIN ── */
+        .wrap {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 32px 120px;
+        }
+
+        /* ── STAGE HEADERS ── */
+        .stage-header {
+            margin: 60px 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stage-header .ln {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .stage-pill {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            padding: 7px 18px;
+            border-radius: 20px;
+            white-space: nowrap;
+            font-weight: 600;
+            border: 1px solid;
+        }
+
+        .s1 {
+            color: #4ade80;
+            border-color: rgba(74, 222, 128, .4);
+            background: rgba(74, 222, 128, .08);
+        }
+
+        .s2 {
+            color: var(--teal);
+            border-color: rgba(0, 212, 170, .4);
+            background: var(--teal-dim);
+        }
+
+        .s3 {
+            color: var(--aws);
+            border-color: rgba(255, 153, 0, .4);
+            background: var(--aws-dim);
+        }
+
+        .s4 {
+            color: var(--violet);
+            border-color: rgba(124, 111, 255, .4);
+            background: var(--violet-dim);
+        }
+
+        .s5 {
+            color: var(--sky);
+            border-color: rgba(56, 189, 248, .4);
+            background: var(--sky-dim);
+        }
+
+        .s6 {
+            color: var(--pink);
+            border-color: rgba(255, 77, 158, .4);
+            background: var(--pink-dim);
+        }
+
+        .s7 {
+            color: var(--gold);
+            border-color: rgba(255, 215, 0, .4);
+            background: var(--gold-dim);
+        }
+
+        .stage-sub {
+            font-size: 13px;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        /* ── PHASE CARD ── */
+        .phase-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: border-color .2s;
+            position: relative;
+        }
+
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--pc, var(--aws)), transparent);
+            border-radius: 3px 0 0 3px;
+        }
+
+        .phase-card:hover {
+            border-color: var(--border-bright);
+        }
+
+        .ph {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 22px 26px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .pnb {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+            gap: 6px;
+        }
+
+        .pnum {
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 6px;
+            border: 1px solid;
+            letter-spacing: .06em;
+            white-space: nowrap;
+        }
+
+        .dbadge {
+            font-family: var(--mono);
+            font-size: 9px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            border: 1px solid;
+        }
+
+        .d-beg {
+            background: rgba(74, 222, 128, .1);
+            color: #4ade80;
+            border-color: rgba(74, 222, 128, .3);
+        }
+
+        .d-int {
+            background: var(--teal-dim);
+            color: var(--teal);
+            border-color: rgba(0, 212, 170, .3);
+        }
+
+        .d-adv {
+            background: var(--orange-dim);
+            color: var(--orange);
+            border-color: rgba(255, 107, 53, .3);
+        }
+
+        .d-exp {
+            background: var(--pink-dim);
+            color: var(--pink);
+            border-color: rgba(255, 77, 158, .3);
+        }
+
+        .pht {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .ptitle {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -.01em;
+        }
+
+        .psub {
+            font-size: 12px;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .pmeta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .pdur {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: .04em;
+        }
+
+        .pchev {
+            color: var(--muted);
+            transition: transform .3s;
+            font-size: 16px;
+        }
+
+        .phase-card.open .pchev {
+            transform: rotate(180deg);
+        }
+
+        .pb {
+            display: none;
+            padding: 4px 26px 26px;
+            border-top: 1px solid var(--border);
+        }
+
+        .phase-card.open .pb {
+            display: block;
+        }
+
+        /* ── WHY NOTE ── */
+        .why {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            background: rgba(255, 153, 0, .06);
+            border: 1px solid rgba(255, 153, 0, .22);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin: 18px 0 0;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .why .wi {
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .why .wt {
+            color: var(--muted);
+        }
+
+        .why .wt strong {
+            color: var(--aws);
+        }
+
+        /* ── PREREQS ── */
+        .prereq {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 14px 0 0;
+            padding: 11px 14px;
+            background: rgba(124, 111, 255, .06);
+            border: 1px solid rgba(124, 111, 255, .2);
+            border-radius: 8px;
+        }
+
+        .prereq-lbl {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--violet);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .prereq-tag {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 9px;
+        }
+
+        /* ── TOPICS ── */
+        .tsec {
+            margin-top: 22px;
+        }
+
+        .tsec-title {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            padding-bottom: 7px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tgrid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .tag {
+            font-family: var(--mono);
+            font-size: 12px;
+            padding: 4px 11px;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            color: var(--text);
+            background: var(--surface);
+            letter-spacing: .02em;
+            transition: all .2s;
+            cursor: default;
+        }
+
+        .tag:hover {
+            border-color: var(--border-bright);
+        }
+
+        .tag.aws {
+            border-color: rgba(255, 153, 0, .4);
+            color: var(--aws);
+            background: var(--aws-dim);
+        }
+
+        .tag.teal {
+            border-color: rgba(0, 212, 170, .4);
+            color: var(--teal);
+            background: var(--teal-dim);
+        }
+
+        .tag.violet {
+            border-color: rgba(124, 111, 255, .4);
+            color: var(--violet);
+            background: var(--violet-dim);
+        }
+
+        .tag.gold {
+            border-color: rgba(255, 215, 0, .3);
+            color: var(--gold);
+            background: var(--gold-dim);
+        }
+
+        .tag.sky {
+            border-color: rgba(56, 189, 248, .4);
+            color: var(--sky);
+            background: var(--sky-dim);
+        }
+
+        /* ── PROJECTS ── */
+        .pgrid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .pcard {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px 20px;
+            transition: border-color .2s, transform .2s;
+        }
+
+        .pcard:hover {
+            border-color: var(--border-bright);
+            transform: translateY(-1px);
+        }
+
+        .ptop {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 9px;
+        }
+
+        .pname {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: -.01em;
+        }
+
+        .pbadges {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+
+        .badge {
+            font-family: var(--mono);
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 4px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            border: 1px solid;
+        }
+
+        .b-faang {
+            background: var(--gold-dim);
+            color: var(--gold);
+            border-color: rgba(255, 215, 0, .3);
+        }
+
+        .b-stream {
+            background: var(--teal-dim);
+            color: var(--teal);
+            border-color: rgba(0, 212, 170, .3);
+        }
+
+        .b-batch {
+            background: var(--violet-dim);
+            color: var(--violet);
+            border-color: rgba(124, 111, 255, .3);
+        }
+
+        .b-tool {
+            background: var(--aws-dim);
+            color: var(--aws);
+            border-color: rgba(255, 153, 0, .3);
+        }
+
+        .b-arch {
+            background: var(--pink-dim);
+            color: var(--pink);
+            border-color: rgba(255, 77, 158, .3);
+        }
+
+        .pdesc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 11px;
+        }
+
+        .pstack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .stag {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 7px;
+        }
+
+        /* ── MINDSET ── */
+        .mindset {
+            background: linear-gradient(135deg, rgba(255, 153, 0, .07), rgba(0, 212, 170, .04));
+            border: 1px solid var(--border-bright);
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin-top: 20px;
+        }
+
+        .mindset .mt {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--aws);
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .mlist {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .mq {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            padding: 5px 11px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: var(--surface);
+        }
+
+        /* ── CAPSTONE ── */
+        .capstone {
+            background: linear-gradient(135deg, rgba(255, 153, 0, .12), rgba(0, 212, 170, .08) 50%, rgba(124, 111, 255, .06));
+            border: 1px solid var(--border-bright);
+            border-radius: 20px;
+            padding: 48px;
+            margin-top: 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .capstone::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 300px;
+            background: radial-gradient(ellipse, rgba(255, 153, 0, .13), transparent 70%);
+            pointer-events: none;
+        }
+
+        .cap-ey {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--gold);
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .capstone h2 {
+            font-size: 30px;
+            font-weight: 900;
+            letter-spacing: -.02em;
+            margin-bottom: 16px;
+        }
+
+        .capstone p {
+            color: var(--muted);
+            font-size: 15px;
+            max-width: 640px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+
+        .cap-grid {
+            display: grid;
+            grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+            text-align: left;
+            max-width: 920px;
+            margin: 0 auto;
+        }
+
+        .cap-f {
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 13px;
+        }
+
+        .cap-f .cft {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .cap-f .cfi {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* ── MANIFESTO ── */
+        .manifesto {
+            margin-top: 80px;
+            border-top: 1px solid var(--border);
+            padding-top: 60px;
+            text-align: center;
+        }
+
+        .manifesto h2 {
+            font-size: 12px;
+            font-family: var(--mono);
+            color: var(--muted);
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+        }
+
+        .man-grid {
+            display: grid;
+            grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            max-width: 920px;
+            margin: 0 auto 60px;
+        }
+
+        .man-item {
+            background: var(--card);
+            padding: 22px;
+            text-align: left;
+        }
+
+        .man-item .mn {
+            font-family: var(--mono);
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--aws), var(--teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .man-item .mt2 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .man-item .ms {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 28px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .ft {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .ft strong {
+            color: var(--text);
+        }
+
+        .ftag {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--aws);
+            letter-spacing: .1em;
+        }
+
+        /* ── PROGRESS ── */
+        .progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--aws), var(--teal));
+            z-index: 200;
+            transition: width .1s;
+        }
+
+        /* ── ARCH FLOW ── */
+        .arch-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 24px;
+            padding: 20px;
+            background: rgba(255, 153, 0, .04);
+            border: 1px solid rgba(255, 153, 0, .2);
+            border-radius: 12px;
+        }
+
+        .arch-node {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--text);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 6px 12px;
+            white-space: nowrap;
+        }
+
+        .arch-arrow {
+            color: var(--aws);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 20px 48px;
+            }
+
+            .wrap {
+                padding: 0 16px 80px;
+            }
+
+            nav {
+                padding: 0 16px;
+            }
+
+            .nav-phases {
+                display: none;
+            }
+
+            .ph {
+                flex-wrap: wrap;
+            }
+
+            .psub {
+                white-space: normal;
+            }
+
+            .capstone {
+                padding: 32px 20px;
+            }
+
+            .stage-sub {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress" id="prog"></div>
+
+<!-- BANNER -->
+<div class="banner">
+    <div class="banner-track">
+        <span class="banner-item"><span>✦</span>Always Be Architecting</span><span class="banner-item"><span>✦</span>Plan For Failure</span><span
+            class="banner-item"><span>✦</span>Favor Managed Services</span><span class="banner-item"><span>✦</span>Build Loosely Coupled Systems</span><span
+            class="banner-item"><span>✦</span>Make Reversible Decisions</span><span class="banner-item"><span>✦</span>Embrace FinOps</span><span
+            class="banner-item"><span>✦</span>Zero Trust Security</span><span class="banner-item"><span>✦</span>Be Smart With State</span><span
+            class="banner-item"><span>✦</span>Design For Automation</span><span class="banner-item"><span>✦</span>Defense In Depth</span><span
+            class="banner-item"><span>✦</span>Architect For Scalability</span><span class="banner-item"><span>✦</span>Architecture Is Leadership</span>
+        <span class="banner-item"><span>✦</span>Always Be Architecting</span><span class="banner-item"><span>✦</span>Plan For Failure</span><span
+            class="banner-item"><span>✦</span>Favor Managed Services</span><span class="banner-item"><span>✦</span>Build Loosely Coupled Systems</span><span
+            class="banner-item"><span>✦</span>Make Reversible Decisions</span><span class="banner-item"><span>✦</span>Embrace FinOps</span><span
+            class="banner-item"><span>✦</span>Zero Trust Security</span><span class="banner-item"><span>✦</span>Be Smart With State</span><span
+            class="banner-item"><span>✦</span>Design For Automation</span><span class="banner-item"><span>✦</span>Defense In Depth</span><span
+            class="banner-item"><span>✦</span>Architect For Scalability</span><span class="banner-item"><span>✦</span>Architecture Is Leadership</span>
+    </div>
+</div>
+
+<!-- NAV -->
+<nav>
+    <a href="#" class="nav-brand">
+        <div class="nav-logo">AO</div>
+        <span class="nav-title">AWS Data Engineer Roadmap <span>· 36 Months</span></span>
+    </a>
+    <div class="nav-phases" id="navPhases"></div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <p class="hero-eyebrow">Abimbola Olaide · Full Stack AWS Data Engineering</p>
+    <h1>
+        <span class="l1">Zero to</span>
+        <span class="l2">FAANG-Scale AWS Data Engineer</span>
+    </h1>
+    <p class="hero-desc">A 36-month structured roadmap from absolute beginner to staff-level AWS Data Engineer. Every
+        phase is ordered A→Z so each topic builds on real, concrete knowledge — no phase requires something you haven't
+        learned yet.</p>
+    <div class="hero-stats">
+        <div class="hero-stat">
+            <div class="num">21</div>
+            <div class="lbl">Phases</div>
+        </div>
+        <div class="hero-stat">
+            <div class="num">36</div>
+            <div class="lbl">Months</div>
+        </div>
+        <div class="hero-stat">
+            <div class="num">70+</div>
+            <div class="lbl">Projects</div>
+        </div>
+        <div class="hero-stat">
+            <div class="num">140+</div>
+            <div class="lbl">Topics</div>
+        </div>
+    </div>
+    <!-- Target Architecture -->
+    <div class="arch-flow" style="max-width:900px;margin:40px auto 0">
+        <span style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;width:100%;text-align:center;margin-bottom:4px">Target Architecture</span>
+        <span class="arch-node">APIs · DBs · Files</span><span class="arch-arrow">→</span>
+        <span class="arch-node" style="color:var(--aws);border-color:rgba(255,153,0,.4)">Kinesis / MSK</span><span
+            class="arch-arrow">→</span>
+        <span class="arch-node" style="color:var(--teal);border-color:rgba(0,212,170,.4)">EMR / Databricks</span><span
+            class="arch-arrow">→</span>
+        <span class="arch-node">S3 Bronze (Iceberg)</span><span class="arch-arrow">→</span>
+        <span class="arch-node">S3 Silver (dbt+Spark)</span><span class="arch-arrow">→</span>
+        <span class="arch-node">S3 Gold (Products)</span><span class="arch-arrow">→</span>
+        <span class="arch-node"
+              style="color:var(--aws);border-color:rgba(255,153,0,.4)">Redshift / Snowflake</span><span
+            class="arch-arrow">→</span>
+        <span class="arch-node" style="color:var(--violet);border-color:rgba(124,111,255,.4)">Tableau · QuickSight · Power BI</span><span
+            class="arch-arrow">→</span>
+        <span class="arch-node">ML · Reverse ETL · APIs</span>
+    </div>
+</header>
+
+<main class="wrap">
+    <div id="phases"></div>
+
+    <!-- CAPSTONE -->
+    <div class="capstone">
+        <p class="cap-ey">★ Final Boss · Phase 21</p>
+        <h2>FAANG-Level Capstone Platform</h2>
+        <p>Build a production-grade Global E-Commerce Data Platform on AWS — the platform you demo at Staff/Principal
+            Engineer interviews. Every service, pattern, and principle from the roadmap converges here.</p>
+        <div class="cap-grid">
+            <div class="cap-f">
+                <div class="cft">📥 Ingestion</div>
+                <div class="cfi">Kinesis · MSK · Lambda · AWS DMS · SFTP · Webhooks · CDC</div>
+            </div>
+            <div class="cap-f">
+                <div class="cft">🗄️ Storage</div>
+                <div class="cfi">S3 · Iceberg · Delta Lake · Hot/Warm/Cold/Glacier · BLOB</div>
+            </div>
+            <div class="cap-f">
+                <div class="cft">⚙️ Processing</div>
+                <div class="cfi">EMR · Databricks · Glue · Spark · PySpark Streaming · dbt</div>
+            </div>
+            <div class="cap-f">
+                <div class="cft">🏛️ Warehouse</div>
+                <div class="cfi">Redshift · Snowflake · Athena · Star Schema + Data Vault 2.0</div>
+            </div>
+            <div class="cap-f">
+                <div class="cft">📊 Serving</div>
+                <div class="cfi">Tableau · QuickSight · Power BI · REST APIs · GraphQL · gRPC</div>
+            </div>
+            <div class="cap-f">
+                <div class="cft">🛡️ Governance</div>
+                <div class="cfi">Lake Formation · AWS Glue Catalog · RBAC · GDPR · SOC2 · HIPAA</div>
+            </div>
+            <div class="cap-f">
+                <div class="cft">🚀 DataOps</div>
+                <div class="cfi">GitHub Actions · CodePipeline · Terraform · CDK · Step Functions</div>
+            </div>
+            <div class="cap-f">
+                <div class="cft">📡 Observability</div>
+                <div class="cfi">CloudWatch · Grafana · OpenTelemetry · Great Expectations · SLOs</div>
+            </div>
+            <div class="cap-f">
+                <div class="cft">💰 Scale</div>
+                <div class="cfi">10M+ records/day · Multi-region · Spot Instances · FinOps · DR</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MANIFESTO -->
+    <div class="manifesto">
+        <h2>The Staff Engineer Mindset</h2>
+        <div class="man-grid">
+            <div class="man-item">
+                <div class="mn">01</div>
+                <div class="mt2">How will this fail?</div>
+                <div class="ms">Design failure modes before they happen. Chaos engineering, fault injection, documented
+                    runbooks.
+                </div>
+            </div>
+            <div class="man-item">
+                <div class="mn">02</div>
+                <div class="mt2">How will it scale 100×?</div>
+                <div class="ms">Partitioning, sharding, caching, async. S3 scales infinitely — your pipeline logic must
+                    too.
+                </div>
+            </div>
+            <div class="man-item">
+                <div class="mn">03</div>
+                <div class="mt2">How much will it cost?</div>
+                <div class="ms">FinOps every decision. Spot Instances, S3 lifecycle, right-sized EMR clusters, Athena
+                    partitioning.
+                </div>
+            </div>
+            <div class="man-item">
+                <div class="mn">04</div>
+                <div class="mt2">How will it be monitored?</div>
+                <div class="ms">CloudWatch, Grafana, OpenTelemetry. SLOs, alerts, and runbooks before go-live.</div>
+            </div>
+            <div class="man-item">
+                <div class="mn">05</div>
+                <div class="mt2">How will it be secured?</div>
+                <div class="ms">IAM least privilege, KMS encryption, VPC isolation, Lake Formation governance. Defense
+                    in depth.
+                </div>
+            </div>
+            <div class="man-item">
+                <div class="mn">06</div>
+                <div class="mt2">How will schema evolve?</div>
+                <div class="ms">Schema Registry, Avro/Iceberg evolution. Backward/forward compatibility enforced in
+                    CI.
+                </div>
+            </div>
+            <div class="man-item">
+                <div class="mn">07</div>
+                <div class="mt2">How is quality enforced?</div>
+                <div class="ms">Great Expectations, dbt tests, freshness/null/duplicate checks as pipeline gates.</div>
+            </div>
+            <div class="man-item">
+                <div class="mn">08</div>
+                <div class="mt2">How does DR work?</div>
+                <div class="ms">Cross-region replication, S3 versioning, RTO/RPO documented. DR tested, not assumed.
+                </div>
+            </div>
+            <div class="man-item">
+                <div class="mn">09</div>
+                <div class="mt2">How is compliance proven?</div>
+                <div class="ms">CloudTrail audit logs, Lake Formation lineage, GDPR/HIPAA/PCI-DSS controls as code.
+                </div>
+            </div>
+            <div class="man-item">
+                <div class="mn">10</div>
+                <div class="mt2">How can it be automated?</div>
+                <div class="ms">IaC everything. Terraform/CDK. No manual console clicks in production. GitOps
+                    end-to-end.
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div style="display:flex;align-items:center;gap:12px">
+        <div class="nav-logo">AO</div>
+        <div>
+            <div class="ft"><strong>Abimbola Olaide</strong> · AWS Data Engineer Roadmap</div>
+            <div class="ft" style="font-size:12px">36 months · 21 phases · Zero to FAANG-level · Correctly ordered A→Z
+            </div>
+        </div>
+    </div>
+    <div class="ftag">Always Be Architecting. ✦</div>
+</footer>
+
+<script>
+    const stages = [
+        {label: 'Stage 1 — Absolute Foundations', cls: 's1', sub: 'Months 0–6 · Start here with zero experience'},
+        {
+            label: 'Stage 2 — Data Engineering Core',
+            cls: 's2',
+            sub: 'Months 6–12 · Pipelines, formats, and real DE work'
+        },
+        {label: 'Stage 3 — AWS Cloud Foundations', cls: 's3', sub: 'Months 12–18 · Taking your skills to AWS'},
+        {
+            label: 'Stage 4 — Big Data Processing',
+            cls: 's4',
+            sub: 'Months 18–24 · Spark, Kafka, and orchestration at scale'
+        },
+        {label: 'Stage 5 — Advanced Data Engineering', cls: 's5', sub: 'Months 24–30 · Warehousing, Lakehouse, APIs'},
+        {
+            label: 'Stage 6 — Specialist & Cloud-Native',
+            cls: 's6',
+            sub: 'Months 30–33 · Databricks, Snowflake, Multi-cloud'
+        },
+        {label: 'Stage 7 — Mastery & Capstone', cls: 's7', sub: 'Months 33–36 · Staff-level systems & FAANG portfolio'},
+    ];
+
+    const phases = [
+// ═══════════════════════════════════════════════════════
+// STAGE 1 — ABSOLUTE FOUNDATIONS
+// ═══════════════════════════════════════════════════════
+        {
+            id: 'p0', stage: 0, color: '#4ade80', diff: 'd-beg', diffLabel: 'Beginner',
+            number: 'PHASE 0', title: 'Dev Environment, Linux, Git & Terminal',
+            sub: 'Linux · Bash · Git · VS Code · Docker basics · SSH · Environment setup',
+            dur: 'Month 0–1',
+            why: 'Nothing works without a proper environment. Linux is the OS of every AWS server, EMR cluster, and container. Git is how all production code is managed. This is unsexy but non-negotiable — get it right on day one.',
+            prereqs: ['None — this is day one'],
+            topics: {
+                'Linux Fundamentals': ['Filesystem hierarchy (/, /home, /etc, /var, /tmp)', 'File permissions & chmod/chown', 'Processes & process management (ps, top, kill)', 'Package managers (apt, yum, brew)', 'Cron jobs & scheduling', 'SSH key generation & remote access', 'Environment variables & .bashrc/.zshrc', 'System monitoring (htop, df, du, netstat)', 'grep, awk, sed, cut, sort, uniq', 'pipes & redirection (|, >, >>, 2>&1)'],
+                'Shell Scripting': ['Bash variables & control flow', 'Functions in bash', 'For/while loops', 'Arguments & conditionals', 'Error handling (set -e, trap)', 'Shell scripts for ETL automation', 'Shebang & executable scripts', 'Heredoc syntax'],
+                'Git & GitHub': ['init, clone, add, commit, push, pull, fetch', 'Branching, merging, rebasing', 'Pull Requests & code review workflows', 'Resolving merge conflicts', '.gitignore patterns', 'Git hooks (pre-commit)', 'Semantic commit messages', 'GitHub Actions (first look)', 'Monorepo vs multi-repo strategies'],
+                'VS Code & Tools': ['Python & SQL extensions', 'Docker extension', 'Remote-SSH development', 'Debugger setup', 'Linting (Black, Ruff, SQLFluff)', 'Jupyter Notebooks (data exploration)'],
+                'Docker Basics': ['Containers vs virtual machines', 'docker run, build, ps, exec, logs', 'Dockerfile structure', 'docker-compose for multi-service stacks', 'Volumes, ports & environment variables', 'When containers solve a real problem'],
+            },
+            projects: [
+                {
+                    name: 'Automated Dev Environment Setup', badges: ['b-tool'],
+                    desc: 'Build a reproducible dev environment: dotfiles repo, shell aliases, automated tool installation script (Python, Docker, AWS CLI, Terraform). Anyone cloning your repo gets your exact setup in under 5 minutes.',
+                    stack: ['Bash', 'Git', 'Docker', 'Makefile', 'VS Code']
+                },
+                {
+                    name: 'Shell ETL Pipeline on 50GB CSV', badges: ['b-tool', 'b-batch'],
+                    desc: 'Process a 50GB CSV log file using only Linux tools: awk, sed, sort, uniq, grep. Aggregate events, detect anomalies, output JSON summaries. Benchmark against Python pandas to understand where shell tools shine.',
+                    stack: ['Bash', 'awk', 'sed', 'Linux CLI', 'cron']
+                },
+                {
+                    name: 'Git Workflow Simulation', badges: ['b-tool'],
+                    desc: 'Implement a team Git workflow: branching strategy (GitFlow vs trunk-based), PR templates, pre-commit hooks (Black, Ruff, pytest), and automated CI that runs on every push to prevent broken merges.',
+                    stack: ['Git', 'GitHub Actions', 'pre-commit', 'Python']
+                },
+            ],
+        },
+        {
+            id: 'p1', stage: 0, color: '#4ade80', diff: 'd-beg', diffLabel: 'Beginner',
+            number: 'PHASE 1', title: 'Python for Data Engineering',
+            sub: 'Core Python · OOP · Functions · Generators · File I/O · Testing · boto3 intro',
+            dur: 'Month 1–3',
+            why: 'Python is the primary language of data engineering — PySpark, Glue, Lambda, dbt, Airflow all use it. Learn the language before algorithms or frameworks. You need the tool before you can sharpen it.',
+            prereqs: ['Phase 0 — Dev Environment & Linux'],
+            topics: {
+                'Core Python': ['Variables, types, and control flow', 'Lists, dicts, sets, tuples — when to use each', 'Functions: *args, **kwargs, default arguments', 'Lambda, map, filter, reduce', 'List/dict/set comprehensions', 'f-strings & string formatting', 'Modules, packages & imports', 'The __name__ == "__main__" pattern'],
+                'Intermediate Python': ['OOP: classes, objects, self, inheritance, polymorphism', 'Dunder methods (__init__, __repr__, __len__, __iter__)', 'Dataclasses & NamedTuples', 'Generators & iterators (yield, next)', 'Decorators (writing your own)', 'Context managers (with, __enter__, __exit__)', 'Type hints & mypy', 'Error handling (try/except/finally, custom exceptions)'],
+                'Advanced Python': ['asyncio — event loop, coroutines, async/await', 'Threading vs Multiprocessing (the GIL explained)', 'concurrent.futures (ThreadPoolExecutor, ProcessPoolExecutor)', 'Memory management & garbage collection', 'Profiling & performance (cProfile, line_profiler)', 'Generators for processing large files without loading into RAM'],
+                'DE-Specific Python': ['File I/O: text, CSV, JSON, binary (pathlib, os)', 'Working with APIs (requests, httpx)', 'Environment variables (python-dotenv)', 'Pydantic for data validation & settings', 'SQLAlchemy Core for database access', 'boto3 intro — the AWS SDK (S3 read/write)', 'Python packaging (pyproject.toml, Poetry, UV)'],
+                'Testing': ['pytest — fixtures, parametrize, markers', 'Arrange / Act / Assert pattern', 'Mocking with unittest.mock and pytest-mock', 'Code coverage (pytest-cov)', 'Integration tests vs unit tests', 'Test-driven development mindset'],
+            },
+            projects: [
+                {
+                    name: 'CLI Data Processing Tool (Pure Python)', badges: ['b-tool', 'b-batch'],
+                    desc: 'Command-line tool that reads CSVs/JSON, applies transformations (filter, sort, aggregate, join), outputs to multiple formats. No pandas — use pure Python to understand what libraries do for you.',
+                    stack: ['Python', 'Click', 'pathlib', 'csv', 'json', 'pytest']
+                },
+                {
+                    name: 'REST API Client Library', badges: ['b-tool'],
+                    desc: 'Typed Python SDK for a public API (finance, weather, sports). Includes retry logic, rate limiting, response caching, full type hints, and 100% test coverage.',
+                    stack: ['Python', 'requests', 'pydantic', 'pytest', 'python-dotenv']
+                },
+                {
+                    name: 'File Validation Engine', badges: ['b-tool'],
+                    desc: 'Build a configurable file validation system that checks CSVs/JSONs for schema conformance, null values, duplicate rows, type mismatches, and referential integrity. CLI + Python library interface.',
+                    stack: ['Python', 'Pydantic', 'pathlib', 'Click', 'pytest']
+                },
+                {
+                    name: 'Metadata Scanner & Data Catalog Prototype', badges: ['b-tool'],
+                    desc: 'Tool that scans a directory of files, infers schemas, profiles column statistics (min/max/nulls/cardinality), and builds a searchable local data catalog in SQLite.',
+                    stack: ['Python', 'SQLite', 'SQLAlchemy', 'pathlib', 'Click', 'Jinja2']
+                },
+            ],
+        },
+        {
+            id: 'p2', stage: 0, color: '#4ade80', diff: 'd-beg', diffLabel: 'Beginner',
+            number: 'PHASE 2', title: 'SQL Mastery',
+            sub: 'ANSI SQL · PostgreSQL · MySQL · Aurora · Window Functions · CTEs · MERGE · CTAS · Materialised Views',
+            dur: 'Month 2–4',
+            why: 'SQL is the universal language of data. Every DE tool — Redshift, Athena, Spark SQL, dbt — is SQL at its core. Learn it properly with Python already in hand so you can immediately automate queries.',
+            prereqs: ['Phase 1 — Python (to script queries with boto3/SQLAlchemy)'],
+            topics: {
+                'SQL Foundations': ['SELECT, FROM, WHERE, ORDER BY, LIMIT, OFFSET', 'INNER, LEFT, RIGHT, FULL OUTER JOINs', 'GROUP BY, HAVING, aggregate functions', 'Subqueries & correlated subqueries', 'UNION, INTERSECT, EXCEPT', 'NULL handling (IS NULL, COALESCE, NULLIF)', 'INSERT, UPDATE, DELETE, TRUNCATE', 'Transactions: BEGIN, COMMIT, ROLLBACK, SAVEPOINT'],
+                'Intermediate SQL': ['Window Functions: ROW_NUMBER, RANK, DENSE_RANK, NTILE, PERCENT_RANK', 'Window Functions: SUM, AVG, COUNT OVER (PARTITION BY … ORDER BY …)', 'LAG, LEAD, FIRST_VALUE, LAST_VALUE', 'Common Table Expressions (CTEs) — readable query decomposition', 'Recursive CTEs (hierarchical data, graph traversal)', 'CASE expressions — inline conditionals', 'Date & time functions across databases', 'String functions & regex'],
+                'Advanced SQL': ['MERGE (UPSERT) — synchronising source and target', 'CTAS (CREATE TABLE AS SELECT) — materialising results', 'Materialised Views — trade-offs, refresh strategies', 'Indexing: B-Tree, Hash, covering indexes', 'EXPLAIN / EXPLAIN ANALYZE — reading query plans', 'Partitioning (range, list, hash) for query performance', 'Window frame clauses (ROWS BETWEEN, RANGE BETWEEN)', 'Lateral joins & table-valued functions'],
+                'Database Flavours': ['PostgreSQL: JSONB, array types, pg_stat_statements, VACUUM', 'MySQL / Aurora: engine types (InnoDB), replication, Aurora Serverless', 'SQL Server / T-SQL: execution plans, columnstore indexes (context for Redshift)', 'Database normalisation (1NF → 3NF) and when to denormalise'],
+            },
+            projects: [
+                {
+                    name: 'SQL Mastery Challenge Set (50+ problems)', badges: ['b-batch'],
+                    desc: 'Progressive SQL challenges: basic joins → window functions → recursive CTEs → performance optimisation. Each solution includes query plan analysis. Hosted on GitHub with explanations.',
+                    stack: ['PostgreSQL', 'MySQL', 'ANSI SQL', 'SSMS / DBeaver', 'EXPLAIN']
+                },
+                {
+                    name: 'Python + SQL Analytics Engine', badges: ['b-tool', 'b-batch'],
+                    desc: 'Python CLI that connects to PostgreSQL, runs parameterised queries, generates HTML analytics reports. Includes connection pooling, query optimisation on a 5M-row dataset, and SQLAlchemy ORM examples.',
+                    stack: ['Python', 'SQLAlchemy', 'PostgreSQL', 'Pandas', 'Jinja2', 'pytest']
+                },
+                {
+                    name: 'Slowly Changing Dimension (SCD) Implementation', badges: ['b-batch', 'b-faang'],
+                    desc: 'Implement SCD Types 1, 2, and 3 using pure SQL MERGE statements on a customer dimension. Include full audit trail, effective dates, and a Python orchestration script.',
+                    stack: ['PostgreSQL', 'SQL MERGE', 'Python', 'SQLAlchemy']
+                },
+                {
+                    name: 'Mini Data Warehouse from Scratch', badges: ['b-faang', 'b-batch'],
+                    desc: 'Build a Kimball star schema warehouse from scratch in PostgreSQL: Sales fact table, 4 dimension tables, ETL scripts, materialised view for reporting, and an analytics query library.',
+                    stack: ['PostgreSQL', 'Star Schema', 'SQL', 'Python', 'SQLAlchemy']
+                },
+            ],
+        },
+        {
+            id: 'p3', stage: 0, color: '#4ade80', diff: 'd-beg', diffLabel: 'Beginner',
+            number: 'PHASE 3', title: 'Computer Science Fundamentals',
+            sub: 'Data Structures · Algorithms · Complexity Analysis · Networking · OS Concepts',
+            dur: 'Month 3–5',
+            why: 'With Python and SQL in hand, DSA is immediately practical — you can implement, run, and benchmark everything. Networking is concrete now because you have HTTP clients and APIs as real context.',
+            prereqs: ['Phase 1 — Python Fundamentals (language to implement in)'],
+            topics: {
+                'Data Structures (implement in Python)': ['Arrays & Dynamic Arrays — why O(1) append matters', 'Hash Maps & Hash Tables — collision handling, load factor', 'Linked Lists (singly & doubly) — when NOT to use them', 'Stacks & Queues — LIFO/FIFO patterns in pipelines', 'Binary Trees & BSTs — tree traversals', 'Heaps (min-heap, max-heap) — priority queues in Airflow/schedulers', 'Graphs (adjacency list & matrix) — DAG representation', 'Tries — prefix lookups', 'Bloom Filters — probabilistic membership (used in Iceberg)'],
+                'Algorithms': ['Sorting: QuickSort, MergeSort, HeapSort, TimSort', 'Binary Search & variants', 'BFS & DFS — graph traversal (used in DAG scheduling)', 'Dynamic Programming — memoisation & tabulation', 'Greedy algorithms', 'Sliding Window & Two Pointers', 'Recursion & backtracking'],
+                'Complexity Analysis': ['Big-O notation — why it matters for choosing DE tools', 'O(1) Hash lookups · O(log n) Binary search · O(n) Linear scan', 'O(n log n) Sort · O(n²) Nested loops — why joins can explode', 'Space complexity — memory-bound vs CPU-bound operations', 'Amortised analysis — Python list append', 'Why this matters: Spark partition count, Redshift distribution keys, index design'],
+                'Networking (Practical DE Focus)': ['OSI model — the 7 layers in plain English', 'TCP/IP — how data travels between services', 'DNS — how AWS Route 53 resolves service names', 'HTTP/1.1 vs HTTP/2 — connection reuse matters for API calls', 'HTTPS & TLS — why encryption in transit is non-negotiable', 'REST architecture — stateless, resources, idempotency', 'WebSockets — persistent connections for streaming dashboards', 'Load Balancers — ALB, NLB in AWS context', 'CDN — CloudFront and caching headers', 'NAT Gateway & Internet Gateway — VPC routing basics'],
+                'OS & Systems Concepts': ['Processes vs Threads — GIL in Python context', 'Concurrency vs Parallelism — when each applies', 'Memory: Stack vs Heap allocation', 'File descriptors & I/O buffering', 'Blocking vs Non-blocking I/O — asyncio and boto3', 'Caching fundamentals — when to cache, cache invalidation'],
+            },
+            projects: [
+                {
+                    name: 'LRU Cache Implementation', badges: ['b-tool'],
+                    desc: 'Build a Redis-like LRU cache using HashMap + Doubly Linked List from scratch. Add TTL expiry, thread-safe locking, and a benchmark comparing cache-hit vs miss rates at 1M operations.',
+                    stack: ['Python', 'Hash Maps', 'Doubly Linked List', 'threading', 'pytest']
+                },
+                {
+                    name: 'Custom Event Queue & Pipeline Scheduler', badges: ['b-tool'],
+                    desc: 'Build a priority-queue-based job scheduler: jobs have priorities and dependencies (DAG), the scheduler resolves execution order via topological sort, handles retries and failures. No Airflow — build the concept from scratch.',
+                    stack: ['Python', 'Heaps', 'Graphs', 'DAGs', 'asyncio', 'SQLite']
+                },
+                {
+                    name: 'Distributed File Transfer Service', badges: ['b-tool'],
+                    desc: 'Build a multi-part file transfer service using sockets: chunked transfer, parallel upload workers, checksum validation, resume on failure. Demonstrates TCP/IP, threading, and real I/O patterns.',
+                    stack: ['Python', 'sockets', 'threading', 'TCP/IP', 'hashlib']
+                },
+            ],
+        },
+// ═══════════════════════════════════════════════════════
+// STAGE 2 — DATA ENGINEERING CORE
+// ═══════════════════════════════════════════════════════
+        {
+            id: 'p4', stage: 1, color: '#00d4aa', diff: 'd-int', diffLabel: 'Intermediate',
+            number: 'PHASE 4', title: 'Advanced Python Engineering',
+            sub: 'asyncio · OOP Patterns · boto3 deep dive · Pandas · Polars · PySpark intro · Data Quality',
+            dur: 'Month 5–7',
+            why: 'Basic Python is not enough for production DE. This phase takes you to engineering-grade Python: async processing, production patterns, and the libraries used daily on every AWS project.',
+            prereqs: ['Phase 1 — Python Fundamentals', 'Phase 3 — CS Foundations (async and concurrency concepts)'],
+            topics: {
+                'Production Python Patterns': ['Config-driven architecture (YAML/JSON/Pydantic Settings)', 'Retry with exponential backoff & jitter', 'Idempotency — why pipelines must be re-runnable', 'Dead Letter Queue pattern in Python', 'Structured logging with structlog', 'Audit trail design', 'Strategy pattern for pluggable connectors', 'Dependency injection', 'Circuit Breaker pattern'],
+                'Concurrency & Performance': ['asyncio deep dive: event loop, coroutines, tasks, gather', 'Threading vs Multiprocessing — when to use each', 'concurrent.futures: ThreadPoolExecutor for I/O, ProcessPoolExecutor for CPU', 'Memory profiling (tracemalloc, memory_profiler)', 'Generators for streaming large files', 'Benchmarking with timeit and pytest-benchmark'],
+                'Data Libraries': ['Pandas advanced: groupby internals, memory optimisation, chaining', 'Polars: lazy evaluation, expression API, performance vs Pandas', 'PySpark intro: DataFrames, schema, transformations', 'PyArrow: columnar in-memory processing, Parquet I/O', 'SQLAlchemy ORM: models, sessions, relationships', 'boto3: S3, Glue, EMR, Kinesis, Lambda — real DE patterns', 'httpx: async HTTP client for API ingestion'],
+            },
+            projects: [
+                {
+                    name: 'Mini Airflow — Config-Driven ETL Framework', badges: ['b-tool', 'b-faang', 'b-batch'],
+                    desc: 'Production ETL framework: YAML-config pipelines, DAG dependency resolution, retry logic with jitter, audit tables, pluggable connectors (S3, PostgreSQL, REST, SFTP). Packaged as a pip-installable library with full test coverage.',
+                    stack: ['Python', 'asyncio', 'SQLAlchemy', 'Pydantic', 'boto3', 'Docker', 'pytest']
+                },
+                {
+                    name: 'Data Quality Framework', badges: ['b-tool', 'b-faang'],
+                    desc: 'Great Expectations-inspired framework: null checks, duplicate detection, freshness validation, range checks, statistical drift detection. HTML reports, Slack alerts, S3 integration for result storage.',
+                    stack: ['Python', 'Pandas', 'Polars', 'PyArrow', 'Jinja2', 'boto3', 'Slack API']
+                },
+                {
+                    name: 'Async Multi-Source API Ingestion Engine', badges: ['b-tool', 'b-batch'],
+                    desc: 'Async Python engine that ingests from 10+ REST APIs concurrently, rate-limits per API, handles pagination, validates with Pydantic, writes to S3 as Parquet. Achieves 10× throughput vs synchronous.',
+                    stack: ['Python', 'asyncio', 'httpx', 'Pydantic', 'boto3', 'PyArrow', 'Polars']
+                },
+                {
+                    name: 'Polars vs Pandas vs PySpark Benchmark CLI', badges: ['b-tool'],
+                    desc: 'Benchmark framework comparing Polars, Pandas, and PySpark on groupby, join, sort, and filter from 1MB to 100GB. Interactive HTML dashboard of results.',
+                    stack: ['Python', 'Polars', 'Pandas', 'PySpark', 'Click', 'Plotly']
+                },
+            ],
+        },
+        {
+            id: 'p5', stage: 1, color: '#00d4aa', diff: 'd-int', diffLabel: 'Intermediate',
+            number: 'PHASE 5', title: 'Data Formats & Serialisation',
+            sub: 'CSV · JSON · Parquet · Avro · ORC · Apache Arrow · Iceberg · Hudi · Schema Evolution · Hot/Cold/Archive',
+            dur: 'Month 7–9',
+            why: 'Every pipeline decision — speed, cost, compatibility — depends on format choice. S3 is just a file store; what you put in it defines everything. Learn this before cloud so you make informed decisions from day one on AWS.',
+            prereqs: ['Phase 1 — Python', 'Phase 4 — Advanced Python (PyArrow, Polars)'],
+            topics: {
+                'Row-Based Formats': ['CSV: encoding, delimiters, quoting edge cases, parsing gotchas', 'JSON: nested data, streaming (JSON Lines), schema inference', 'XML & XSD Schemas', 'NDJSON / JSON-L for streaming pipelines'],
+                'Columnar & Binary Formats': ['Parquet: row groups, column chunks, statistics, predicate pushdown, encoding types', 'ORC: stripes, ACID transactions, vectorised reads', 'Avro: binary, schema-first, evolution rules', 'Apache Arrow: in-memory columnar, zero-copy reads, used inside Spark/Pandas', 'Format comparison & decision matrix: when to choose each'],
+                'Open Table Formats (Lakehouse)': ['Apache Iceberg: hidden partitioning, time travel, schema evolution, partition evolution, Bloom filters in files', 'Apache Hudi: Copy-on-Write vs Merge-on-Read, upserts, incremental pull, CDC support', 'Delta Lake: ACID transactions, DML operations, Change Data Feed, liquid clustering', 'Choosing between Iceberg, Hudi, and Delta Lake on S3', 'AWS Glue Catalog integration with all three'],
+                'Serialisation & Schema Management': ['Schema Registry (AWS Glue Schema Registry, Confluent)', 'Backward / Forward / Full compatibility rules', 'Schema evolution strategies in streaming pipelines', 'Compression: Snappy, GZIP, Zstd, LZ4, Brotli — trade-offs', 'Encoding: Run-length, dictionary, delta — inside Parquet/ORC'],
+                'Data Storage Lifecycle & Tiering': ['Hot vs Warm vs Cold vs Glacier/Archive — AWS S3 storage classes', 'S3 Intelligent-Tiering', 'Access pattern analysis and tier selection', 'S3 Lifecycle policies — automated tier transitions', 'Data Retention Policies and Legal Hold', 'TTL (Time-to-Live) on data objects', 'GDPR right-to-erasure and S3 object versioning'],
+            },
+            projects: [
+                {
+                    name: '100GB Format Benchmark Tool', badges: ['b-tool', 'b-faang'],
+                    desc: 'CLI benchmark across CSV, JSON, Avro, Parquet, ORC on datasets from 1GB to 100GB. Measures read/write speed, file size, compression ratio, predicate pushdown performance. Publishes interactive HTML comparison dashboard.',
+                    stack: ['Python', 'PyArrow', 'Polars', 'Pandas', 'Avro', 'Click', 'Plotly', 'S3']
+                },
+                {
+                    name: 'Schema Evolution Test Suite', badges: ['b-tool'],
+                    desc: 'Testing framework validating schema evolution scenarios: adding nullable fields, removing fields, type widening. Tests Avro, Parquet, and Iceberg against AWS Glue Schema Registry.',
+                    stack: ['Python', 'AWS Glue Schema Registry', 'Avro', 'Iceberg', 'Pytest', 'boto3']
+                },
+                {
+                    name: 'Data Lifecycle Manager', badges: ['b-tool'],
+                    desc: 'Analyses S3 access logs to classify objects as Hot/Warm/Cold, estimates monthly cost savings, generates lifecycle policy JSON deployable via Terraform or CLI.',
+                    stack: ['Python', 'boto3', 'S3 Access Logs', 'Pandas', 'Click', 'Terraform']
+                },
+            ],
+        },
+        {
+            id: 'p6', stage: 1, color: '#00d4aa', diff: 'd-int', diffLabel: 'Intermediate',
+            number: 'PHASE 6', title: 'Database Design, NoSQL & Data Modelling',
+            sub: 'Normalisation · OLTP/OLAP · Star Schema · Data Vault · NoSQL · CAP Theorem · Materialised Views · Federation',
+            dur: 'Month 8–10',
+            why: 'You have SQL fundamentals. Now learn to design multi-table systems, understand WHY NoSQL exists, and master the theory that underpins every architecture decision you will make in your career.',
+            prereqs: ['Phase 2 — SQL Mastery', 'Phase 3 — CS Foundations (CAP Theorem)'],
+            topics: {
+                'Relational Database Design': ['OLTP vs OLAP design objectives', 'Normalisation: 1NF, 2NF, 3NF, BCNF (with real examples)', 'When to denormalise — and exactly why', 'Surrogate vs Natural Keys', 'Entity-Relationship Diagrams (ERDs)', 'Conceptual / Logical / Physical data models'],
+                'Data Warehouse Modelling': ['Fact Tables: additive, semi-additive, non-additive facts', 'Dimension Tables: SCD Type 1 / 2 / 3 / 4 / 6', 'Star Schema — simplicity for BI tools', 'Snowflake Schema — storage efficiency', 'Data Vault 2.0: Hubs, Links, Satellites, PIT tables', 'Inmon (3NF enterprise DW) vs Kimball (dimensional) vs Data Vault'],
+                'Indexing & Query Performance': ['B-Tree vs Hash vs Bitmap indexes', 'Clustered vs Non-clustered', 'Covering indexes', 'Materialised Views — design, incremental refresh, trade-offs', 'Query plan reading (EXPLAIN ANALYZE)', 'Partitioning strategies for analytics (range, list, hash)', 'Redshift distribution styles (preview: EVEN, KEY, ALL)'],
+                'NoSQL Databases': ['Document stores: DynamoDB & MongoDB — when to use', 'Key-Value: ElastiCache (Redis) — caching, sessions, leaderboards', 'Columnar: Apache Cassandra — partition key design, wide rows', 'Graph: Neptune (AWS) & Neo4j — Cypher, traversals', 'Time-Series: Amazon Timestream — sensor & IoT data', 'Choosing NoSQL vs SQL — practical decision framework'],
+                'Distributed Theory': ['CAP Theorem: Consistency, Availability, Partition Tolerance', 'PACELC model extension', 'Eventual consistency and convergence patterns', 'ACID (traditional DBs) vs BASE (NoSQL)', 'Distributed transactions: 2PC and Saga', 'Consensus: Raft algorithm concepts', 'DynamoDB vs Cassandra through the CAP lens'],
+                'Federation & Virtualisation': ['What is query virtualisation', 'Redshift Spectrum — query S3 from Redshift', 'Redshift Federated Queries — query Aurora/PostgreSQL live', 'Athena as a virtual query layer', 'Logical Data Warehouse pattern', 'Virtualise vs Materialise: the trade-off explained'],
+            },
+            projects: [
+                {
+                    name: 'Retail Enterprise Data Warehouse', badges: ['b-faang', 'b-batch'],
+                    desc: 'Full Kimball star schema + Data Vault 2.0 hybrid: Sales, Inventory, Customers, Products with SCD Type 2, materialised views, partitioning, and index analysis on PostgreSQL. Includes Tableau/QuickSight reporting layer.',
+                    stack: ['PostgreSQL', 'Star Schema', 'Data Vault 2.0', 'Python', 'SQLAlchemy', 'dbt']
+                },
+                {
+                    name: 'Ride-Share Scale Database Architecture', badges: ['b-faang', 'b-arch'],
+                    desc: 'Design Uber-scale database architecture: drivers, trips, geolocation writes, surge pricing, payments. Handle 10M concurrent writes. Document OLTP/OLAP split, sharding, read replicas, DynamoDB for geo-queries, ElastiCache for surge pricing.',
+                    stack: ['PostgreSQL', 'DynamoDB', 'ElastiCache', 'Cassandra', 'CAP Theorem', 'Architecture ADRs']
+                },
+                {
+                    name: 'Multi-Database Social Platform Backend', badges: ['b-faang'],
+                    desc: 'Backend using the right DB for each use case: DynamoDB (posts), Neptune (social graph), ElastiCache (feeds + sessions), Cassandra (activity timeline). Designed for 100M users with sub-10ms reads.',
+                    stack: ['DynamoDB', 'Amazon Neptune', 'ElastiCache', 'Cassandra', 'Docker Compose', 'Python']
+                },
+            ],
+        },
+        {
+            id: 'p7', stage: 1, color: '#00d4aa', diff: 'd-int', diffLabel: 'Intermediate',
+            number: 'PHASE 7', title: 'Hadoop & Big Data Foundations',
+            sub: 'HDFS · YARN · MapReduce · Hive · HBase · Why Spark replaced MapReduce',
+            dur: 'Month 9–11',
+            why: 'Understanding Hadoop makes Spark make sense. HDFS explains why S3 + Iceberg are designed the way they are. MapReduce explains why Spark\'s in-memory DAG model is revolutionary. Learn the past to master the present.',
+            prereqs: ['Phase 1 — Python', 'Phase 3 — CS Foundations (distributed concepts)', 'Phase 5 — Data Formats'],
+            topics: {
+                'Hadoop Core': ['HDFS: NameNode, DataNode, blocks, replication factor, rack awareness', 'YARN: ResourceManager, NodeManager, ApplicationMaster lifecycle', 'MapReduce: map phase, shuffle & sort, reduce phase, combiners', 'Hadoop streaming — run Python scripts as MapReduce jobs', 'HDFS vs S3 for AWS workloads — why S3 won'],
+                'Apache Ecosystem': ['Hive: HQL, Metastore, SerDe, file format evolution (ORC → Parquet → Iceberg)', 'HBase: wide-column store, row key design, compaction', 'Pig: Latin scripts (largely replaced, but context matters)', 'Sqoop: RDBMS → Hadoop data migration (now AWS DMS)', 'Oozie: workflow scheduling (now replaced by Airflow/Step Functions)', 'Zookeeper: distributed coordination, leader election, watches'],
+                'Modern vs Legacy Mapping': ['MapReduce → Spark (why in-memory wins by 100×)', 'Flume/Sqoop → Kinesis & DMS (why managed services won)', 'HDFS → S3 + Glue Catalog (why object storage beat block storage)', 'Hive → Athena + Iceberg (serverless won for interactive queries)', 'Oozie → Airflow / Step Functions (DAG-first orchestration)', 'When Hadoop still makes sense: on-prem, cost constraints, legacy systems'],
+                'AWS EMR as Managed Hadoop': ['EMR cluster types (long-running vs transient)', 'EMR vs Glue vs Databricks — decision guide', 'EMR Serverless — no cluster management', 'EMRFS: using S3 as HDFS replacement', 'Bootstrap actions and custom configurations'],
+            },
+            projects: [
+                {
+                    name: 'Docker Mini Hadoop Cluster', badges: ['b-tool', 'b-faang'],
+                    desc: 'Fully functional Hadoop cluster via Docker Compose: HDFS (1 NameNode + 3 DataNodes), YARN, MapReduce, Hive, HBase. Run a Python MapReduce job on 10GB log data. Document Spark vs MapReduce performance comparison.',
+                    stack: ['Docker Compose', 'Hadoop', 'HDFS', 'YARN', 'Hive', 'HBase', 'Python', 'MapReduce']
+                },
+                {
+                    name: '100GB Log Processing: Shell → MapReduce → Spark', badges: ['b-faang', 'b-batch'],
+                    desc: 'Process the same 100GB web server log dataset using three approaches: Linux shell tools, Python MapReduce on Hadoop, then Spark on EMR. Benchmark all three, document trade-offs, produce analysis report.',
+                    stack: ['Bash', 'Python', 'MapReduce', 'Apache Spark', 'AWS EMR', 'S3']
+                },
+            ],
+        },
+// ═══════════════════════════════════════════════════════
+// STAGE 3 — AWS CLOUD FOUNDATIONS
+// ═══════════════════════════════════════════════════════
+        {
+            id: 'p8', stage: 2, color: '#FF9900', diff: 'd-int', diffLabel: 'Intermediate',
+            number: 'PHASE 8', title: 'AWS Core — IAM, EC2, S3, VPC & Networking',
+            sub: 'IAM deep dive · EC2 · S3 deep dive · VPC · Subnets · Security Groups · Route Tables · KMS · CloudTrail',
+            dur: 'Month 10–13',
+            why: 'You now have real skills to put in the cloud. AWS fundamentals are much more meaningful with Python, SQL, Linux, and real data as context — you understand WHY each service exists.',
+            prereqs: ['Phase 0 — Linux & terminal', 'Phase 1 — Python + boto3', 'Phase 3 — Networking fundamentals'],
+            topics: {
+                'IAM (Deep — Security Foundation)': ['Users, Groups, Roles, and Policies', 'Policy types: identity-based, resource-based, SCPs, permission boundaries', 'Policy evaluation logic: explicit deny > SCP > identity > resource', 'IAM Roles for EC2, Lambda, Glue, EMR — no hardcoded credentials ever', 'Cross-account roles', 'Conditions in policies (IP, time, MFA)', 'IAM Access Analyzer', 'AWS Security Token Service (STS)', 'Least privilege design patterns for DE workloads'],
+                'EC2 & Compute': ['Instance types for DE: memory-optimised (R), compute-optimised (C), storage-optimised (I)', 'AMIs, launch templates, Auto Scaling Groups', 'Spot Instances — saving 70-90% on EMR and batch workloads', 'Key pairs & SSH access', 'EC2 User Data scripts', 'Elastic IPs vs dynamic DNS', 'EC2 cost optimisation strategies'],
+                'S3 Deep Dive': ['Bucket policies vs IAM policies vs ACLs', 'S3 storage classes: Standard, IA, One-Zone, Intelligent-Tiering, Glacier, Deep Archive', 'S3 Lifecycle rules — automated tier management', 'S3 Versioning & Object Lock', 'S3 Event Notifications → Lambda / SQS / SNS', 'S3 Transfer Acceleration', 'S3 Multipart Upload for large files', 'Server-side encryption: SSE-S3, SSE-KMS, SSE-C', 'S3 Access Logs & CloudTrail for audit', 'Presigned URLs', 'S3 Select & Glacier Select — query without downloading'],
+                'VPC & Networking (AWS Deep)': ['VPC: CIDR design, why 10.0.0.0/16 is standard', 'Public vs Private subnets', 'Internet Gateway & NAT Gateway', 'Route Tables — routing decisions explained', 'Security Groups (stateful) vs Network ACLs (stateless)', 'VPC Peering & Transit Gateway', 'VPC Endpoints (Gateway for S3/DynamoDB, Interface for other services)', 'AWS Direct Connect & Site-to-Site VPN', 'Private Subnets for EMR, RDS, Redshift — no public IPs for data', 'AWS PrivateLink'],
+                'Security & Encryption': ['AWS KMS: CMKs, data keys, envelope encryption', 'Secrets Manager vs Parameter Store', 'CloudTrail: API auditing for all AWS services', 'AWS Config: compliance rules and drift detection', 'Amazon GuardDuty: threat detection', 'CloudWatch Logs: centralised logging'],
+            },
+            projects: [
+                {
+                    name: 'Multi-Account AWS Landing Zone', badges: ['b-arch', 'b-faang'],
+                    desc: 'Set up a proper AWS multi-account structure: Root account, Security account, Log Archive, Shared Services, Dev/Test/Prod workload accounts. IAM roles with cross-account access. SCPs blocking dangerous actions. All via Terraform.',
+                    stack: ['AWS Organizations', 'IAM', 'SCPs', 'Terraform', 'CloudTrail', 'AWS Config']
+                },
+                {
+                    name: 'Secure Data Lake on S3', badges: ['b-faang', 'b-arch'],
+                    desc: 'Build a production-ready S3 data lake: Raw/Bronze/Silver/Gold zones, bucket policies with least-privilege, KMS CMK encryption, VPC endpoints (no traffic over internet), lifecycle policies, CloudTrail audit, all provisioned via Terraform.',
+                    stack: ['S3', 'KMS', 'IAM', 'VPC Endpoints', 'Terraform', 'CloudTrail', 'Python']
+                },
+                {
+                    name: 'VPC Network Architecture for DE Workloads', badges: ['b-arch'],
+                    desc: 'Design and deploy a VPC for data engineering: public subnets (bastion/NAT), private subnets (EMR, Redshift, RDS), VPC endpoints for S3/Glue/KMS, security groups with minimum required ports, network flow logs.',
+                    stack: ['VPC', 'Subnets', 'Security Groups', 'NAT Gateway', 'VPC Endpoints', 'Terraform']
+                },
+            ],
+        },
+        {
+            id: 'p9', stage: 2, color: '#FF9900', diff: 'd-adv', diffLabel: 'Advanced',
+            number: 'PHASE 9', title: 'AWS Data Engineering Stack',
+            sub: 'Glue · Athena · EMR · Lambda · Kinesis · Redshift · DynamoDB · Step Functions · EventBridge · Lake Formation',
+            dur: 'Month 13–18',
+            why: 'This is the core AWS DE toolkit. Each service builds on the previous: Lambda ingests, Glue catalogues and transforms, Athena queries, Kinesis streams, Redshift warehouses. Sequentially, they form a complete data platform.',
+            prereqs: ['Phase 8 — AWS Core (IAM, S3, VPC)', 'Phase 4 — Python + boto3', 'Phase 7 — Hadoop (EMR context)'],
+            topics: {
+                'AWS Glue': ['Glue Crawlers — automatic schema discovery from S3, RDS, DynamoDB', 'Glue Data Catalog — centralised metadata repository, table definitions', 'Glue Jobs: PySpark jobs, Python Shell tasks, Spark Streaming jobs', 'Glue Job Bookmarks — incremental processing, tracking last processed state', 'Glue Workflows — multi-job orchestration with triggers', 'Glue DataBrew — visual data preparation', 'Glue Schema Registry — Avro/JSON schema management', 'Development lifecycle: local testing → Glue DevEndpoint → production', 'Glue DynamicFrame vs Spark DataFrame: when to use each'],
+                'AWS Athena': ['Serverless SQL on S3 — how it works (Presto/Trino under the hood)', 'Partitioning strategy for Athena cost optimisation (partition projection)', 'CTAS (CREATE TABLE AS SELECT) in Athena', 'Athena Federated Query — querying RDS, DynamoDB, Redshift, on-prem', 'Workgroups: cost control, query limits, output locations', 'Athena with Glue Catalog: tables, views, partitions', 'Running Athena queries via CLI and boto3 (Python)', 'Cost optimisation: columnar formats, partitioning, compression', 'Athena for ad-hoc vs production query patterns'],
+                'AWS EMR': ['Cluster architecture: Master, Core, Task nodes', 'Cluster types: long-running vs transient (cost difference is massive)', 'EMR Serverless: no cluster management, auto-scaling', 'EMRFS: S3 as HDFS replacement — consistent view', 'Spot Instances on EMR: Instance Fleets, Spot diversification', 'Bootstrap actions: custom software installation', 'EMR Steps vs Applications', 'Spark History Server setup', 'EMR Studio: notebook-based development', 'Cost optimisation: right-sizing, Spot, transient clusters'],
+                'AWS Lambda': ['Execution model: cold starts, warm instances, concurrency', 'Event sources: S3, Kinesis, DynamoDB Streams, SQS, API Gateway, EventBridge', 'Lambda layers for shared dependencies', 'Lambda with Glue: triggering jobs on S3 events', 'Limitations: 15min timeout, 10GB memory, 512MB /tmp', 'Serverless vs container for DE workloads', 'Lambda + SQS for fan-out patterns', 'Dead Letter Queues for Lambda failures'],
+                'AWS Kinesis': ['Kinesis Data Streams: shards, partition keys, retention, sequence numbers', 'Kinesis Firehose: S3, Redshift, OpenSearch delivery — no consumer code', 'Kinesis Data Analytics: Flink-based stream processing', 'Kinesis vs MSK (Kafka): decision guide', 'Shard capacity: 1MB/s in, 2MB/s out — scaling strategy', 'Enhanced fan-out for parallel consumers', 'KCL (Kinesis Client Library) vs boto3', 'Streaming web server logs to S3 via Firehose'],
+                'Amazon Redshift': ['MPP architecture: leader node, compute nodes, slices', 'Distribution styles: KEY (join/group optimisation), EVEN, ALL (small dims)', 'Sort keys: compound vs interleaved', 'Columnstore compression: encoding types', 'COPY command: loading from S3 at full speed', 'Redshift Spectrum: query S3 directly from Redshift SQL', 'Redshift Federated Query: query live Aurora/PostgreSQL', 'Workload Management (WLM): query priority queues', 'Materialised Views in Redshift', 'Concurrency Scaling: burst capacity at cost', 'VACUUM and ANALYZE: maintenance operations', 'Redshift Serverless: on-demand, no cluster management'],
+                'DynamoDB': ['Single-table design: partition key + sort key patterns', 'GSIs and LSIs: when and why', 'DynamoDB Streams: CDC for downstream processing', 'DynamoDB Accelerator (DAX): in-memory caching layer', 'On-demand vs provisioned capacity', 'Batch write and transactional writes', 'TTL: automatic expiry of records', 'DynamoDB → Lambda → Kinesis → S3 pipeline pattern'],
+                'Orchestration on AWS': ['AWS Step Functions: state machines, parallel states, error handling, Map states', 'EventBridge: scheduled events, event routing rules, custom event buses', 'EventBridge → Lambda, Glue, Step Functions patterns', 'Scheduling vs event-driven: when to use each', 'Idempotency in Step Functions workflows'],
+                'AWS Lake Formation': ['Fine-grained access control on the Glue Catalog', 'Column-level security for Athena and Redshift Spectrum', 'Row-level security filters', 'Data lineage (preview)', 'LF-Tags for attribute-based access', 'Lake Formation vs S3 bucket policies: the difference'],
+            },
+            projects: [
+                {
+                    name: 'End-to-End AWS Data Lake (S3 + Glue + Athena)', badges: ['b-faang', 'b-batch'],
+                    desc: 'Full medallion data lake: Lambda triggers on S3 upload → Glue Crawler catalogs → Glue PySpark job transforms to Parquet/Iceberg → Athena queries Gold layer → QuickSight dashboard. Glue Workflows for orchestration. Lake Formation for governance.',
+                    stack: ['S3', 'Glue', 'Athena', 'Lambda', 'Lake Formation', 'QuickSight', 'Iceberg', 'Terraform']
+                },
+                {
+                    name: 'Streaming Analytics Pipeline: Kinesis → Firehose → Redshift',
+                    badges: ['b-faang', 'b-stream'],
+                    desc: 'Real-time clickstream pipeline: events → Kinesis Data Streams → Lambda for enrichment → Kinesis Firehose → S3 + Redshift → Athena + QuickSight. Include DLQ, schema validation, partitioned S3 output.',
+                    stack: ['Kinesis', 'Lambda', 'Firehose', 'S3', 'Redshift', 'Athena', 'QuickSight', 'boto3']
+                },
+                {
+                    name: 'CDC Pipeline: RDS → DMS → S3 → Redshift', badges: ['b-faang', 'b-batch'],
+                    desc: 'Change Data Capture pipeline: PostgreSQL Aurora → AWS DMS (full load + CDC) → S3 (Parquet, partitioned) → Glue Crawler → Athena/Redshift. Handles inserts, updates, deletes end-to-end.',
+                    stack: ['Aurora PostgreSQL', 'AWS DMS', 'S3', 'Glue', 'Athena', 'Redshift', 'Terraform']
+                },
+                {
+                    name: 'Serverless Data Processing with Lambda', badges: ['b-tool', 'b-batch'],
+                    desc: 'Event-driven data processing: S3 upload triggers Lambda → validates and transforms → writes to DynamoDB + S3. Includes DLQ, structured logging, X-Ray tracing, and automated deployment via GitHub Actions.',
+                    stack: ['Lambda', 'S3', 'DynamoDB', 'SQS', 'CloudWatch', 'X-Ray', 'GitHub Actions']
+                },
+                {
+                    name: 'AWS Glue Metadata-Driven ETL Framework', badges: ['b-faang', 'b-batch'],
+                    desc: 'Metadata-driven Glue framework: new sources onboarded via config table — no new Glue job code. Handles 100+ tables with bookmark-based incremental loads, data quality checks, SNS failure alerts.',
+                    stack: ['Glue', 'S3', 'DynamoDB config table', 'SNS', 'Step Functions', 'Terraform']
+                },
+            ],
+        },
+// ═══════════════════════════════════════════════════════
+// STAGE 4 — BIG DATA PROCESSING
+// ═══════════════════════════════════════════════════════
+        {
+            id: 'p10', stage: 3, color: '#7c6fff', diff: 'd-adv', diffLabel: 'Advanced',
+            number: 'PHASE 10', title: 'Apache Spark Deep Dive — EMR & Databricks',
+            sub: 'RDD · DataFrames · Catalyst · Tungsten · AQE · Spark SQL · PySpark · Structured Streaming · Scala intro',
+            dur: 'Month 17–21',
+            why: 'Spark is the engine behind EMR, Glue, and Databricks. This phase requires Python + SQL + AWS + Hadoop in your foundations — without those, Spark is confusing; with them, it clicks in days not weeks.',
+            prereqs: ['Phase 4 — Advanced Python (PySpark intro)', 'Phase 7 — Hadoop (understands what Spark replaced)', 'Phase 8 — AWS (EMR as the platform)'],
+            topics: {
+                'Spark Core Architecture': ['RDDs — what they are, immutability, lineage graph', 'DataFrames vs Datasets — why DataFrames won for Python', 'Spark execution model: driver, executors, tasks, stages, jobs', 'DAG scheduler: logical vs physical plans', 'Lazy evaluation — nothing runs until an action', 'Partitions: how Spark parallelises data', 'Shuffle: the most expensive operation in Spark', 'Catalyst Optimiser: rule-based and cost-based optimisation', 'Tungsten execution engine: binary memory management, code generation', 'Adaptive Query Execution (AQE): runtime plan changes'],
+                'Spark SQL': ['Creating tables, views, temp views', 'explain() and reading query plans (parsed, analysed, optimised, physical)', 'Window functions at scale', 'LATERAL VIEW & explode for arrays/maps', 'Dynamic partition pruning', 'Z-ordering and data skipping with Delta/Iceberg', 'Broadcast hint for small tables', 'Spark SQL with Hive Metastore and AWS Glue Catalog'],
+                'Performance & Optimisation': ['Partitioning strategies: repartition vs coalesce', 'Data skew detection and handling (salting)', 'Broadcast joins vs sort-merge joins', 'Caching and persistence (MEMORY_AND_DISK, DISK_ONLY)', 'Kryo serialisation', 'Spark configuration tuning: executor memory, cores, parallelism', 'Speculative execution for stragglers', 'Spot Instance configuration on EMR for Spark'],
+                'PySpark Patterns': ['Schema inference vs schema enforcement', 'Reading/writing Parquet, Iceberg, Hudi, Delta on S3', 'Spark with AWS Glue Catalog: databases and tables', 'foreachBatch for writing to multiple sinks', 'Idempotent Spark pipelines', 'Testing PySpark locally with pytest'],
+                'Structured Streaming': ['Micro-batch vs continuous processing', 'Watermarks and late data handling', 'Streaming joins: stream-stream and stream-static', 'Stateful processing with mapGroupsWithState', 'Output modes: append, complete, update', 'Checkpointing to S3', 'Kinesis → Spark Streaming pattern on EMR'],
+                'Scala for Spark (Intermediate)': ['Why Scala: Spark is written in Scala, type safety, performance', 'Case classes, pattern matching', 'Collections and functional patterns', 'Writing a Spark job in Scala — comparison with PySpark', 'When to use Scala vs Python for Spark'],
+            },
+            projects: [
+                {
+                    name: 'Netflix-Scale Batch Analytics Platform (200GB/day)', badges: ['b-faang', 'b-batch'],
+                    desc: 'End-to-end: Glue Crawler catalogs S3 raw data → PySpark EMR job (200GB/day) → Iceberg Silver layer → dbt Gold layer → Redshift → Tableau. Optimised with AQE, Z-ordering, Spot Instances. Includes full CI/CD via GitHub Actions.',
+                    stack: ['EMR', 'PySpark', 'Iceberg', 'S3', 'dbt', 'Redshift', 'Tableau', 'Terraform', 'GitHub Actions']
+                },
+                {
+                    name: 'Real-Time Fraud Detection (Spark Streaming + Kinesis)', badges: ['b-faang', 'b-stream'],
+                    desc: 'Transactions stream from Kinesis → Spark Structured Streaming on EMR → feature engineering → rule engine + ML scoring → Delta Lake → Redshift real-time mart → QuickSight dashboard. Exactly-once, DLQ, Grafana alerting.',
+                    stack: ['Kinesis', 'EMR Spark Streaming', 'Delta Lake', 'S3', 'Redshift', 'QuickSight', 'CloudWatch']
+                },
+                {
+                    name: 'Spark Performance Optimisation Toolkit', badges: ['b-tool'],
+                    desc: 'Tool that analyses Spark event logs and Spark UI, identifies anti-patterns (skew, cartesian joins, missing partitions, over-caching), suggests fixes, and generates an HTML report with before/after metrics.',
+                    stack: ['PySpark', 'Spark UI / History Server', 'Python', 'Click', 'Plotly']
+                },
+                {
+                    name: 'Databricks Lakehouse on AWS', badges: ['b-faang', 'b-arch'],
+                    desc: 'Full medallion lakehouse on Databricks (AWS): Auto Loader for Bronze, DQ-validated Silver, Gold SQL Warehouse. Unity Catalog for governance, Delta Lake, Databricks Workflows CI/CD. Terraform-provisioned.',
+                    stack: ['Databricks', 'Delta Lake', 'Unity Catalog', 'Auto Loader', 'dbt', 'Workflows', 'Terraform']
+                },
+            ],
+        },
+        {
+            id: 'p11', stage: 3, color: '#7c6fff', diff: 'd-adv', diffLabel: 'Advanced',
+            number: 'PHASE 11', title: 'Apache Kafka Deep Dive — MSK',
+            sub: 'Topics · Partitions · Consumer Groups · Schema Registry · Exactly-Once · Kafka Connect · MSK · CQRS · Event Sourcing',
+            dur: 'Month 20–23',
+            why: 'Kafka is the backbone of event-driven data architectures. MSK is the fully managed AWS equivalent. This phase requires Spark knowledge so streaming processing and Kafka integration make full sense.',
+            prereqs: ['Phase 10 — Spark Structured Streaming', 'Phase 8 — AWS Networking (MSK VPC config)', 'Phase 3 — Networking (TCP/IP, partitions)'],
+            topics: {
+                'Kafka Architecture': ['Brokers, Topics, Partitions, Replicas', 'Producers: acks, retries, idempotency, batching, compression', 'Consumers: poll loop, offset commit, auto vs manual commit', 'Consumer Groups: partition assignment, rebalancing, cooperative rebalancing', 'Leader election and ISR (In-Sync Replicas)', 'Log compaction vs retention by time/size', 'Exactly-once semantics: idempotent producers + transactional API', 'Controller broker and Zookeeper → KRaft migration'],
+                'Advanced Kafka': ['Kafka Connect: source connectors (Debezium CDC), sink connectors (S3, Redshift)', 'Kafka Streams: stateful processing, KTables, joins', 'Schema Registry (AWS Glue or Confluent): Avro, Protobuf, JSON Schema', 'Consumer lag monitoring and backpressure handling', 'Kafka MirrorMaker 2: cross-cluster replication', 'Topic partitioning strategy for throughput and ordering guarantees', 'Dead letter topics: handling poison messages', 'Compacted topics: key-based latest-value materialisation'],
+                'AWS MSK (Managed Streaming for Kafka)': ['MSK vs self-managed Kafka: when managed services win', 'MSK cluster sizing: broker storage, instance types', 'MSK Serverless: no capacity planning', 'MSK Connect: managed Kafka Connect', 'IAM authentication for MSK (vs SASL)', 'VPC configuration: private subnets, security groups', 'MSK with Kinesis vs MSK vs EventBridge: decision matrix', 'Monitoring MSK with CloudWatch and Prometheus'],
+                'Streaming Patterns & Architecture': ['Lambda Architecture (batch + stream layers)', 'Kappa Architecture (stream-only, reprocess via replay)', 'CQRS: Command Query Responsibility Segregation — separate read/write', 'Event Sourcing: append-only event log as source of truth', 'Outbox Pattern: reliable event publishing from relational DBs', 'Saga Pattern: distributed transaction management across services', 'Backpressure in streaming pipelines', 'Late-arriving data: watermarks and allowed lateness', 'Schema evolution in live streams — why this is hard', 'Consumer push vs pull: Kafka vs SQS vs Kinesis comparison'],
+            },
+            projects: [
+                {
+                    name: 'Amazon-Scale Event Architecture', badges: ['b-faang', 'b-stream'],
+                    desc: 'Full event-driven platform: order events → MSK → Kafka Streams (enrichment + routing) → S3 (Iceberg) via Kafka Connect → Spark Streaming on EMR → Redshift. Debezium CDC from RDS. Schema Registry validation. Grafana lag monitoring.',
+                    stack: ['MSK', 'Kafka Connect', 'Debezium', 'Kafka Streams', 'EMR Spark', 'Iceberg', 'Redshift', 'Terraform']
+                },
+                {
+                    name: 'Real-Time Clickstream Analytics', badges: ['b-faang', 'b-stream'],
+                    desc: 'Clickstream events → MSK → PySpark Streaming → session windowing → Delta Lake → Athena + QuickSight. Implements exactly-once, DLQ, schema evolution, and a Grafana consumer lag dashboard.',
+                    stack: ['MSK', 'PySpark Streaming', 'EMR', 'Delta Lake', 'S3', 'Athena', 'QuickSight', 'Grafana']
+                },
+                {
+                    name: 'CDC Platform: Debezium → Kafka → S3', badges: ['b-faang', 'b-stream'],
+                    desc: 'Production CDC pipeline: Debezium reads PostgreSQL WAL → MSK → Kafka Connect S3 Sink (Iceberg format, partitioned by date) → Glue Crawler → Athena. Handles schema changes, DDL events, tombstone messages.',
+                    stack: ['PostgreSQL', 'Debezium', 'MSK', 'Kafka Connect', 'Iceberg', 'S3', 'Glue', 'Athena']
+                },
+                {
+                    name: 'Custom Dead Letter Queue Manager', badges: ['b-tool'],
+                    desc: 'UI + API to inspect, replay, and archive dead letter messages across Kafka (MSK) and SQS. Filter by topic, error type, time range. Bulk replay with configurable delay. Failure analytics dashboard.',
+                    stack: ['Python', 'FastAPI', 'MSK', 'SQS', 'boto3', 'HTML/JS', 'Docker']
+                },
+            ],
+        },
+        {
+            id: 'p12', stage: 3, color: '#7c6fff', diff: 'd-adv', diffLabel: 'Advanced',
+            number: 'PHASE 12', title: 'Orchestration — Airflow, Prefect & Step Functions',
+            sub: 'Airflow DAGs · Operators · Sensors · MWAA · Prefect · Dagster · Step Functions · EventBridge',
+            dur: 'Month 22–24',
+            why: 'Orchestration is meaningless without pipelines to orchestrate. This phase makes complete sense now that you have Spark jobs, Glue jobs, Lambda functions, and Kafka pipelines to coordinate.',
+            prereqs: ['Phase 9 — AWS DE Stack (Glue, Lambda, EMR)', 'Phase 10 — Spark', 'Phase 3 — DSA (DAG topology sort)'],
+            topics: {
+                'Apache Airflow': ['DAG anatomy: tasks, operators, sensors, dependencies', 'Operators: PythonOperator, BashOperator, S3Operator, GlueJobOperator, EMROperator', 'Sensors: S3KeySensor, ExternalTaskSensor', 'XCom: passing data between tasks (and why to avoid it for large data)', 'Variables and Connections (secrets management)', 'Dynamic DAG generation', 'Branching: BranchPythonOperator', 'SLA misses and alerting', 'Backfill and catchup', 'Task concurrency and pool management', 'MWAA (Amazon Managed Workflows for Apache Airflow): setup, security, scaling'],
+                'Modern Orchestration': ['Prefect: flows, tasks, deployments, work pools, notifications', 'Dagster: assets, ops, jobs, resources, sensors', 'Airflow vs Prefect vs Dagster: honest comparison', 'AWS Step Functions: state machines, parallel, map, catch/retry', 'EventBridge for event-driven orchestration', 'Choosing between managed orchestrators on AWS'],
+                'Production Patterns': ['Metadata-driven pipeline design', 'Idempotent DAG design', 'Testing DAGs (unit tests with pytest, integration tests)', 'CI/CD for Airflow DAGs: lint, test, deploy via GitHub Actions', 'Monitoring: DAG SLAs, task duration trends, failure rates', 'Secrets in Airflow: AWS Secrets Manager backend'],
+            },
+            projects: [
+                {
+                    name: 'Enterprise ETL Scheduler with MWAA', badges: ['b-faang', 'b-batch'],
+                    desc: 'Production Airflow deployment on MWAA: 50+ DAGs orchestrating Glue jobs, EMR steps, Redshift COPY, and Lambda functions. Metadata-driven framework — new pipelines via config, not new DAG code. Full CI/CD deployment pipeline.',
+                    stack: ['MWAA', 'Airflow', 'Glue', 'EMR', 'Redshift', 'Lambda', 'S3', 'GitHub Actions', 'Terraform']
+                },
+                {
+                    name: 'Step Functions Data Pipeline Orchestrator', badges: ['b-faang', 'b-batch'],
+                    desc: 'Step Functions state machine orchestrating: S3 file arrival (EventBridge) → Lambda validation → Glue ETL → Redshift COPY → SNS notification. Parallel processing branches, error handling, retry logic, comprehensive CloudWatch dashboard.',
+                    stack: ['Step Functions', 'EventBridge', 'Lambda', 'Glue', 'Redshift', 'SNS', 'CloudWatch', 'Terraform']
+                },
+            ],
+        },
+// ═══════════════════════════════════════════════════════
+// STAGE 5 — ADVANCED DATA ENGINEERING
+// ═══════════════════════════════════════════════════════
+        {
+            id: 'p13', stage: 4, color: '#38bdf8', diff: 'd-adv', diffLabel: 'Advanced',
+            number: 'PHASE 13', title: 'Data Warehousing at Scale — Redshift & Snowflake',
+            sub: 'Redshift deep dive · Kimball · Inmon · Data Vault 2.0 · SSRS/Tableau · Federation · Query Virtualisation',
+            dur: 'Month 23–26',
+            why: 'You have built data pipelines. Now you need to serve data correctly. Warehouse methodology (Kimball, Data Vault) is the difference between a queryable data dump and a world-class analytics platform.',
+            prereqs: ['Phase 6 — Database Design & Data Vault', 'Phase 9 — Redshift intro', 'Phase 4 — Python + dbt'],
+            topics: {
+                'Warehouse Methodologies': ['Kimball: dimensional modelling, conformed dimensions, bus matrix', 'Inmon: 3NF enterprise DW, top-down, EDW + data marts', 'Data Vault 2.0: Hubs (business keys), Links (relationships), Satellites (context + history)', 'PIT (Point-in-Time) tables and Bridge tables', 'Choosing: greenfield → Kimball, regulated enterprise → Data Vault', 'Anchor Modelling (overview)'],
+                'Redshift Deep Dive': ['MPP internals: leader node routing, compute node slices', 'Distribution: KEY (skew risk), EVEN (round-robin), ALL (tiny dims only)', 'Sort keys: compound (range queries), interleaved (multiple predicates)', 'Columnstore compression: choosing encodings per column type', 'COPY vs INSERT performance (use COPY always for bulk)', 'Redshift Spectrum: Parquet on S3 queried via Redshift SQL', 'Redshift Federated Query: live Aurora/PostgreSQL from Redshift', 'Materialised Views with auto-refresh', 'WLM: concurrency slots, memory per slot, query priorities', 'VACUUM (reclaim space after deletes) and ANALYZE (update stats)', 'Redshift Serverless: on-demand vs provisioned decision'],
+                'Tableau & Visualisation': ['Tableau Desktop vs Tableau Server vs Tableau Cloud', 'Connecting to Redshift, Athena, Snowflake', 'Data source vs live connection vs extract', 'Calculated fields and table calculations', 'LOD expressions: FIXED, INCLUDE, EXCLUDE', 'Dashboard design for executives vs analysts', 'Tableau Prep for data cleaning', 'QuickSight as the AWS-native alternative'],
+                'SSRS & Paginated Reports': ['SSRS report types and use cases', 'Parameter-driven reports for operations teams', 'Subscriptions and data-driven subscriptions', 'Migrating SSRS to Power BI Paginated / Tableau'],
+                'Federation & Advanced Patterns': ['Redshift Spectrum vs Athena: cost and use case comparison', 'Trino/Presto for cross-source federation', 'Data virtualisation: Redshift Federated + Spectrum combined', 'Query virtualisation layer design', 'Semantic layer: dbt Semantic Layer, AtScale'],
+            },
+            projects: [
+                {
+                    name: 'Global Enterprise Data Warehouse on Redshift', badges: ['b-faang', 'b-batch', 'b-arch'],
+                    desc: 'Kimball star schema + Data Vault 2.0 hybrid on Redshift: 5 source systems via DMS CDC, dbt transformation layer, Tableau executive dashboard, SSRS operational reports, WLM configuration, materialised views, Redshift Spectrum for historical data.',
+                    stack: ['Redshift', 'dbt', 'S3', 'Redshift Spectrum', 'Tableau', 'SSRS', 'AWS DMS', 'Terraform']
+                },
+                {
+                    name: 'Query Virtualisation Federation Layer', badges: ['b-tool', 'b-arch'],
+                    desc: 'Unified query layer across Redshift (warehouse), Athena (S3 data lake), Aurora (operational DB), and DynamoDB (NoSQL). Single SQL interface for analysts via Redshift Federated Queries + Spectrum. Benchmarks virtualised vs materialised.',
+                    stack: ['Redshift Federated', 'Redshift Spectrum', 'Athena', 'Aurora', 'DynamoDB', 'dbt']
+                },
+            ],
+        },
+        {
+            id: 'p14', stage: 4, color: '#38bdf8', diff: 'd-adv', diffLabel: 'Advanced',
+            number: 'PHASE 14', title: 'Lakehouse Architecture',
+            sub: 'S3 + Glue Catalog · Iceberg · Delta Lake · Hudi · Medallion Architecture · Data Mesh · Multi-Tenant',
+            dur: 'Month 25–27',
+            why: 'The Lakehouse is the dominant modern data architecture — combining the flexibility of a data lake with the reliability of a data warehouse. This phase ties together S3, Spark, Glue, and open table formats into a complete system.',
+            prereqs: ['Phase 5 — Data Formats (Iceberg/Hudi/Delta)', 'Phase 9 — AWS DE Stack', 'Phase 10 — Spark'],
+            topics: {
+                'Lakehouse Concepts': ['Why the Lakehouse: data lake problems (no ACID, schema chaos) + warehouse problems (cost, lock-in)', 'Data Lakehouse = open table format + query engine + governance', 'S3 + Glue Catalog + Iceberg as the AWS Lakehouse stack', 'Medallion Architecture: Bronze (raw) → Silver (curated) → Gold (products)', 'Data Products: treating datasets as first-class APIs'],
+                'Open Table Formats on AWS': ['Apache Iceberg on S3: hidden partitioning, schema evolution, time travel, partition pruning', 'Apache Hudi on S3: CoW vs MoR, upserts, incremental queries, Hudi DeltaStreamer', 'Delta Lake on EMR/Databricks: ACID, DML, Change Data Feed, Optimize + Z-Order', 'Glue Catalog integration for all three', 'AWS native Iceberg support: Athena, EMR, Glue, Redshift Spectrum'],
+                'dbt on AWS': ['dbt Core: models, tests, snapshots, seeds, macros', 'dbt Incremental Models: unique_key, merge strategy, insert-overwrite', 'dbt Snapshots: SCD Type 2 on Redshift/Athena', 'dbt Sources and freshness checks', 'dbt-expectations for data quality', 'dbt Semantic Layer: metrics definitions', 'Deploying dbt on AWS: ECS, Lambda, MWAA (dbt operator)', 'CI/CD for dbt: lint, test, deploy via GitHub Actions'],
+                'Data Mesh Concepts': ['Domain-oriented data ownership', 'Data as a Product: contracts, SLAs, discoverability', 'Self-serve data infrastructure on AWS', 'Federated computational governance: Lake Formation + Glue Catalog', 'Implementing a Data Mesh with multiple AWS accounts'],
+            },
+            projects: [
+                {
+                    name: 'Enterprise Lakehouse: S3 + Iceberg + dbt + Redshift', badges: ['b-faang', 'b-arch'],
+                    desc: 'Production medallion lakehouse: Kinesis → Lambda → S3 Bronze (raw JSON) → Glue PySpark → S3 Silver (Iceberg, cleaned) → dbt Gold (dimensional models) → Redshift Spectrum + Athena serving → Tableau. Terraform end-to-end.',
+                    stack: ['S3', 'Iceberg', 'Glue', 'EMR', 'dbt', 'Redshift Spectrum', 'Athena', 'Tableau', 'Terraform']
+                },
+                {
+                    name: 'Multi-Tenant Lakehouse Platform', badges: ['b-faang', 'b-arch'],
+                    desc: 'Multi-tenant lakehouse serving 5 business domains: each domain owns its S3 prefix, Glue Catalog database, and Iceberg tables. Lake Formation row/column security. Shared Gold layer for cross-domain analytics. Data product APIs.',
+                    stack: ['S3', 'Iceberg', 'Lake Formation', 'Glue Catalog', 'Athena', 'FastAPI', 'Terraform', 'GitHub Actions']
+                },
+                {
+                    name: 'Data Mesh Proof of Concept (3 Domains)', badges: ['b-faang', 'b-arch'],
+                    desc: 'Data Mesh on AWS: Orders, Products, Customers domains, each with its own AWS account, S3 data product, REST API, and SLA monitoring. Central governance via Lake Formation. Data contracts enforced in CI.',
+                    stack: ['AWS Organizations', 'S3', 'Iceberg', 'Lake Formation', 'FastAPI', 'Glue', 'Terraform', 'dbt']
+                },
+            ],
+        },
+        {
+            id: 'p15', stage: 4, color: '#38bdf8', diff: 'd-adv', diffLabel: 'Advanced',
+            number: 'PHASE 15', title: 'APIs, Web Scraping & Data Integration',
+            sub: 'REST · GraphQL · gRPC · Webhooks · RPC · Web scraping · Reverse ETL · Data sharing',
+            dur: 'Month 26–28',
+            why: 'Modern data engineers build APIs as well as consume them. This phase makes you the person who both ingests external data AND provides data as a service to other teams — a massive career differentiator.',
+            prereqs: ['Phase 1 — Python', 'Phase 2 — SQL', 'Phase 3 — Networking', 'Phase 4 — Advanced Python'],
+            topics: {
+                'API Design & Consumption': ['REST: OpenAPI/Swagger, resource design, HTTP methods, status codes, pagination', 'GraphQL: schema, queries, mutations, subscriptions, DataLoader pattern', 'gRPC & Protocol Buffers: streaming RPCs, binary performance vs REST', 'JSON-RPC & XML-RPC: legacy system integration', 'Webhooks: inbound verification (HMAC), outbound retry strategies', 'API versioning: URI, header, content negotiation', 'Authentication: OAuth2, JWT, API Keys, mTLS for service-to-service', 'Rate limiting, throttling, quotas — building and consuming', 'API Gateway on AWS: REST + HTTP + WebSocket APIs'],
+                'Building Data APIs for Teams': ['FastAPI: async, auto-OpenAPI docs, Pydantic validation, dependency injection', 'Data-as-a-Product API design patterns', 'API contract testing (Pact — consumer-driven contracts)', 'SDK auto-generation from OpenAPI spec', 'Internal data platform API: query datasets, trigger pipelines, subscribe to changes'],
+                'Web Scraping': ['requests + BeautifulSoup: static HTML pages', 'Scrapy: spiders, pipelines, item processors, middlewares', 'Playwright / Selenium: dynamic JS-rendered pages', 'Anti-bot: rotating proxies, user-agent rotation, Playwright stealth', 'robots.txt, rate limiting, ethical scraping guidelines', 'Scraping → S3 (JSON Lines) → Glue → Athena pipeline'],
+                'Reverse ETL & Data Sharing': ['Reverse ETL: warehouse → Salesforce, HubSpot, Mailchimp, Slack', 'Incremental sync: CDC-based Reverse ETL', 'Conflict resolution: source-of-truth rules', 'AWS Data Exchange: subscribing to and publishing data products', 'S3 cross-account data sharing', 'Redshift Data Sharing: sharing live data across Redshift clusters'],
+            },
+            projects: [
+                {
+                    name: 'Data Platform API Layer', badges: ['b-tool', 'b-faang', 'b-arch'],
+                    desc: 'FastAPI + GraphQL API over the data warehouse: query datasets, trigger Glue/Step Functions pipelines, subscribe to S3 events via webhooks, manage data sharing. JWT auth, API Gateway, rate limiting, audit log, OpenAPI docs, SDK generation.',
+                    stack: ['FastAPI', 'Strawberry GraphQL', 'API Gateway', 'Lambda', 'JWT', 'Cognito', 'Redshift', 'Terraform']
+                },
+                {
+                    name: 'Reverse ETL: Redshift → Salesforce + HubSpot', badges: ['b-tool', 'b-faang'],
+                    desc: 'Config-driven reverse ETL: customer segments from Redshift → Salesforce, HubSpot, Mailchimp. Incremental CDC-based sync, conflict resolution, retry logic, sync status dashboard, Step Functions orchestration.',
+                    stack: ['Python', 'Redshift', 'Salesforce API', 'HubSpot API', 'Step Functions', 'DynamoDB', 'Terraform']
+                },
+                {
+                    name: 'Distributed Web Scraping Pipeline', badges: ['b-tool', 'b-batch'],
+                    desc: 'ECS-deployed Scrapy + Playwright scrapers: S3 JSON Lines output, partitioned by date/source, Glue auto-cataloging, Athena queries, deduplication via DynamoDB, proxy rotation, Grafana scrape monitoring.',
+                    stack: ['Scrapy', 'Playwright', 'ECS', 'S3', 'Glue', 'Athena', 'DynamoDB', 'ElastiCache', 'Terraform']
+                },
+            ],
+        },
+// ═══════════════════════════════════════════════════════
+// STAGE 6 — SPECIALIST & CLOUD-NATIVE
+// ═══════════════════════════════════════════════════════
+        {
+            id: 'p16', stage: 5, color: '#ff4d9e', diff: 'd-exp', diffLabel: 'Expert',
+            number: 'PHASE 16', title: 'Databricks on AWS — Unity Catalog & Delta Lake',
+            sub: 'Unity Catalog · Delta Lake · Auto Loader · Workflows · Photon · Databricks Asset Bundles',
+            dur: 'Month 28–30',
+            why: 'Databricks is the most widely adopted enterprise data platform and is increasingly the preferred choice over EMR for complex Spark workloads. Unity Catalog is the future of data governance for Databricks shops.',
+            prereqs: ['Phase 10 — Spark Deep Dive', 'Phase 14 — Lakehouse Architecture'],
+            topics: {
+                'Databricks Platform': ['Workspace, clusters, cluster policies, auto-scaling, spot instances', 'Unity Catalog: metastore, catalogs, schemas, tables, volumes', 'Unity Catalog permission model vs legacy Table ACLs', 'Delta Lake deep dive: ACID, DML (MERGE, UPDATE, DELETE), transaction log, CDF', 'Auto Loader: incremental file ingestion from S3, schema inference & evolution', 'Databricks Workflows: job clusters, task dependencies, repair runs, alerting', 'Databricks Asset Bundles: IaC for Databricks resources', 'Photon engine: vectorised C++ execution for Delta tables', 'MLflow integration: experiment tracking, model registry', 'Databricks SQL Warehouse: serverless vs classic'],
+                'Production Databricks Patterns': ['Medallion architecture on Databricks: Auto Loader Bronze → DQ Silver → dbt Gold', 'Unity Catalog for Data Mesh on AWS', 'Column-level security and row filters in Unity Catalog', 'Delta table optimisation: OPTIMIZE, Z-ORDER, VACUUM, liquid clustering', 'Cost management: DBU budgets, cluster policies, auto-termination', 'CI/CD for Databricks: DABs + GitHub Actions'],
+            },
+            projects: [
+                {
+                    name: 'Databricks Lakehouse Platform on AWS', badges: ['b-faang', 'b-arch'],
+                    desc: 'Full production Databricks platform on AWS: Terraform-provisioned Unity Catalog, Auto Loader Bronze ingest from S3, DQ-validated Silver, dbt Gold on SQL Warehouse. Workflows CI/CD, column-level security, Photon-optimised queries.',
+                    stack: ['Databricks', 'Delta Lake', 'Unity Catalog', 'Auto Loader', 'dbt', 'Workflows', 'S3', 'Terraform']
+                },
+                {
+                    name: 'Data Mesh on Databricks + AWS', badges: ['b-faang', 'b-arch'],
+                    desc: 'Three-domain Data Mesh (Orders, Products, Customers) on Databricks: each domain owns Unity Catalog schema + Delta tables + FastAPI data product. Central governance, data contracts, cross-domain lineage in Unity Catalog.',
+                    stack: ['Databricks', 'Unity Catalog', 'Delta Lake', 'FastAPI', 'S3', 'Terraform', 'GitHub Actions']
+                },
+            ],
+        },
+        {
+            id: 'p17', stage: 5, color: '#ff4d9e', diff: 'd-exp', diffLabel: 'Expert',
+            number: 'PHASE 17', title: 'Snowflake on AWS',
+            sub: 'Snowpipe · Streams · Tasks · Dynamic Tables · Snowpark · Data Sharing · Multi-Cloud',
+            dur: 'Month 30–32',
+            why: 'Snowflake is the dominant cloud warehouse at many enterprises. Understanding it alongside Redshift gives you the ability to work in any data team and to make informed warehouse selection decisions.',
+            prereqs: ['Phase 13 — Data Warehousing', 'Phase 5 — Data Formats (Snowpipe + Iceberg)'],
+            topics: {
+                'Snowflake Core': ['Virtual Warehouses: auto-suspend, auto-resume, multi-cluster', 'Snowflake storage: micro-partitions, clustering, time travel, fail-safe', 'Snowpipe: continuous loading from S3 via SQS event notification', 'Streams: CDC on Snowflake tables (standard, append-only, insert-only)', 'Tasks: DAG-based scheduling in Snowflake (cron or stream-triggered)', 'Dynamic Tables: declarative, continuously refreshed materialised results', 'Zero-copy cloning: instant Dev/Test environments', 'Data Sharing: share live data to other Snowflake accounts', 'Snowflake Marketplace: subscribing to data products'],
+                'Advanced Snowflake': ['Snowpark: Python/Java/Scala running inside Snowflake', 'External functions: Lambda-backed UDFs', 'Cortex AI: SQL-accessible LLM functions', 'Iceberg Tables in Snowflake: S3-backed, interoperable with EMR', 'SnowCD, network policies, private link for AWS', 'Query profiling: Query Profile UI, warehouse sizing', 'Resource monitors: cost alerts and hard limits', 'Snowflake vs Redshift: honest trade-off analysis'],
+                'Multi-Cloud with Snowflake': ['Snowflake on AWS: deployment regions, PrivateLink', 'Cross-cloud replication: Business Critical tier', 'AWS + Snowflake pattern: Kinesis → S3 → Snowpipe → Snowflake → Tableau', 'Snowflake + AWS Data Exchange', 'DR strategy across Snowflake accounts'],
+            },
+            projects: [
+                {
+                    name: 'Enterprise Snowflake Data Platform on AWS', badges: ['b-faang', 'b-arch'],
+                    desc: 'Kinesis → S3 (Parquet/Iceberg) → Snowpipe continuous loading → Snowflake Streams+Tasks (CDC processing) → Dynamic Tables (real-time marts) → Tableau. Snowpark for Python transformations. Terraform-provisioned. dbt-transformed Gold layer.',
+                    stack: ['Snowflake', 'Snowpipe', 'Snowpark', 'Streams', 'Tasks', 'S3', 'Kinesis', 'dbt', 'Tableau', 'Terraform']
+                },
+            ],
+        },
+// ═══════════════════════════════════════════════════════
+// STAGE 7 — MASTERY
+// ═══════════════════════════════════════════════════════
+        {
+            id: 'p18', stage: 6, color: '#ffd700', diff: 'd-exp', diffLabel: 'Expert',
+            number: 'PHASE 18', title: 'DataOps, MLOps, CI/CD & Infrastructure as Code',
+            sub: 'GitHub Actions · CodePipeline · Terraform · CDK · Docker · ECS · Observability · SLOs · MLflow · SageMaker',
+            dur: 'Month 31–33',
+            why: 'Senior engineers own the reliability, repeatability, and observability of entire platforms. DataOps is the discipline that turns good pipelines into production-grade systems others can trust 24/7.',
+            prereqs: ['Phase 0 — Git & Docker', 'Phase 8 — AWS (IAM, EC2)', 'Phase 9 — AWS DE Stack'],
+            topics: {
+                'DataOps & CI/CD': ['Git branching for data: trunk-based development, Gitflow', 'CI/CD for Glue jobs, EMR scripts, dbt, Lambda, Airflow DAGs', 'Automated data quality gates in CI pipelines', 'Environment promotion: Dev → Test → Prod', 'Feature flags for data pipelines', 'Blue/green deployments for data systems', 'DataOps maturity model'],
+                'Infrastructure as Code': ['Terraform deep dive: state management, modules, workspaces, remote state on S3', 'AWS CDK: L1, L2, L3 constructs, Python CDK for DE stacks', 'CloudFormation (understanding for legacy)', 'IaC for: S3, Glue, EMR, Redshift, MSK, MWAA, Lambda, Step Functions', 'Drift detection: Terraform plan in CI, AWS Config rules', 'Open Policy Agent (OPA) for policy-as-code'],
+                'Containers & ECS': ['Docker for DE: packaging Spark jobs, Glue Python shells, API services', 'Multi-stage builds for production images', 'ECS Fargate: serverless containers for DE workloads', 'ECS Task Definitions and Service auto-scaling', 'ECR: private container registry', 'EKS basics: Kubernetes for large-scale Spark (Spark on K8s)', 'Deploying containerised Python workloads on ECS'],
+                'Observability & Monitoring': ['CloudWatch: metrics, logs, dashboards, alarms, anomaly detection', 'AWS X-Ray: distributed tracing for Lambda, API Gateway, ECS', 'Grafana + Prometheus on AWS (Amazon Managed Grafana/Prometheus)', 'OpenTelemetry instrumentation for data pipelines', 'Custom pipeline metrics: rows processed, latency, error rate, DQ score', 'SLOs, SLIs, SLAs for data products', 'Data observability: freshness, volume anomaly, schema drift, distribution', 'Great Expectations + OpenLineage integration', 'On-call practices for data engineers'],
+                'MLOps Foundations': ['MLflow: experiment tracking, model registry, serving', 'Amazon SageMaker: training jobs, feature store, model monitoring', 'SageMaker Pipelines: ML CI/CD', 'Feature stores: Feast on AWS', 'Model drift monitoring: SageMaker Model Monitor', 'Integrating ML pipelines into DataOps workflows (Airflow + SageMaker)'],
+            },
+            projects: [
+                {
+                    name: 'Zero-Click AWS Platform Deployment', badges: ['b-faang', 'b-tool', 'b-arch'],
+                    desc: 'Provision an entire AWS data platform (VPC, S3, Glue, EMR, MSK, Redshift, MWAA, Step Functions, Lambda) from a single terraform apply. Module library, remote state, Dev/Test/Prod environments, drift alerting, automated rollback.',
+                    stack: ['Terraform', 'AWS CDK', 'GitHub Actions', 'CodePipeline', 'S3 remote state', 'AWS Config', 'OPA']
+                },
+                {
+                    name: 'Data Observability Platform', badges: ['b-tool', 'b-faang'],
+                    desc: 'Instrument Glue, EMR, Lambda, and dbt with OpenTelemetry. Amazon Managed Grafana dashboards: pipeline health, freshness anomaly detection, volume trends, SLO burn-rate alerts with PagerDuty integration. Great Expectations quality scores.',
+                    stack: ['OpenTelemetry', 'Amazon Managed Grafana', 'Prometheus', 'CloudWatch', 'Great Expectations', 'OpenLineage', 'dbt']
+                },
+                {
+                    name: 'Containerised DE Workloads on ECS', badges: ['b-tool', 'b-faang'],
+                    desc: 'Package a web scraping + API ingestion pipeline as Docker containers, deploy on ECS Fargate: auto-scaling based on SQS queue depth, secrets from Secrets Manager, output to S3, logs to CloudWatch, full Terraform IaC.',
+                    stack: ['Docker', 'ECS Fargate', 'ECR', 'SQS', 'S3', 'Secrets Manager', 'CloudWatch', 'Terraform']
+                },
+            ],
+        },
+        {
+            id: 'p19', stage: 6, color: '#ffd700', diff: 'd-exp', diffLabel: 'Expert',
+            number: 'PHASE 19', title: 'Data Security & Governance',
+            sub: 'IAM deep · Lake Formation · KMS · Secrets Manager · GDPR · HIPAA · SOC2 · PCI-DSS · CloudTrail · Macie',
+            dur: 'Month 32–34',
+            why: 'Governance cannot be bolted on after the fact — but it is far easier to understand once you have real platforms to govern. This phase makes compliance concrete, not theoretical.',
+            prereqs: ['Phase 8 — AWS Security (IAM, KMS)', 'Phase 13 — Warehousing', 'Phase 14 — Lakehouse'],
+            topics: {
+                'Data Governance on AWS': ['AWS Glue Data Catalog as the governance foundation', 'AWS Lake Formation: column-level security, row filters, LF-Tags', 'Data lineage: Lake Formation lineage, OpenLineage, Marquez', 'Data ownership and stewardship models', 'Business glossary: Glue catalog descriptions + custom metadata', 'Data quality governance: Great Expectations + CloudWatch alerts', 'Amazon DataZone: new unified governance service'],
+                'Access Control': ['IAM policy evaluation deep dive: explicit deny, SCP, boundary, identity, resource', 'Lake Formation vs S3 bucket policies: understanding the difference and precedence', 'Row-Level Security in Redshift and Athena', 'Column masking: dynamic data masking in Redshift', 'Attribute-Based Access Control (ABAC) with IAM tags', 'Cross-account access patterns for data platforms', 'Cognito for external user authentication to data APIs'],
+                'Encryption & Secrets': ['KMS key types: AWS managed, customer managed (CMK), multi-region', 'Envelope encryption: data key → encrypted with CMK', 'SSE-S3, SSE-KMS, SSE-C for S3 objects', 'TDE (Transparent Data Encryption) for Redshift', 'Always encrypted patterns for PII', 'AWS Secrets Manager: rotation, Lambda-backed rotation', 'Parameter Store: hierarchical config, SecureString', 'Certificate Manager (ACM) for TLS'],
+                'Compliance & Audit': ['CloudTrail: API logging, management events, data events (S3 object-level)', 'Amazon Macie: ML-powered PII detection in S3', 'AWS Config: resource compliance rules, conformance packs', 'GDPR: right to erasure (S3 versioning + delete markers), data residency (S3 region), consent', 'HIPAA on AWS: covered services, Business Associate Agreement', 'PCI-DSS on AWS: data isolation, encryption, logging requirements', 'SOC 2 Type II control mapping', 'Compliance-as-code: AWS Config rules in Terraform', 'Audit log design: immutable, tamper-evident, queryable via Athena'],
+            },
+            projects: [
+                {
+                    name: 'Enterprise Governance & Compliance Platform', badges: ['b-faang', 'b-arch'],
+                    desc: 'Full governance: Lake Formation scanning all sources, Macie PII detection, column-level security across Athena + Redshift, row filters, GDPR right-to-erasure workflow (S3 versioning + Lambda delete), CloudTrail audit queryable via Athena, GDPR/HIPAA compliance dashboard.',
+                    stack: ['Lake Formation', 'Macie', 'Glue Catalog', 'Redshift RLS', 'CloudTrail', 'Athena', 'Lambda', 'Config', 'Terraform']
+                },
+                {
+                    name: 'PII Detection & Tokenisation Pipeline', badges: ['b-tool'],
+                    desc: 'Automated PII pipeline: Macie scans S3 → classifies PII types → Lambda applies tokenisation/masking per policy → logs decisions to DynamoDB → generates compliance report. Integrates with Glue and EMR.',
+                    stack: ['Amazon Macie', 'Lambda', 'Glue', 'EMR', 'DynamoDB', 'KMS', 'S3', 'Presidio', 'Terraform']
+                },
+            ],
+        },
+        {
+            id: 'p20', stage: 6, color: '#ffd700', diff: 'd-exp', diffLabel: 'Expert',
+            number: 'PHASE 20', title: 'Data Architecture Mastery',
+            sub: 'CAP Theorem · Data Mesh · Lambda/Kappa · CQRS · Event Sourcing · Federation · 100-page Architecture Document',
+            dur: 'Month 33–35',
+            why: 'Architecture is where senior engineers spend most of their time. This phase codifies the design instincts you have been building throughout the roadmap into formal patterns you can apply and explain at Staff/Principal level.',
+            prereqs: ['Phase 11 — Kafka (streaming patterns)', 'Phase 14 — Lakehouse', 'Phase 15 — APIs', 'Most of the roadmap'],
+            topics: {
+                'Distributed Systems Theory': ['CAP Theorem: real examples with DynamoDB (AP), RDS (CP), ElastiCache', 'PACELC model: latency trade-off under normal operation', 'Eventual consistency: convergence, read-your-writes, monotonic reads', 'Distributed transactions: 2PC (why it is avoided), Saga pattern', 'Consensus: Raft basics (how DynamoDB and MSK leader election works)', 'Idempotency: exactly-once in distributed systems'],
+                'Architecture Patterns': ['Lambda Architecture: separate batch and stream, query both', 'Kappa Architecture: single stream layer, batch via replay', 'Lakehouse: S3 + Iceberg + dbt + Redshift', 'Data Mesh: domain ownership, data-as-a-product, self-serve, federated governance', 'Data Fabric: AI-assisted, automated integration', 'Medallion (Bronze/Silver/Gold): layered quality model', 'Hub & Spoke vs Mesh: governance trade-offs'],
+                'Application-Level Patterns': ['CQRS: separate command (write) and query (read) models', 'Event Sourcing: append-only event log as the system of record', 'Outbox Pattern: reliable event publishing from relational DBs', 'Saga Pattern: multi-step distributed transaction management', 'Strangler Fig: incremental migration from legacy systems', 'Sidecar Pattern: separating infrastructure concerns'],
+                'AWS-Specific Architecture': ['Well-Architected Framework: 6 pillars applied to DE', 'Data platform reference architectures on AWS', 'Multi-region active-active data platforms', 'Cost architecture: Spot, Reserved, Savings Plans, S3 lifecycle', 'Disaster Recovery: RTO/RPO, pilot light, warm standby, multi-region active-active'],
+            },
+            projects: [
+                {
+                    name: 'Netflix-Scale Architecture Document (100+ pages)', badges: ['b-faang', 'b-arch'],
+                    desc: 'Full architecture design document for a Netflix-scale data platform on AWS: ingestion (Kinesis + MSK), storage (S3 + Iceberg), processing (EMR + Databricks), warehouse (Redshift + Snowflake), serving (APIs + Tableau), governance, security, DR strategy, cost model, migration plan. C4 model diagrams.',
+                    stack: ['Miro / Lucidchart', 'C4 Model', 'AWS Well-Architected', 'ADR Documents']
+                },
+                {
+                    name: 'Data Mesh on AWS (3 Accounts)', badges: ['b-faang', 'b-arch'],
+                    desc: 'Production Data Mesh: Orders, Products, Customers domains, each with their own AWS account, S3 data products (Iceberg), REST API, SLA monitoring, and data contracts enforced in CI. Central governance account with Lake Formation and OpenLineage.',
+                    stack: ['AWS Organizations', 'S3', 'Iceberg', 'Lake Formation', 'FastAPI', 'Glue', 'OpenLineage', 'Terraform', 'GitHub Actions']
+                },
+            ],
+        },
+    ];
+
+    // ─────────────────────────────────────────────────────────
+    // RENDER
+    // ─────────────────────────────────────────────────────────
+    const container = document.getElementById('phases');
+    const navEl = document.getElementById('navPhases');
+    let curStage = -1;
+
+    const bMap = {
+        'b-faang': 'b-faang',
+        'b-stream': 'b-stream',
+        'b-batch': 'b-batch',
+        'b-tool': 'b-tool',
+        'b-arch': 'b-arch'
+    };
+    const bLbl = {
+        'b-faang': '★ FAANG',
+        'b-stream': '⚡ Stream',
+        'b-batch': '⬛ Batch',
+        'b-tool': '🔧 Build',
+        'b-arch': '🏛 Arch'
+    };
+    const dLbl = {'d-beg': 'Beginner', 'd-int': 'Intermediate', 'd-adv': 'Advanced', 'd-exp': 'Expert'};
+
+    function rgb(h) {
+        return `${parseInt(h.slice(1, 3), 16)},${parseInt(h.slice(3, 5), 16)},${parseInt(h.slice(5, 7), 16)}`;
+    }
+
+    phases.forEach((p, idx) => {
+        // Stage divider
+        if (p.stage !== curStage) {
+            curStage = p.stage;
+            const st = stages[p.stage];
+            const d = document.createElement('div');
+            d.className = 'stage-header';
+            d.innerHTML = `<div class="ln"></div><span class="stage-pill ${st.cls}">${st.label}</span><span class="stage-sub">${st.sub}</span><div class="ln"></div>`;
+            container.appendChild(d);
+        }
+
+        // Nav button
+        const btn = document.createElement('button');
+        btn.className = 'nav-phase-btn';
+        btn.textContent = `P${idx}`;
+        btn.title = p.title;
+        btn.onclick = () => document.getElementById(p.id)?.scrollIntoView({behavior: 'smooth', block: 'start'});
+        navEl.appendChild(btn);
+
+        // Topics HTML
+        let tHtml = '';
+        for (const [sec, items] of Object.entries(p.topics)) {
+            tHtml += `<div class="tsec"><div class="tsec-title">${sec}</div><div class="tgrid">${items.map(t => `<span class="tag">${t}</span>`).join('')}</div></div>`;
+        }
+
+        // Projects HTML
+        let prHtml = '<div class="pgrid">';
+        p.projects.forEach(pr => {
+            const bBadges = pr.badges.map(b => `<span class="badge ${b}">${bLbl[b]}</span>`).join('');
+            const bStack = pr.stack.map(s => `<span class="stag">${s}</span>`).join('');
+            prHtml += `<div class="pcard"><div class="ptop"><div class="pname">${pr.name}</div><div class="pbadges">${bBadges}</div></div><div class="pdesc">${pr.desc}</div><div class="pstack">${bStack}</div></div>`;
+        });
+        prHtml += '</div>';
+
+        const prereqTags = p.prereqs.map(r => `<span class="prereq-tag">${r}</span>`).join('');
+        const pc = p.color;
+        const pca = `rgba(${rgb(pc)},0.12)`;
+        const pcb = `rgba(${rgb(pc)},0.3)`;
+
+        const card = document.createElement('div');
+        card.className = 'phase-card';
+        card.id = p.id;
+        card.style.setProperty('--pc', pc);
+        card.innerHTML = `
+    <div class="ph" onclick="this.closest('.phase-card').classList.toggle('open')">
+      <div class="pnb">
+        <div class="pnum" style="background:${pca};color:${pc};border-color:${pcb}">${p.number}</div>
+        <div class="dbadge ${p.diff}">${dLbl[p.diff]}</div>
+      </div>
+      <div class="pht">
+        <div class="ptitle">${p.title}</div>
+        <div class="psub">${p.sub}</div>
+      </div>
+      <div class="pmeta">
+        <span class="pdur">${p.dur}</span>
+        <span class="pchev">▾</span>
+      </div>
+    </div>
+    <div class="pb">
+      <div class="why"><span class="wi">💡</span><div class="wt"><strong>Why this order?</strong> ${p.why}</div></div>
+      <div class="prereq"><span class="prereq-lbl">Prerequisites</span>${prereqTags}</div>
+      <div class="tsec"><div class="tsec-title">Core Topics</div>${tHtml}</div>
+      <div class="tsec"><div class="tsec-title">Projects</div>${prHtml}</div>
+      <div class="mindset">
+        <div class="mt">Staff Engineer Mindset — Ask For Every Project</div>
+        <div class="mlist">
+          ${['How will this fail?', 'How will it scale 100×?', 'How much will it cost?', 'How will it be monitored?', 'How will it be secured?', 'How can it be automated?'].map(q => `<span class="mq">${q}</span>`).join('')}
+        </div>
+      </div>
+    </div>`;
+        container.appendChild(card);
+    });
+
+    // Reading progress
+    window.addEventListener('scroll', () => {
+        const d = document.documentElement;
+        document.getElementById('prog').style.width = (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+    });
+
+    // Active nav
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const i = phases.findIndex(ph => ph.id === e.target.id);
+                if (i >= 0) document.querySelectorAll('.nav-phase-btn').forEach((b, j) => b.classList.toggle('active', i === j));
+            }
+        });
+    }, {threshold: 0.2});
+    phases.forEach(p => {
+        const el = document.getElementById(p.id);
+        if (el) obs.observe(el);
+    });
+
+    // Open first phase
+    document.querySelector('.phase-card')?.classList.add('open');
+</script>
+</body>
+</html>
+HTMLEOF
+echo "Done. $(wc -c < /mnt/user-data/outputs/aws-data-engineer-roadmap.html) bytes"
