@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning Roadmap — AO</title>
+    <meta name="description"
+          content="Beginner to research-professor roadmap for Machine Learning: math, statistics, classical ML, deep learning, specialized domains, distributed systems, and the academic research track.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+          rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0d14;
+            --bg-elevated: #11151f;
+            --card: #151a26;
+            --card-hover: #1b2130;
+            --line: #242c3d;
+            --violet: #8b6ef5;
+            --violet-dim: #8b6ef533;
+            --teal: #2dd4bf;
+            --teal-dim: #2dd4bf33;
+            --amber: #f0a94e;
+            --amber-dim: #f0a94e33;
+            --text: #e7e9f2;
+            --text-dim: #8891a8;
+            --text-faint: #565f75;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* ---------- background texture ---------- */
+        .bg-field {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse 900px 500px at 15% -5%, var(--violet-dim), transparent 60%),
+            radial-gradient(ellipse 700px 500px at 100% 15%, var(--teal-dim), transparent 55%);
+        }
+
+        /* ---------- header ---------- */
+        header {
+            position: relative;
+            z-index: 2;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 72px 32px 48px;
+        }
+
+        .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 12.5px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .eyebrow::before {
+            content: '';
+            width: 26px;
+            height: 1px;
+            background: var(--teal);
+            display: inline-block;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(34px, 5.4vw, 60px);
+            line-height: 1.05;
+            letter-spacing: -.01em;
+            max-width: 820px;
+        }
+
+        h1 em {
+            font-style: normal;
+            color: transparent;
+            background: linear-gradient(100deg, var(--violet), var(--teal));
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .lede {
+            margin-top: 22px;
+            max-width: 640px;
+            font-size: 17px;
+            color: var(--text-dim);
+        }
+
+        .hero-meta {
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .meta-pill {
+            font-family: var(--font-mono);
+            font-size: 12.5px;
+            color: var(--text-dim);
+            border: 1px solid var(--line);
+            border-radius: 100px;
+            padding: 7px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-elevated);
+        }
+
+        .meta-pill b {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* progress console */
+        .console {
+            margin-top: 40px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: var(--bg-elevated);
+            padding: 22px 24px;
+            display: flex;
+            align-items: center;
+            gap: 26px;
+            flex-wrap: wrap;
+        }
+
+        .ring-wrap {
+            position: relative;
+            width: 74px;
+            height: 74px;
+            flex-shrink: 0;
+        }
+
+        .ring-wrap svg {
+            transform: rotate(-90deg);
+        }
+
+        .ring-bg {
+            fill: none;
+            stroke: var(--line);
+            stroke-width: 6;
+        }
+
+        .ring-fg {
+            fill: none;
+            stroke: url(#ringGrad);
+            stroke-width: 6;
+            stroke-linecap: round;
+            transition: stroke-dashoffset .4s ease;
+        }
+
+        .ring-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .console-text {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .console-text .t1 {
+            font-family: var(--font-display);
+            font-size: 15.5px;
+            font-weight: 600;
+        }
+
+        .console-text .t2 {
+            font-size: 13.5px;
+            color: var(--text-faint);
+            margin-top: 3px;
+        }
+
+        .console button {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-dim);
+            background: transparent;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 9px 14px;
+            cursor: pointer;
+            transition: .15s;
+        }
+
+        .console button:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+        }
+
+        /* ---------- spine layout ---------- */
+        .spine-wrap {
+            position: relative;
+            z-index: 2;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 20px 32px 140px;
+        }
+
+        .spine-line {
+            position: absolute;
+            left: 47px;
+            top: 14px;
+            bottom: 80px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--violet), var(--teal) 55%, var(--amber) 100%);
+            opacity: .35;
+        }
+
+        @media (max-width: 760px) {
+            .spine-line {
+                left: 27px;
+            }
+        }
+
+        .phase {
+            position: relative;
+            padding-left: 104px;
+            margin-bottom: 14px;
+        }
+
+        @media (max-width: 760px) {
+            .phase {
+                padding-left: 64px;
+            }
+        }
+
+        .node {
+            position: absolute;
+            left: 22px;
+            top: 2px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 15px;
+            color: var(--text-dim);
+            transition: .2s;
+            z-index: 2;
+        }
+
+        @media (max-width: 760px) {
+            .node {
+                left: 2px;
+                width: 44px;
+                height: 44px;
+                font-size: 12.5px;
+            }
+        }
+
+        .phase.done .node {
+            border-color: var(--teal);
+            color: var(--teal);
+            background: var(--teal-dim);
+        }
+
+        .phase.research .node {
+            border-color: var(--amber);
+            color: var(--amber);
+        }
+
+        .phase-card {
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: var(--card);
+            overflow: hidden;
+            transition: border-color .2s;
+        }
+
+        .phase-card:hover {
+            border-color: #2e3648;
+        }
+
+        .phase.research .phase-card {
+            background: linear-gradient(180deg, #181310, var(--card) 40%);
+            border-color: #3a2c18;
+        }
+
+        .phase-head {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 22px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .phase-num {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-faint);
+            min-width: 52px;
+        }
+
+        .phase-title-wrap {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .phase-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 19px;
+        }
+
+        .phase-sub {
+            font-size: 13.5px;
+            color: var(--text-faint);
+            margin-top: 3px;
+        }
+
+        .phase-progress {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-dim);
+            white-space: nowrap;
+        }
+
+        .chevron {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            color: var(--text-faint);
+            transition: transform .25s;
+        }
+
+        .phase-card.open .chevron {
+            transform: rotate(180deg);
+        }
+
+        .phase-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .35s ease;
+        }
+
+        .phase-body-inner {
+            padding: 0 22px 22px;
+        }
+
+        .phase-blurb {
+            font-size: 14.5px;
+            color: var(--text-dim);
+            padding-bottom: 16px;
+            border-bottom: 1px dashed var(--line);
+            margin-bottom: 16px;
+            max-width: 640px;
+        }
+
+        .clusters {
+            display: grid;
+            grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+        }
+
+        .cluster-name {
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--violet);
+            margin-bottom: 10px;
+        }
+
+        .phase.research .cluster-name {
+            color: var(--amber);
+        }
+
+        .topic {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 6px 0;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .topic input {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            border: 1.5px solid var(--line);
+            border-radius: 5px;
+            background: var(--bg);
+            cursor: pointer;
+            position: relative;
+            transition: .15s;
+        }
+
+        .topic input:checked {
+            background: var(--teal);
+            border-color: var(--teal);
+        }
+
+        .topic input:checked::after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 1px;
+            width: 4px;
+            height: 8px;
+            border: solid var(--bg);
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .topic span {
+            color: var(--text);
+        }
+
+        .topic input:checked ~ span {
+            color: var(--text-faint);
+            text-decoration: line-through;
+        }
+
+        .tools-line {
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px dashed var(--line);
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        .tools-line b {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .milestone {
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-radius: 10px;
+            background: var(--violet-dim);
+            border: 1px solid #3a3260;
+            font-size: 13.5px;
+            color: var(--text);
+        }
+
+        .phase.research .milestone {
+            background: var(--amber-dim);
+            border-color: #4a3a1e;
+        }
+
+        .milestone b {
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--teal);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .phase.research .milestone b {
+            color: var(--amber);
+        }
+
+        /* ---------- footer ---------- */
+        footer {
+            position: relative;
+            z-index: 2;
+            border-top: 1px solid var(--line);
+            padding: 40px 32px 60px;
+            max-width: 1180px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            background: linear-gradient(135deg, var(--violet), var(--teal));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 13px;
+            color: #0a0d14;
+        }
+
+        .brand-text {
+            font-family: var(--font-mono);
+            font-size: 12.5px;
+            color: var(--text-faint);
+        }
+
+        footer p {
+            font-size: 12.5px;
+            color: var(--text-faint);
+            max-width: 420px;
+        }
+
+        ::selection {
+            background: var(--violet-dim);
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-field"></div>
+
+<header>
+    <div class="eyebrow">AO · Roadmap Hub</div>
+    <h1>From your first <em>vector</em> to your first <em>faculty offer</em>.</h1>
+    <p class="lede">A complete, sequenced path through machine learning — the mathematics, the classical models, the
+        deep learning stack, the specialized domains, and the research track that ends at a whiteboard in front of a
+        graduate seminar.</p>
+
+    <div class="hero-meta">
+        <div class="meta-pill">🎯 <b>13 phases</b>&nbsp;·&nbsp;beginner → researcher</div>
+        <div class="meta-pill">🧮 Math-first, tool-second</div>
+        <div class="meta-pill">🧪 Every topic is checkable, not just readable</div>
+    </div>
+
+    <div class="console">
+        <div class="ring-wrap">
+            <svg width="74" height="74" viewBox="0 0 74 74">
+                <defs>
+                    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#8b6ef5"/>
+                        <stop offset="100%" stop-color="#2dd4bf"/>
+                    </linearGradient>
+                </defs>
+                <circle class="ring-bg" cx="37" cy="37" r="31"></circle>
+                <circle id="progressRing" class="ring-fg" cx="37" cy="37" r="31" stroke-dasharray="194.8"
+                        stroke-dashoffset="194.8"></circle>
+            </svg>
+            <div class="ring-label" id="progressPct">0%</div>
+        </div>
+        <div class="console-text">
+            <div class="t1" id="progressCount">0 of 0 topics checked</div>
+            <div class="t2">Progress is kept in this browser tab only — refreshing clears it. Self-host this file and
+                wire it to <span style="font-family:var(--font-mono)">localStorage</span> if you want it to persist.
+            </div>
+        </div>
+        <button id="expandAllBtn">Expand all</button>
+        <button id="resetBtn">Reset progress</button>
+    </div>
+</header>
+
+<div class="spine-wrap">
+    <div class="spine-line"></div>
+    <div id="phasesRoot"></div>
+</div>
+
+<footer>
+    <div class="brand">
+        <div class="brand-mark">AO</div>
+        <div class="brand-text">roadmap-hub / machine-learning.html</div>
+    </div>
+    <p>Reference structure inspired by roadmap.sh/machine-learning, expanded into a full curriculum with an explicit
+        research &amp; academia track. Static, dependency-free, hostable anywhere.</p>
+</footer>
+
+<script>
+    const PHASES = [
+        {
+            glyph: 'x', title: 'Orientation & Tooling', sub: 'Set up the workshop before you pick up any tools.',
+            blurb: 'Before the math and the models, get the environment right. This phase is short on purpose — the goal is to remove friction, not to master anything yet.',
+            tools: 'Python 3.11+, Jupyter/VS Code, Git & GitHub, virtual environments (venv/conda), Markdown for notes.',
+            clusters: [
+                {
+                    name: 'Environment',
+                    topics: ['Python fundamentals (if new to Python)', 'Jupyter notebooks & the notebook workflow', 'Virtual environments (venv, conda)', 'Git & GitHub basics for versioning experiments']
+                },
+                {
+                    name: 'Mindset',
+                    topics: ['Reading documentation over tutorials', 'Keeping a running lab notebook of what you tried', 'Reproducibility: seeds, environment files, saved configs']
+                },
+            ],
+            milestone: 'Ship a "hello world" notebook that loads a toy dataset, plots it, and is version-controlled on GitHub.'
+        },
+        {
+            glyph: 'ℝⁿ', title: 'Linear Algebra', sub: 'The language every model is written in.',
+            blurb: 'Every model you will ever train is, underneath, matrix arithmetic. This phase is non-negotiable — rushing it is the single most common reason people plateau later.',
+            tools: 'NumPy for hands-on practice; 3Blue1Brown\'s "Essence of Linear Algebra" as visual intuition.',
+            clusters: [
+                {
+                    name: 'Objects',
+                    topics: ['Scalars, Vectors, Tensors', 'Matrix representation & notation', 'Matrix operations (addition, multiplication, transpose)']
+                },
+                {
+                    name: 'Structure',
+                    topics: ['Determinants', 'Inverse of a matrix', 'Eigenvalues & Eigenvectors, Diagonalization', 'Singular Value Decomposition (SVD)']
+                },
+            ],
+            milestone: 'Implement matrix multiply, transpose, and a basic Gaussian-elimination inverse from scratch in NumPy — before letting NumPy do it for you.'
+        },
+        {
+            glyph: '∇', title: 'Calculus & Optimization', sub: 'How a model learns anything at all.',
+            blurb: 'Gradient descent is the engine under almost every algorithm in this roadmap. Understanding derivatives geometrically, not just symbolically, pays off for the rest of your career.',
+            tools: 'SymPy for symbolic checks; pen-and-paper derivations before code.',
+            clusters: [
+                {
+                    name: 'Single & multivariable',
+                    topics: ['Derivatives & the chain rule', 'Partial Derivatives', 'Gradient']
+                },
+                {name: 'Higher order', topics: ['Jacobian', 'Hessian', 'Convexity & why it matters for optimization']},
+            ],
+            milestone: 'Derive gradient descent for linear regression by hand, then implement it without scikit-learn.'
+        },
+        {
+            glyph: 'P', title: 'Probability & Statistics', sub: 'Reasoning under uncertainty.',
+            blurb: 'Machine learning is applied statistics with better marketing. This phase is where you learn to think in distributions instead of point estimates.',
+            tools: 'SciPy.stats for distributions; a spreadsheet or notebook for descriptive-stats practice.',
+            clusters: [
+                {
+                    name: 'Probability core',
+                    topics: ['Basics of Probability', 'Bayes\' Theorem', 'Random Variables & Probability Density Functions', 'Discrete Mathematics fundamentals', 'Types of Distributions (Normal, Binomial, Poisson, Uniform, Exponential)']
+                },
+                {
+                    name: 'Statistics',
+                    topics: ['Basic Statistical Concepts', 'Descriptive Statistics (mean, variance, skew, kurtosis)', 'Graphs & Charts for exploratory analysis', 'Inferential Statistics (hypothesis testing, confidence intervals, p-values)']
+                },
+            ],
+            milestone: 'Run and correctly interpret a hypothesis test (e.g. a t-test) on a real dataset — including when it would be misleading to use one.'
+        },
+        {
+            glyph: '{ }', title: 'The Scientific Python Stack', sub: 'Turning math into working code.',
+            blurb: 'This is where theory becomes tooling. Get fluent enough that these libraries feel like extensions of your own hands, not references you look up every line.',
+            tools: 'NumPy, SciPy, Pandas, Matplotlib, Seaborn, JAX (for later phases).',
+            clusters: [
+                {
+                    name: 'Numerical computing',
+                    topics: ['NumPy: arrays, broadcasting, vectorization', 'SciPy: optimization, linear algebra, stats modules']
+                },
+                {
+                    name: 'Data handling',
+                    topics: ['Pandas: DataFrames, indexing, groupby, joins', 'Data formats: CSV, Parquet, JSON, Excel']
+                },
+                {name: 'Visualization', topics: ['Matplotlib fundamentals', 'Seaborn for statistical visualization']},
+            ],
+            milestone: 'Take a messy real-world CSV, load it with Pandas, and produce three publication-quality Seaborn plots with correct labels and units.'
+        },
+        {
+            glyph: '⊙',
+            title: 'Data Preprocessing & Feature Engineering',
+            sub: 'Garbage in, garbage out — so don\'t put garbage in.',
+            blurb: 'Most of the real work in applied ML happens here, long before a model is trained. Treat this phase as seriously as the algorithms themselves.',
+            tools: 'Pandas, scikit-learn preprocessing module, category_encoders.',
+            clusters: [
+                {
+                    name: 'Cleaning',
+                    topics: ['Preprocessing techniques overview', 'Data Cleaning: missing values, duplicates, outliers']
+                },
+                {
+                    name: 'Engineering',
+                    topics: ['Feature Engineering (creating new signal from raw data)', 'Feature Scaling & Normalization (standardization, min-max)']
+                },
+                {
+                    name: 'Reduction & selection',
+                    topics: ['Dimensionality Reduction (intro — PCA formalized in Phase 8)', 'Feature Selection (filter, wrapper, embedded methods)']
+                },
+            ],
+            milestone: 'Build a reusable preprocessing pipeline (scikit-learn Pipeline/ColumnTransformer) that handles missing data, scaling, and encoding in one call.'
+        },
+        {
+            glyph: '⊢', title: 'Core Learning Paradigms', sub: 'Knowing which kind of problem you actually have.',
+            blurb: 'Before reaching for an algorithm, you need to correctly classify the problem. This phase is conceptual scaffolding for everything that follows.',
+            tools: 'scikit-learn as the reference implementation for the workflow below.',
+            clusters: [
+                {
+                    name: 'Paradigms',
+                    topics: ['Supervised Learning', 'Unsupervised Learning', 'Semi-supervised Learning', 'Reinforcement Learning', 'Self-supervised Learning']
+                },
+                {
+                    name: 'Scikit-learn workflow',
+                    topics: ['Data loading & datasets API', 'Data preparation (train/test split, pipelines)', 'Model training', 'Model selection', 'Hyperparameter tuning', 'Prediction & inference']
+                },
+            ],
+            milestone: 'Given a new dataset with no label, correctly decide (and justify in one paragraph) which paradigm fits before writing a single line of model code.'
+        },
+        {
+            glyph: 'ŷ',
+            title: 'Classification & Regression Algorithms',
+            sub: 'The classical toolbox every practitioner needs cold.',
+            blurb: 'These algorithms are old, well understood, and still what you reach for first in production. Learn the intuition and the failure modes of each, not just the API call.',
+            tools: 'scikit-learn, xgboost/lightgbm for gradient boosting.',
+            clusters: [
+                {
+                    name: 'Classification',
+                    topics: ['K-Nearest Neighbors (KNN)', 'Convolutional Neural Networks (CNN) — intro as a classifier', 'Logistic Regression', 'Support Vector Machines (SVM)', 'Decision Trees', 'Random Forest', 'Gradient Boosting Machines']
+                },
+                {
+                    name: 'Regression',
+                    topics: ['Linear Regression', 'Polynomial Regression', 'Lasso Regression (L1)', 'Ridge Regression (L2)', 'Elastic Net Regularization']
+                },
+            ],
+            milestone: 'On one dataset, train five different classifiers and produce a single comparison table of accuracy, precision, recall, and training time — with a written explanation of the trade-offs.'
+        },
+        {
+            glyph: 'κ',
+            title: 'Model Evaluation, Tuning & Ensembling',
+            sub: 'A model that looks good on the training set is not a model yet.',
+            blurb: 'This is the discipline that separates a hobbyist from a practitioner: knowing exactly how good your model really is, and why.',
+            tools: 'scikit-learn (GridSearchCV, cross_val_score), Optuna for advanced tuning.',
+            clusters: [
+                {
+                    name: 'Evaluation',
+                    topics: ['Train/validation/test splitting done correctly', 'Cross-validation strategies', 'Bias–variance tradeoff', 'Confusion matrix, ROC/AUC, precision-recall curves']
+                },
+                {
+                    name: 'Tuning & ensembling',
+                    topics: ['Grid search & random search', 'Bayesian hyperparameter optimization', 'Bagging vs. Boosting vs. Stacking']
+                },
+            ],
+            milestone: 'Diagnose a deliberately overfit model using learning curves, then fix it with regularization or data changes — and prove the fix with numbers.'
+        },
+        {
+            glyph: 'μ',
+            title: 'Unsupervised Learning & Dimensionality Reduction',
+            sub: 'Finding structure nobody labeled for you.',
+            blurb: 'Real-world data rarely comes with labels attached. This phase formalizes the intuition you built in Phase 6.',
+            tools: 'scikit-learn (cluster, decomposition modules), UMAP.',
+            clusters: [
+                {
+                    name: 'Clustering',
+                    topics: ['K-Means', 'Hierarchical clustering', 'DBSCAN and density-based methods']
+                },
+                {
+                    name: 'Dimensionality reduction (formal)',
+                    topics: ['Principal Component Analysis, built on SVD from Phase 2', 't-SNE and UMAP for visualization', 'When dimensionality reduction helps vs. hurts a downstream model']
+                },
+            ],
+            milestone: 'Reduce a high-dimensional dataset to 2D with PCA and with UMAP, and write a short note on what each projection reveals or distorts.'
+        },
+        {
+            glyph: 'σ(x)',
+            title: 'Deep Learning Foundations',
+            sub: 'From a single neuron to the architectures that ate the field.',
+            blurb: 'This is where the roadmap stops being purely classical. Build up from the perceptron so that Transformers feel like an extension of ideas you already have, not magic.',
+            tools: 'NumPy, SciPy, JAX, TensorFlow, PyTorch — build one model in at least two frameworks to see the tradeoffs.',
+            clusters: [
+                {
+                    name: 'Building blocks',
+                    topics: ['Perceptron & the Multilayer Perceptron (MLP)', 'Activation functions', 'Backpropagation, derived from the chain rule in Phase 2', 'Loss functions & optimizers (SGD, Adam)']
+                },
+                {
+                    name: 'Architectures',
+                    topics: ['Convolutional Neural Networks (CNN) for spatial data', 'Recurrent Neural Networks (RNN) & LSTM/GRU', 'Attention & the Transformer architecture']
+                },
+                {
+                    name: 'Frameworks',
+                    topics: ['NumPy/SciPy for from-scratch implementations', 'JAX for functional, composable, GPU/TPU-ready code', 'TensorFlow for production training pipelines']
+                },
+            ],
+            milestone: 'Implement backpropagation for a small MLP entirely in NumPy — no autodiff — then confirm the gradients match a JAX or TensorFlow implementation.'
+        },
+        {
+            glyph: '∀',
+            title: 'Specialized Domains & Systems at Scale',
+            sub: 'Where general ML becomes a specific product.',
+            blurb: 'This phase branches: pick the domains that match the problems you actually want to solve, and pair them with the systems knowledge required to run them at scale.',
+            tools: 'spaCy/Hugging Face (NLP), OpenCV/timm (vision), Spark/Dask (data mining at scale), Kafka/Ray (distributed systems).',
+            clusters: [
+                {
+                    name: 'Applied domains',
+                    topics: ['Artificial Intelligence — the broader field ML sits inside', 'Natural Language Processing (tokenization, embeddings, language models)', 'Image Classification & computer vision pipelines', 'Data Mining (pattern discovery, association rules, anomaly detection)', 'Spam Fighting & abuse detection as an applied classification problem']
+                },
+                {
+                    name: 'Systems',
+                    topics: ['Distributed Systems fundamentals (consistency, partitioning, fault tolerance)', 'Distributed training (data parallel, model parallel)', 'MLOps: experiment tracking, model versioning, CI/CD for models', 'Serving & monitoring models in production']
+                },
+            ],
+            milestone: 'Take one specialized domain above, build an end-to-end project (data → model → served prediction), and write it up as if it were a portfolio case study.'
+        },
+        {
+            glyph: '∎',
+            title: 'The Research Track',
+            sub: 'From practitioner to the person who teaches the practitioners.',
+            research: true,
+            blurb: 'Everything above makes you an excellent ML engineer. This phase is the deliberate turn toward research and academia — reading, questioning, and eventually producing knowledge, not just applying it.',
+            tools: 'arXiv, Papers With Code, Overleaf (LaTeX), a reference manager (Zotero), conference proceedings (NeurIPS, ICML, ICLR, ACL, CVPR, KDD).',
+            clusters: [
+                {
+                    name: 'Reading & reproducing',
+                    topics: ['Read one paper deeply per week; summarize it in your own words before checking others\' summaries', 'Reproduce a paper\'s core result from scratch — this is the single highest-leverage research skill', 'Follow a subfield closely enough to know its open problems, not just its famous results']
+                },
+                {
+                    name: 'Producing research',
+                    topics: ['Formulate your own research question from a gap you found while reproducing', 'Design and run controlled experiments; pre-register hypotheses where possible', 'Write your first paper — clarity over cleverness, always', 'Submit to a workshop before a top-tier conference; use the feedback loop']
+                },
+                {
+                    name: 'The academic path',
+                    topics: ['Build a public portfolio: code, papers, a personal research page', 'Apply to a PhD program aligned with your research question, not just prestige', 'Teaching assistant work — teaching is how you find the gaps in your own understanding', 'Postdoc or industry-research route toward a faculty position', 'Building and leading your own lab; mentoring the next cohort']
+                },
+            ],
+            milestone: 'Have one paper (workshop-level is fine to start) that you can defend, line by line, in front of a skeptical room — including its limitations.'
+        },
+    ];
+
+    const root = document.getElementById('phasesRoot');
+    let totalTopics = 0;
+
+    PHASES.forEach((phase, pIdx) => {
+        const phaseEl = document.createElement('div');
+        phaseEl.className = 'phase' + (phase.research ? ' research' : '');
+
+        const node = document.createElement('div');
+        node.className = 'node';
+        node.textContent = phase.glyph;
+        phaseEl.appendChild(node);
+
+        const card = document.createElement('div');
+        card.className = 'phase-card';
+
+        const head = document.createElement('div');
+        head.className = 'phase-head';
+        head.innerHTML = `
+    <div class="phase-num">${String(pIdx).padStart(2, '0')} /12</div>
+    <div class="phase-title-wrap">
+      <div class="phase-title">${phase.title}</div>
+      <div class="phase-sub">${phase.sub}</div>
+    </div>
+    <div class="phase-progress" data-progress-label>0/0</div>
+    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+  `;
+        card.appendChild(head);
+
+        const body = document.createElement('div');
+        body.className = 'phase-body';
+        const bodyInner = document.createElement('div');
+        bodyInner.className = 'phase-body-inner';
+
+        const blurb = document.createElement('div');
+        blurb.className = 'phase-blurb';
+        blurb.textContent = phase.blurb;
+        bodyInner.appendChild(blurb);
+
+        const clusters = document.createElement('div');
+        clusters.className = 'clusters';
+        phase.clusters.forEach(cluster => {
+            const cEl = document.createElement('div');
+            const cName = document.createElement('div');
+            cName.className = 'cluster-name';
+            cName.textContent = cluster.name;
+            cEl.appendChild(cName);
+            cluster.topics.forEach(t => {
+                totalTopics++;
+                const label = document.createElement('label');
+                label.className = 'topic';
+                label.innerHTML = `<input type="checkbox" data-topic><span>${t}</span>`;
+                cEl.appendChild(label);
+            });
+            clusters.appendChild(cEl);
+        });
+        bodyInner.appendChild(clusters);
+
+        const toolsLine = document.createElement('div');
+        toolsLine.className = 'tools-line';
+        toolsLine.innerHTML = `<b>Tools:</b> ${phase.tools}`;
+        bodyInner.appendChild(toolsLine);
+
+        const milestone = document.createElement('div');
+        milestone.className = 'milestone';
+        milestone.innerHTML = `<b>Milestone</b>${phase.milestone}`;
+        bodyInner.appendChild(milestone);
+
+        body.appendChild(bodyInner);
+        card.appendChild(body);
+
+        head.addEventListener('click', () => {
+            const isOpen = card.classList.toggle('open');
+            body.style.maxHeight = isOpen ? body.scrollHeight + 'px' : '0px';
+        });
+
+        phaseEl.appendChild(card);
+        root.appendChild(phaseEl);
+    });
+
+    // progress tracking (in-memory only)
+    const ring = document.getElementById('progressRing');
+    const CIRC = 2 * Math.PI * 31;
+    ring.setAttribute('stroke-dasharray', CIRC);
+
+    function updateProgress() {
+        const all = document.querySelectorAll('[data-topic]');
+        const checked = document.querySelectorAll('[data-topic]:checked');
+        const pct = all.length ? checked.length / all.length : 0;
+        ring.setAttribute('stroke-dashoffset', CIRC * (1 - pct));
+        document.getElementById('progressPct').textContent = Math.round(pct * 100) + '%';
+        document.getElementById('progressCount').textContent = `${checked.length} of ${all.length} topics checked`;
+
+        // per-phase counters + node "done" styling
+        document.querySelectorAll('.phase').forEach(phaseEl => {
+            const topics = phaseEl.querySelectorAll('[data-topic]');
+            const done = phaseEl.querySelectorAll('[data-topic]:checked');
+            phaseEl.querySelector('[data-progress-label]').textContent = `${done.length}/${topics.length}`;
+            phaseEl.classList.toggle('done', topics.length > 0 && done.length === topics.length);
+        });
+    }
+
+    root.addEventListener('change', (e) => {
+        if (e.target.matches('[data-topic]')) updateProgress();
+    });
+
+    document.getElementById('expandAllBtn').addEventListener('click', () => {
+        const cards = document.querySelectorAll('.phase-card');
+        const anyClosed = Array.from(cards).some(c => !c.classList.contains('open'));
+        cards.forEach(card => {
+            const body = card.querySelector('.phase-body');
+            if (anyClosed) {
+                card.classList.add('open');
+                body.style.maxHeight = body.scrollHeight + 'px';
+            } else {
+                card.classList.remove('open');
+                body.style.maxHeight = '0px';
+            }
+        });
+        document.getElementById('expandAllBtn').textContent = anyClosed ? 'Collapse all' : 'Expand all';
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+        document.querySelectorAll('[data-topic]').forEach(cb => cb.checked = false);
+        updateProgress();
+    });
+
+    updateProgress();
+
+    // keep open panels sized correctly on resize (font loading can shift heights)
+    window.addEventListener('load', () => {
+        document.querySelectorAll('.phase-card.open .phase-body').forEach(body => {
+            body.style.maxHeight = body.scrollHeight + 'px';
+        });
+    });
+</script>
+
+</body>
+</html>
