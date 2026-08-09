@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AO // Studio Pipeline Roadmap — Blender · C++ · Unreal · Resolve</title>
+<style>
+  :root{
+    --bg: #0a0b0f;
+    --bg-raised: #12141b;
+    --line: #22252f;
+    --teal: #2dd8c9;
+    --violet: #8b6bff;
+    --text: #e7e8ee;
+    --text-dim: #8b8e9c;
+    --blender-orange: #f5792a;
+    --unreal-blue: #4a9eff;
+    --resolve-pink: #ff4d6d;
+    --code-amber: #ffb020;
+    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --display: 'Bebas Neue', 'Anton', sans-serif;
+    --body: 'Inter', -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(ellipse 1200px 600px at 15% -10%, rgba(139,107,255,0.10), transparent),
+      radial-gradient(ellipse 1000px 600px at 90% 10%, rgba(45,216,201,0.08), transparent),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+
+  header.hero{padding:90px 0 60px; border-bottom:1px solid var(--line); position:relative; overflow:hidden;}
+  .eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--teal); display:flex; align-items:center; gap:10px; margin-bottom:22px;}
+  .eyebrow::before{content:''; width:22px; height:1px; background:var(--teal);}
+  h1.title{
+    font-family:var(--display); font-size:clamp(44px, 7.5vw, 88px); line-height:0.92; letter-spacing:0.01em; text-transform:uppercase;
+    background:linear-gradient(120deg, #fff 25%, var(--teal) 60%, var(--violet) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; max-width:920px;
+  }
+  .sub{margin-top:22px; max-width:640px; color:var(--text-dim); font-size:16px;}
+  .sub b{color:var(--text); font-weight:600;}
+  .toolbar-legend{margin-top:44px; display:flex; gap:24px; flex-wrap:wrap; font-family:var(--mono); font-size:12px; color:var(--text-dim);}
+  .toolbar-legend span{display:flex; align-items:center; gap:8px;}
+  .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+
+  .scrubber{margin-top:40px; border:1px solid var(--line); background:var(--bg-raised); border-radius:10px; padding:18px 20px 14px;}
+  .scrubber-head{display:flex; justify-content:space-between; align-items:baseline; font-family:var(--mono); font-size:11px; color:var(--text-dim); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:10px;}
+  .track{display:flex; height:34px; border-radius:6px; overflow:hidden; gap:2px; flex-wrap:wrap;}
+  .clip{flex:1; min-width:60px; position:relative; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:9px; color:rgba(0,0,0,0.65); font-weight:700; text-align:center; padding:2px;}
+  .clip::after{content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg, rgba(0,0,0,0.12) 0 1px, transparent 1px 8px);}
+
+  section{padding:60px 0; border-bottom:1px solid var(--line);}
+  .section-head{display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:34px; flex-wrap:wrap; gap:12px;}
+  .phase-tag{font-family:var(--mono); font-size:12px; color:var(--text-dim); letter-spacing:0.1em;}
+  h2.phase-title{font-family:var(--display); font-size:clamp(28px, 4.2vw, 44px); text-transform:uppercase; letter-spacing:0.01em; line-height:1; margin-top:6px;}
+  .phase-meta{font-family:var(--mono); font-size:12px; color:var(--text-dim); text-align:right;}
+  .phase-meta .weeks{color:var(--text); font-size:14px; display:block; margin-bottom:2px;}
+
+  .card-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;}
+  .card{background:var(--bg-raised); border:1px solid var(--line); border-radius:10px; padding:22px; border-left:3px solid var(--tool-color, var(--teal));}
+  .card h3{font-size:15px; font-weight:700; margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .card h3 .tool-dot{width:8px;height:8px;border-radius:50%;background:var(--tool-color, var(--teal)); flex-shrink:0;}
+  .card ul{list-style:none;}
+  .card li{font-size:13.5px; color:var(--text-dim); padding-left:16px; position:relative; margin-bottom:7px;}
+  .card li::before{content:'—'; position:absolute; left:0; color:var(--tool-color, var(--teal)); opacity:0.7;}
+  .card code{font-family:var(--mono); font-size:12px; color:var(--text); background:rgba(255,255,255,0.06); padding:1px 5px; border-radius:4px;}
+
+  .milestone{margin-top:22px; background:linear-gradient(90deg, rgba(139,107,255,0.08), rgba(45,216,201,0.05)); border:1px solid rgba(139,107,255,0.25); border-radius:10px; padding:18px 22px; display:flex; gap:16px; align-items:flex-start;}
+  .milestone .mark{font-family:var(--mono); font-size:11px; color:var(--violet); letter-spacing:0.1em; white-space:nowrap; padding-top:2px;}
+  .milestone p{font-size:14px; color:var(--text);}
+  .milestone p b{color:var(--violet);}
+
+  .resources{margin-top:18px; font-family:var(--mono); font-size:12.5px; color:var(--text-dim); display:flex; flex-wrap:wrap; gap:10px 22px;}
+  .resources span b{color:var(--text); font-family:var(--body); font-weight:600;}
+
+  .subnote{
+    margin-top:14px; margin-bottom:22px; font-size:13.5px; color:var(--text-dim);
+    border-left:2px solid var(--line); padding-left:14px; max-width:760px;
+  }
+  .subnote b{color:var(--text);}
+
+  .capstone{background:var(--bg-raised); border:1px solid var(--line); border-radius:14px; padding:40px; position:relative; overflow:hidden;}
+  .capstone::before{content:''; position:absolute; top:-40%; right:-10%; width:400px; height:400px; background:radial-gradient(circle, rgba(139,107,255,0.18), transparent 70%);}
+  .capstone h2{font-family:var(--display); font-size:clamp(30px,4.6vw,50px); text-transform:uppercase; background:linear-gradient(120deg, var(--teal), var(--violet)); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:16px;}
+  .capstone p{color:var(--text-dim); max-width:640px; font-size:15px; margin-bottom:24px;}
+  .capstone-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px;}
+  .capstone-item{border-left:2px solid var(--violet); padding-left:14px;}
+  .capstone-item h4{font-size:13px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text); margin-bottom:6px; font-family:var(--mono);}
+  .capstone-item p{font-size:13px; margin:0; color:var(--text-dim);}
+
+  footer{padding:40px 0 60px; text-align:center; font-family:var(--mono); font-size:12px; color:var(--text-dim); letter-spacing:0.06em;}
+  footer .ao{display:inline-flex; align-items:center; justify-content:center; width:34px;height:34px; border:1px solid var(--line); border-radius:50%; margin-bottom:14px; font-family:var(--display); color:var(--teal); font-size:14px;}
+
+  @media (max-width:640px){
+    .track{height:auto;} .clip{min-width:45%; height:34px;}
+    .phase-meta{text-align:left;} .section-head{align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">AO / Roadmap Hub — 08 (v2, expanded)</div>
+    <h1 class="title">Studio<br>Pipeline</h1>
+    <p class="sub">The full-depth version: <b>Blender</b> for asset creation, a standalone <b>C++</b> track for real engine programming (not just Blueprints), <b>Unreal Engine</b> for real-time rendering and cinematics, and <b>DaVinci Resolve</b> for grade, composite, and final cut. Rigging is now its own phase, not a subsection of animation.</p>
+
+    <div class="toolbar-legend">
+      <span><span class="dot" style="background:var(--blender-orange)"></span>Blender</span>
+      <span><span class="dot" style="background:var(--code-amber)"></span>C++</span>
+      <span><span class="dot" style="background:var(--unreal-blue)"></span>Unreal Engine</span>
+      <span><span class="dot" style="background:var(--resolve-pink)"></span>DaVinci Resolve</span>
+      <span><span class="dot" style="background:var(--violet)"></span>Pipeline / Integration</span>
+    </div>
+
+    <div class="scrubber">
+      <div class="scrubber-head"><span>Timeline — 12 phases</span><span>~11–13 months @ 10–12 hrs/wk</span></div>
+      <div class="track">
+        <div class="clip" style="background:var(--violet)">01 FOUNDATIONS</div>
+        <div class="clip" style="background:var(--blender-orange)">02 MODELING</div>
+        <div class="clip" style="background:var(--blender-orange)">03 SCULPT+TEX</div>
+        <div class="clip" style="background:var(--blender-orange)">04 RIGGING</div>
+        <div class="clip" style="background:var(--blender-orange)">05 ANIMATION</div>
+        <div class="clip" style="background:var(--code-amber)">06 C++</div>
+        <div class="clip" style="background:var(--unreal-blue)">07 UE BASICS</div>
+        <div class="clip" style="background:var(--unreal-blue)">08 UE ANIM</div>
+        <div class="clip" style="background:var(--unreal-blue)">09 UE CINE</div>
+        <div class="clip" style="background:var(--resolve-pink)">10 RESOLVE</div>
+        <div class="clip" style="background:var(--violet)">11 PIPELINE</div>
+        <div class="clip" style="background:#fff">12 CAPSTONE</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- 01 FOUNDATIONS -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="phase-tag">PHASE 01 · FOUNDATIONS</div><h2 class="phase-title">Think Like a Studio</h2></div>
+      <div class="phase-meta"><span class="weeks">2–3 weeks</span>before touching any app</div>
+    </div>
+    <div class="card-grid">
+      <div class="card" style="--tool-color:var(--violet)">
+        <h3><span class="tool-dot"></span>Visual grammar</h3>
+        <ul><li>Composition, framing, value-first color theory</li><li>Light as storytelling: motivated sources, 3-point setups</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--violet)">
+        <h3><span class="tool-dot"></span>Pipeline literacy</h3>
+        <ul><li>Pre-production → assets → layout → anim → lighting → render → comp → grade</li><li>Why studios split look-dev, lighting, and comp into separate roles</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--violet)">
+        <h3><span class="tool-dot"></span>Machine &amp; project setup</h3>
+        <ul><li>GPU/VRAM matters more than CPU for all four tracks below</li><li>Install Blender LTS, a C++ toolchain (see Phase 06), Unreal 5.x, Resolve</li></ul>
+      </div>
+    </div>
+    <div class="milestone"><span class="mark">✓ MILESTONE</span><p>Lock your capstone subject (short film or game vignette) and write a one-page visual bible — every later phase practises on this same asset.</p></div>
+  </div>
+</section>
+
+<!-- 02 MODELING -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="phase-tag" style="color:var(--blender-orange)">PHASE 02 · BLENDER — MODELING</div><h2 class="phase-title">Build the Geometry</h2></div>
+      <div class="phase-meta"><span class="weeks">4 weeks</span>Blender</div>
+    </div>
+    <div class="card-grid">
+      <div class="card" style="--tool-color:var(--blender-orange)">
+        <h3><span class="tool-dot"></span>Poly modeling</h3>
+        <ul><li>Edge flow, quads over tris, topology for deformation later</li><li>Non-destructive modifier stack: <code>Mirror</code>, <code>Bevel</code>, <code>Subdivision Surface</code></li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--blender-orange)">
+        <h3><span class="tool-dot"></span>Hard-surface</h3>
+        <ul><li>Boolean kit-bashing, support edges for clean subdivision</li><li>Building a reusable hard-surface asset kit for props/environments</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--blender-orange)">
+        <h3><span class="tool-dot"></span>UV foundations</h3>
+        <ul><li>Seam placement strategy, texel density consistency across an asset set</li><li>UDIMs — when a single 0–1 tile isn't enough</li></ul>
+      </div>
+    </div>
+    <div class="milestone"><span class="mark">✓ MILESTONE</span><p>Model a clean, game/film-ready hero prop and one modular environment kit — topology checked in wireframe view.</p></div>
+    <div class="resources"><span><b>Course:</b> Blender Guru "Donut" + "Blender Fundamentals 4.x"</span></div>
+  </div>
+</section>
+
+<!-- 03 SCULPT + TEX -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="phase-tag" style="color:var(--blender-orange)">PHASE 03 · BLENDER — SCULPTING &amp; PBR TEXTURING</div><h2 class="phase-title">Give It a Surface</h2></div>
+      <div class="phase-meta"><span class="weeks">4–5 weeks</span>Blender</div>
+    </div>
+    <div class="card-grid">
+      <div class="card" style="--tool-color:var(--blender-orange)">
+        <h3><span class="tool-dot"></span>Sculpting</h3>
+        <ul><li>Dyntopo for freeform organic blocking; Multires for detail passes</li><li>Retopology: turning a sculpt into an animation-ready mesh</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--blender-orange)">
+        <h3><span class="tool-dot"></span>Baking</h3>
+        <ul><li>Baking normal, AO, and curvature maps from high-poly to low-poly</li><li>Cage setup and common baking artifacts (and how to fix them)</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--blender-orange)">
+        <h3><span class="tool-dot"></span>PBR materials</h3>
+        <ul><li>Albedo, roughness, normal, metallic — physically-based theory, not guesswork</li><li>Procedural texturing in the Shader Editor; node groups for reuse</li></ul>
+      </div>
+    </div>
+    <div class="milestone"><span class="mark">✓ MILESTONE</span><p>Sculpt a detailed hero character or creature, bake it down to a game-ready mesh, and fully PBR-texture it. Render a turntable.</p></div>
+  </div>
+</section>
+
+<!-- 04 RIGGING (its own phase) -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="phase-tag" style="color:var(--blender-orange)">PHASE 04 · BLENDER — RIGGING</div><h2 class="phase-title">Build the Skeleton</h2></div>
+      <div class="phase-meta"><span class="weeks">4–5 weeks</span>Blender</div>
+    </div>
+    <p class="subnote">Rigging is a discipline of its own at every real studio — a dedicated "rigger" role sits between modeling and animation. Treat it that way here rather than folding it into animation week one.</p>
+    <div class="card-grid">
+      <div class="card" style="--tool-color:var(--blender-orange)">
+        <h3><span class="tool-dot"></span>Skeleton &amp; deformation</h3>
+        <ul><li>Armatures, bone hierarchies, bone roll and orientation</li><li>Weight painting: automatic weights as a start, hand-painting for problem areas</li><li>Vertex groups and deformation troubleshooting (candy-wrapper joints, volume loss)</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--blender-orange)">
+        <h3><span class="tool-dot"></span>Control systems</h3>
+        <ul><li>IK vs FK and switching between them mid-chain</li><li>Rigify: generating a full biped control rig, then customizing it</li><li>Custom bone shapes, rig layers, and a usable animator-facing UI</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--blender-orange)">
+        <h3><span class="tool-dot"></span>Facial &amp; secondary rigs</h3>
+        <ul><li>Shape keys (blend shapes) for facial expressions and lip sync</li><li>Corrective shape keys for joint-bend artifacts</li><li>Secondary motion: bone-driven cloth/hair jiggle without a full sim</li></ul>
+      </div>
+    </div>
+    <div class="milestone"><span class="mark">✓ MILESTONE</span><p>Rig your hero character with a full Rigify control rig plus a facial shape-key set — deformation-tested through a full range of motion before you animate a single frame.</p></div>
+    <div class="resources"><span><b>Course:</b> Rigify official docs + Pierrick Picaut rigging series</span></div>
+  </div>
+</section>
+
+<!-- 05 ANIMATION -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="phase-tag" style="color:var(--blender-orange)">PHASE 05 · BLENDER — ANIMATION &amp; SIMULATION</div><h2 class="phase-title">Bring It to Life</h2></div>
+      <div class="phase-meta"><span class="weeks">5–6 weeks</span>Blender</div>
+    </div>
+    <div class="card-grid">
+      <div class="card" style="--tool-color:var(--blender-orange)">
+        <h3><span class="tool-dot"></span>Animation principles</h3>
+        <ul><li>The 12 principles applied directly in the Graph Editor curves</li><li>Studio blocking → splining workflow, not straight-ahead posing</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--blender-orange)">
+        <h3><span class="tool-dot"></span>Performance</h3>
+        <ul><li>Walk/run cycles, weight and anticipation</li><li>Lip sync against your facial shape keys from Phase 04</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--blender-orange)">
+        <h3><span class="tool-dot"></span>Geometry Nodes &amp; sim</h3>
+        <ul><li>Procedural scattering for set dressing</li><li>Cloth, hair, and particle basics for environment life</li></ul>
+      </div>
+    </div>
+    <div class="milestone"><span class="mark">✓ MILESTONE</span><p>Animate a 10–15 second performance shot on your rig — fully blocked, splined, and polished with proper timing and lip sync.</p></div>
+    <div class="resources"><span><b>Book:</b> The Animator's Survival Kit (Richard Williams)</span></div>
+  </div>
+</section>
+
+<!-- 06 C++ standalone -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="phase-tag" style="color:var(--code-amber)">PHASE 06 · C++ — STANDALONE TRACK</div><h2 class="phase-title">Learn the Language, Not Just the Blueprint</h2></div>
+      <div class="phase-meta"><span class="weeks">6–8 weeks</span>C++ (before touching UE's C++ side)</div>
+    </div>
+    <p class="subnote">This is deliberately sequenced <b>before</b> Unreal's engine-specific C++ conventions. Learn the language on its own first, the way an engineer would, so you're not debugging syntax and engine architecture at the same time.</p>
+    <div class="card-grid">
+      <div class="card" style="--tool-color:var(--code-amber)">
+        <h3><span class="tool-dot"></span>Core language</h3>
+        <ul><li>Variables, control flow, functions, and compilation basics</li><li>Classes, inheritance, polymorphism, virtual functions</li><li>Pointers and references — the concept that trips up most beginners moving from Blueprints</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--code-amber)">
+        <h3><span class="tool-dot"></span>Memory &amp; structure</h3>
+        <ul><li>Stack vs heap, manual memory management basics before UE hides it</li><li>Headers vs source files, include guards, compilation units</li><li>Standard Template Library: vectors, maps, iterators</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--code-amber)">
+        <h3><span class="tool-dot"></span>Unreal's C++ dialect</h3>
+        <ul><li><code>UCLASS</code>, <code>UPROPERTY</code>, <code>UFUNCTION</code> macros and the reflection system they enable</li><li>Unreal's smart pointers (<code>UPROPERTY</code>-tracked garbage collection) vs raw <code>std</code> pointers</li><li><code>AActor</code> / <code>UActorComponent</code> class hierarchy and the gameplay framework (GameMode, PlayerController, Pawn)</li></ul>
+      </div>
+    </div>
+    <div class="milestone"><span class="mark">✓ MILESTONE</span><p>Write a small non-engine C++ console program first (to prove the fundamentals independent of Unreal), then port the same logic into a UE <code>AActor</code> subclass exposed to Blueprints via <code>UPROPERTY</code>/<code>UFUNCTION</code>.</p></div>
+    <div class="resources"><span><b>Course:</b> learncpp.com for language basics</span><span><b>Course:</b> Unreal's official "C++ Programming" docs + Tom Looman's UE5 C++ guides</span></div>
+  </div>
+</section>
+
+<!-- 07 UE BASICS -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="phase-tag" style="color:var(--unreal-blue)">PHASE 07 · UNREAL — ENGINE FUNDAMENTALS</div><h2 class="phase-title">Move Into Real Time</h2></div>
+      <div class="phase-meta"><span class="weeks">5 weeks</span>Unreal Engine 5</div>
+    </div>
+    <div class="card-grid">
+      <div class="card" style="--tool-color:var(--unreal-blue)">
+        <h3><span class="tool-dot"></span>Editor &amp; world-building</h3>
+        <ul><li>Level editor, actors/components, World Partition for large levels</li><li>Nanite (virtualized geometry) and Lumen (dynamic GI) — what they replace from baked pipelines</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--unreal-blue)">
+        <h3><span class="tool-dot"></span>Blueprints, and where C++ takes over</h3>
+        <ul><li>Blueprint visual scripting for fast iteration on gameplay logic</li><li>The real studio pattern: core systems in C++, designer-facing tuning exposed to Blueprint</li><li>Creating a C++ base class, then extending it in Blueprint (from your Phase 06 work)</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--unreal-blue)">
+        <h3><span class="tool-dot"></span>Import pipeline</h3>
+        <ul><li>FBX/glTF import settings that preserve your Blender materials and scale</li><li>Collision setup, LODs, and enabling Nanite correctly on static meshes</li></ul>
+      </div>
+    </div>
+    <div class="milestone"><span class="mark">✓ MILESTONE</span><p>Import your Blender environment into a Lumen/Nanite-lit level, and build one interactable object whose logic lives in a C++ class with Blueprint-exposed tuning variables.</p></div>
+    <div class="resources"><span><b>Course:</b> Unreal Sensei "Complete Beginner" series</span></div>
+  </div>
+</section>
+
+<!-- 08 UE ANIMATION SYSTEMS -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="phase-tag" style="color:var(--unreal-blue)">PHASE 08 · UNREAL — CHARACTER &amp; ANIMATION SYSTEMS</div><h2 class="phase-title">Rig It Again, In-Engine</h2></div>
+      <div class="phase-meta"><span class="weeks">5 weeks</span>Unreal Engine 5</div>
+    </div>
+    <p class="subnote">Unreal has its own rigging layer, separate from what you built in Blender — it retargets and re-controls the skeleton for real-time playback and gameplay-driven blending.</p>
+    <div class="card-grid">
+      <div class="card" style="--tool-color:var(--unreal-blue)">
+        <h3><span class="tool-dot"></span>Skeletal setup</h3>
+        <ul><li>Skeletal Mesh import, physics assets, and skeleton retargeting from your Blender rig</li><li>IK Rig / IK Retargeter — Unreal's system for reusing animation across different skeletons</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--unreal-blue)">
+        <h3><span class="tool-dot"></span>Control Rig</h3>
+        <ul><li>Unreal's node-based rigging tool — building or importing controls for in-engine posing</li><li>Driving Control Rig from C++/Blueprint for runtime procedural adjustments</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--unreal-blue)">
+        <h3><span class="tool-dot"></span>Animation Blueprints &amp; MetaHuman</h3>
+        <ul><li>State machines, blend spaces, and layered blending for gameplay-driven motion</li><li>MetaHuman as a fast path to studio-grade digital humans (optional but high-value)</li></ul>
+      </div>
+    </div>
+    <div class="milestone"><span class="mark">✓ MILESTONE</span><p>Retarget your Blender character animation onto an in-engine skeleton via IK Retargeter, and drive a simple locomotion Animation Blueprint from C++ input.</p></div>
+  </div>
+</section>
+
+<!-- 09 UE CINEMATICS -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="phase-tag" style="color:var(--unreal-blue)">PHASE 09 · UNREAL — CINEMATICS</div><h2 class="phase-title">Direct the Shot</h2></div>
+      <div class="phase-meta"><span class="weeks">5 weeks</span>Unreal Engine 5</div>
+    </div>
+    <div class="card-grid">
+      <div class="card" style="--tool-color:var(--unreal-blue)">
+        <h3><span class="tool-dot"></span>Sequencer</h3>
+        <ul><li>Cinematic cameras, keyframing, camera cuts and procedural shake</li><li>Movie Render Queue for final-frame quality, multi-layer output</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--unreal-blue)">
+        <h3><span class="tool-dot"></span>Lighting &amp; atmosphere</h3>
+        <ul><li>Post-process volumes: exposure, bloom, depth of field</li><li>Volumetric fog/clouds for cinematic depth</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--unreal-blue)">
+        <h3><span class="tool-dot"></span>Render passes for comp</h3>
+        <ul><li>Configuring AOVs (beauty, depth, cryptomatte) in Movie Render Queue</li><li>Naming/structure that Fusion in Phase 10 expects</li></ul>
+      </div>
+    </div>
+    <div class="milestone"><span class="mark">✓ MILESTONE</span><p>Cut a 30–45 second cinematic sequence with multi-pass EXR output, ready to composite.</p></div>
+  </div>
+</section>
+
+<!-- 10 RESOLVE -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="phase-tag" style="color:var(--resolve-pink)">PHASE 10 · DAVINCI RESOLVE — EDIT, COMP, GRADE</div><h2 class="phase-title">Finish It Like Post</h2></div>
+      <div class="phase-meta"><span class="weeks">4–5 weeks</span>DaVinci Resolve</div>
+    </div>
+    <div class="card-grid">
+      <div class="card" style="--tool-color:var(--resolve-pink)">
+        <h3><span class="tool-dot"></span>Edit page</h3>
+        <ul><li>Importing image-sequence renders, cutting on action</li><li>Sound design and mix in Fairlight</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--resolve-pink)">
+        <h3><span class="tool-dot"></span>Fusion compositing</h3>
+        <ul><li>Node-based comp — same mental model as Blender/Unreal shader graphs</li><li>Combining beauty/AO/depth/cryptomatte passes from Phase 09</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--resolve-pink)">
+        <h3><span class="tool-dot"></span>Color page</h3>
+        <ul><li>Primary grade: lift/gamma/gain, white balance</li><li>Power windows, qualifiers, and a consistent LUT-driven studio look</li></ul>
+      </div>
+    </div>
+    <div class="milestone"><span class="mark">✓ MILESTONE</span><p>Take your Unreal sequence through a full post pass: edit → Fusion composite → color grade → audio mix.</p></div>
+  </div>
+</section>
+
+<!-- 11 PIPELINE -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="phase-tag" style="color:var(--violet)">PHASE 11 · PIPELINE INTEGRATION</div><h2 class="phase-title">Make Every Tool Talk</h2></div>
+      <div class="phase-meta"><span class="weeks">3–4 weeks</span>All tracks</div>
+    </div>
+    <div class="card-grid">
+      <div class="card" style="--tool-color:var(--violet)">
+        <h3><span class="tool-dot"></span>Asset pipeline</h3>
+        <ul><li>Blender → Unreal via the official Send to Unreal add-on</li><li>Naming/versioning conventions that survive a real production</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--violet)">
+        <h3><span class="tool-dot"></span>Code + content pipeline</h3>
+        <ul><li>Keeping C++ gameplay classes and Blueprint content in sync as both change</li><li>Source control basics for a mixed code/asset project (Git + Git LFS or Perforce)</li></ul>
+      </div>
+      <div class="card" style="--tool-color:var(--violet)">
+        <h3><span class="tool-dot"></span>Team-scale habits</h3>
+        <ul><li>Shot numbering, take versions, review notes — how studios track iteration</li><li>Dailies/playblast culture for fast feedback loops</li></ul>
+      </div>
+    </div>
+    <div class="milestone"><span class="mark">✓ MILESTONE</span><p>Document your pipeline as a one-page "pipeline bible" diagram showing exactly how a shot and a code change each move through the system.</p></div>
+  </div>
+</section>
+
+<!-- 12 CAPSTONE -->
+<section style="border-bottom:none;">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="phase-tag">PHASE 12 · CAPSTONE</div><h2 class="phase-title">Ship the Showreel</h2></div>
+      <div class="phase-meta"><span class="weeks">5–6 weeks</span>All tracks</div>
+    </div>
+    <div class="capstone">
+      <h2>One Finished Piece &gt; Twelve Tutorials</h2>
+      <p>Finish one thing end-to-end using every phase above — this is the artifact that gets you hired or funded.</p>
+      <div class="capstone-grid">
+        <div class="capstone-item"><h4>Track A — Short film</h4><p>60–90s animated short: modeled, rigged &amp; animated in Blender, lit and shot in Sequencer, finished in Resolve.</p></div>
+        <div class="capstone-item"><h4>Track B — Game vignette</h4><p>A vertical-slice level with real C++ gameplay logic (not just Blueprint), plus a cinematic trailer cut in Resolve.</p></div>
+        <div class="capstone-item"><h4>Delivery bar</h4><p>Consistent grade, mixed audio, a title card, and a written pipeline note explaining your process and code architecture.</p></div>
+        <div class="capstone-item"><h4>Where it lives</h4><p>ArtStation for stills/turntables, GitHub for the C++ source, YouTube/Vimeo or itch.io for the piece itself.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ao">AO</div>
+  <div>ROADMAP HUB — 08 / STUDIO PIPELINE (V2)</div>
+</footer>
+
+</body>
+</html>
