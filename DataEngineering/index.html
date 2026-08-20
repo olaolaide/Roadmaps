@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data → ML → AI Engineerp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0d14;
+    --bg-raised: #10141d;
+    --bg-card: #131824;
+    --line: #212a3a;
+    --violet: #8b6bff;
+    --violet-dim: #5c4a9e;
+    --teal: #2dd8c4;
+    --gold: #f2b84b;
+    --silver: #9fb0c9;
+    --text: #e9edf5;
+    --text-dim: #8792a6;
+    --text-faint: #4d5568;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection{ background: var(--violet-dim); color: #fff; }
+
+  .wrap{ max-width: 980px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    position: relative;
+    padding: 88px 0 40px;
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+  header.hero::before{
+    content:'';
+    position:absolute; inset:0;
+    background:
+      radial-gradient(560px 300px at 15% -10%, rgba(139,107,255,0.16), transparent 60%),
+      radial-gradient(500px 260px at 90% 10%, rgba(45,216,196,0.10), transparent 60%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color: var(--teal);
+    border:1px solid rgba(45,216,196,0.35);
+    background: rgba(45,216,196,0.06);
+    padding:6px 12px; border-radius:100px;
+  }
+  .eyebrow span.dot{ width:6px; height:6px; border-radius:50%; background:var(--teal); box-shadow:0 0 8px var(--teal); }
+
+  h1.title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size: clamp(34px, 5.2vw, 58px);
+    line-height:1.06;
+    margin-top:22px;
+    letter-spacing:-0.02em;
+  }
+  h1.title .grad{
+    background: linear-gradient(100deg, var(--violet), var(--teal) 70%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .subtitle{
+    margin-top:18px; max-width:620px;
+    color: var(--text-dim); font-size:17px;
+  }
+  .hero-meta{
+    display:flex; flex-wrap:wrap; gap:28px;
+    margin-top:34px; font-family:'JetBrains Mono', monospace; font-size:12.5px; color: var(--text-faint);
+  }
+  .hero-meta strong{ color: var(--silver); font-weight:500; }
+
+  /* ---------- CONVERGENCE STACK (signature element) ---------- */
+  .stack-section{ padding: 64px 0 56px; border-bottom:1px solid var(--line); }
+  .section-label{
+    font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.14em;
+    text-transform:uppercase; color: var(--text-faint); margin-bottom:10px;
+  }
+  h2.section-title{
+    font-family:'Space Grotesk', sans-serif; font-size:26px; font-weight:600;
+    margin-bottom: 8px;
+  }
+  .section-desc{ color: var(--text-dim); font-size:14.5px; max-width: 620px; margin-bottom: 34px;}
+
+  .stack{
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .stack-tier{
+    display:grid; grid-template-columns: 190px 1fr;
+    border:1px solid var(--line);
+    background: var(--bg-raised);
+    transition: background .18s ease;
+  }
+  .stack-tier + .stack-tier{ border-top:none; }
+  .stack-tier:hover{ background: #141a26; }
+  .stack-tier .tier-label{
+    padding: 18px 20px;
+    font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:14px;
+    letter-spacing:0.02em;
+    display:flex; align-items:center; gap:10px;
+    border-right:1px solid var(--line);
+    color: var(--tier-color, var(--text));
+  }
+  .stack-tier .tier-label .bar{
+    width:4px; height:22px; border-radius:2px; background: var(--tier-color, var(--violet));
+  }
+  .stack-tier .tier-items{
+    padding: 16px 20px;
+    display:flex; flex-wrap:wrap; gap:8px;
+    align-items:center;
+  }
+  .chip{
+    font-family:'JetBrains Mono', monospace; font-size:12px;
+    color: var(--silver);
+    background: rgba(255,255,255,0.03);
+    border:1px solid var(--line);
+    padding: 4px 9px; border-radius:5px;
+  }
+  .stack-arrow{
+    display:flex; justify-content:center; padding:4px 0;
+    color: var(--text-faint); font-size:13px; font-family:'JetBrains Mono',monospace;
+  }
+
+  /* ---------- PRIORITY TABLE ---------- */
+  .priority-section{ padding: 64px 0 56px; border-bottom:1px solid var(--line); }
+  table.priority{
+    width:100%; border-collapse: collapse; margin-top: 8px;
+  }
+  table.priority th{
+    text-align:left; font-family:'JetBrains Mono', monospace; font-size:11px;
+    text-transform:uppercase; letter-spacing:0.1em; color: var(--text-faint);
+    padding: 10px 14px; border-bottom:1px solid var(--line);
+  }
+  table.priority td{
+    padding: 13px 14px; border-bottom:1px solid var(--line); font-size:14px;
+  }
+  table.priority tr:hover td{ background: rgba(255,255,255,0.015); }
+  .tier-tag{
+    font-family:'JetBrains Mono', monospace; font-size:11px;
+    padding: 3px 8px; border-radius:4px; font-weight:600;
+  }
+  .tier-tag.core{ background: rgba(242,184,75,0.12); color: var(--gold); border:1px solid rgba(242,184,75,0.3);}
+  .tier-tag.compound{ background: rgba(139,107,255,0.12); color: var(--violet); border:1px solid rgba(139,107,255,0.3);}
+  td.tech{ font-family:'Space Grotesk', sans-serif; font-weight:600; }
+  td.why{ color: var(--text-dim); }
+
+  /* ---------- PHASES ---------- */
+  .phases-section{ padding: 64px 0 40px; }
+  .phase{
+    border:1px solid var(--line);
+    background: var(--bg-card);
+    border-radius:10px;
+    margin-bottom:14px;
+    overflow:hidden;
+  }
+  .phase summary{
+    list-style:none; cursor:pointer;
+    display:flex; align-items:center; gap:16px;
+    padding: 20px 22px;
+  }
+  .phase summary::-webkit-details-marker{ display:none; }
+  .phase-num{
+    font-family:'JetBrains Mono', monospace; font-size:12px; color: var(--phase-color, var(--violet));
+    border:1px solid var(--phase-color, var(--violet));
+    width:34px; height:34px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; font-weight:600;
+    background: color-mix(in srgb, var(--phase-color, var(--violet)) 12%, transparent);
+  }
+  .phase-heading{ flex:1; }
+  .phase-heading .tag{
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:0.1em;
+    text-transform:uppercase; color: var(--phase-color, var(--teal)); display:block; margin-bottom:3px;
+  }
+  .phase-heading h3{
+    font-family:'Space Grotesk', sans-serif; font-size:17px; font-weight:600;
+  }
+  .chevron{
+    color: var(--text-faint); transition: transform .2s ease; flex-shrink:0;
+  }
+  details[open] .chevron{ transform: rotate(180deg); }
+  .phase-body{
+    padding: 0 22px 24px 72px;
+    color: var(--text-dim); font-size:14px;
+  }
+  .phase-body .why{
+    font-size:13.5px; color: var(--silver); margin-bottom:14px; padding-left:12px;
+    border-left:2px solid var(--phase-color, var(--violet));
+  }
+  .eli15{
+    display:flex; gap:10px; align-items:flex-start;
+    background: rgba(45,216,196,0.05);
+    border:1px solid rgba(45,216,196,0.2);
+    border-radius:8px;
+    padding: 12px 14px;
+    margin-bottom:16px;
+    font-size:13.5px; color: var(--text);
+    line-height:1.6;
+  }
+  .eli15 .badge{
+    flex-shrink:0; font-family:'JetBrains Mono', monospace; font-size:10px;
+    text-transform:uppercase; letter-spacing:0.08em; color: var(--teal);
+    background: rgba(45,216,196,0.12); border:1px solid rgba(45,216,196,0.35);
+    padding: 3px 7px; border-radius:5px; margin-top:1px;
+  }
+  .tier-tag.diff{ background: rgba(159,176,201,0.12); color: var(--silver); border:1px solid rgba(159,176,201,0.3);}
+  .skill-groups{ display:flex; flex-wrap:wrap; gap:20px; }
+  .skill-group{ min-width: 200px; flex:1; }
+  .skill-group h4{
+    font-family:'JetBrains Mono', monospace; font-size:11px; text-transform:uppercase;
+    letter-spacing:0.08em; color: var(--text-faint); margin-bottom:8px;
+  }
+  .skill-group ul{ list-style:none; }
+  .skill-group li{
+    font-size:13.5px; padding: 3px 0; color: var(--text-dim);
+    position:relative; padding-left:14px;
+  }
+  .skill-group li::before{
+    content:'—'; position:absolute; left:0; color: var(--text-faint);
+  }
+
+  /* ---------- POSITIONING ---------- */
+  .position-section{ padding: 60px 0; border-top:1px solid var(--line); }
+  .position-flow{
+    display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin: 26px 0 30px;
+    font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px;
+  }
+  .position-flow .node{
+    padding: 9px 16px; border-radius:100px; border:1px solid var(--line); background: var(--bg-raised);
+  }
+  .position-flow .node.now{ border-color: rgba(45,216,196,0.4); color: var(--teal); }
+  .position-flow .node.end{ border-color: rgba(139,107,255,0.4); color: var(--violet); background: rgba(139,107,255,0.08); }
+  .position-flow .sep{ color: var(--text-faint); font-size:13px; }
+  .not-this{
+    text-decoration: line-through; color: var(--text-faint);
+  }
+  blockquote.reframe{
+    border-left: 2px solid var(--gold);
+    padding-left: 16px; margin-top: 18px;
+    font-size:14.5px; color: var(--text-dim);
+  }
+
+  footer{
+    padding: 40px 0 60px; text-align:center;
+    color: var(--text-faint); font-family:'JetBrains Mono', monospace; font-size:12px;
+    border-top: 1px solid var(--line);
+  }
+  footer .mark{ color: var(--violet); font-weight:600; letter-spacing:0.05em;}
+
+  @media (max-width: 640px){
+    .stack-tier{ grid-template-columns: 1fr; }
+    .stack-tier .tier-label{ border-right:none; border-bottom:1px solid var(--line); }
+    .phase-body{ padding-left: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="eyebrow"><span class="dot"></span>AO Roadmap Hub — Career Track</span>
+    <h1 class="title">Data Engineer → ML Engineer → <span class="grad">AI Engineer</span></h1>
+    <p class="subtitle">An eleven-phase, five-year path built for the agentic decade: a deliberately narrow stack instead of a scatter of trending tools, chosen against what Fortune 500 postings are actually asking for right now.</p>
+    <div class="hero-meta">
+      <span><strong>11</strong> phases</span>
+      <span><strong>17</strong> core technologies</span>
+      <span><strong>2026</strong> evidence-based</span>
+      <span><strong>~5yr</strong> horizon, self-paced</span>
+    </div>
+  </header>
+
+  <section class="stack-section">
+    <div class="section-label">The Convergence</div>
+    <h2 class="section-title">One stack, five layers, no detours</h2>
+    <p class="section-desc">Every layer is load-bearing for the one above it. Skipping a layer to chase AI Engineering early is the most common failure mode — enterprise AI roles increasingly sit on top of exactly this foundation.</p>
+
+    <div class="stack">
+      <div class="stack-tier" style="--tier-color:#8b6bff">
+        <div class="tier-label"><span class="bar"></span>Agentic AI</div>
+        <div class="tier-items">
+          <span class="chip">Tool calling</span><span class="chip">MCP</span><span class="chip">Multi-agent</span><span class="chip">Guardrails</span><span class="chip">Observability</span>
+        </div>
+      </div>
+      <div class="stack-arrow">↑ builds on</div>
+      <div class="stack-tier" style="--tier-color:#8b6bff">
+        <div class="tier-label"><span class="bar"></span>AI Engineering</div>
+        <div class="tier-items">
+          <span class="chip">LLMs</span><span class="chip">RAG</span><span class="chip">Embeddings</span><span class="chip">Fine-tuning / LoRA</span><span class="chip">Vector DBs</span>
+        </div>
+      </div>
+      <div class="stack-arrow">↑ builds on</div>
+      <div class="stack-tier" style="--tier-color:#2dd8c4">
+        <div class="tier-label"><span class="bar"></span>ML Engineering</div>
+        <div class="tier-items">
+          <span class="chip">PyTorch</span><span class="chip">XGBoost</span><span class="chip">MLflow</span><span class="chip">MLOps</span><span class="chip">FastAPI</span>
+        </div>
+      </div>
+      <div class="stack-arrow">↑ builds on</div>
+      <div class="stack-tier" style="--tier-color:#2dd8c4">
+        <div class="tier-label"><span class="bar"></span>Data Engineering</div>
+        <div class="tier-items">
+          <span class="chip">Spark</span><span class="chip">Kafka</span><span class="chip">Airflow</span><span class="chip">dbt</span><span class="chip">Databricks · Delta Lake</span><span class="chip">Neo4j (Graph DB)</span>
+        </div>
+      </div>
+      <div class="stack-arrow">↑ builds on</div>
+      <div class="stack-tier" style="--tier-color:#f2b84b">
+        <div class="tier-label"><span class="bar"></span>Cloud + Data</div>
+        <div class="tier-items">
+          <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">PostgreSQL</span><span class="chip">AWS: S3 · Glue · EMR · Redshift</span><span class="chip">IAM · CloudWatch</span><span class="chip">Tableau / Power BI</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="priority-section">
+    <div class="section-label">The Core Fifteen</div>
+    <h2 class="section-title">Deliberately narrow, not exhaustive</h2>
+    <p class="section-desc">Seventeen technologies, ranked. The two DIFFERENTIATOR rows aren't optional extras — Fortune 500 job posts increasingly ask for data visualization and graph databases alongside the core stack, and most candidates skip both.</p>
+    <table class="priority">
+      <tr><th>Tier</th><th>Technology</th><th>Why it's non-negotiable</th></tr>
+      <tr><td><span class="tier-tag core">CORE</span></td><td class="tech">Python</td><td class="why">The connective tissue across every later layer</td></tr>
+      <tr><td><span class="tier-tag core">CORE</span></td><td class="tech">SQL</td><td class="why">An engineering language at enterprise scale, not a BI skill</td></tr>
+      <tr><td><span class="tier-tag core">CORE</span></td><td class="tech">PostgreSQL</td><td class="why">Where relational fundamentals actually get tested</td></tr>
+      <tr><td><span class="tier-tag core">CORE</span></td><td class="tech">Git</td><td class="why">Baseline engineering hygiene</td></tr>
+      <tr><td><span class="tier-tag core">CORE</span></td><td class="tech">Linux</td><td class="why">Everything in production runs on it</td></tr>
+      <tr><td><span class="tier-tag core">CORE</span></td><td class="tech">AWS</td><td class="why">One cloud, deeply — not three, shallowly</td></tr>
+      <tr><td><span class="tier-tag core">CORE</span></td><td class="tech">Spark</td><td class="why">The distributed-processing backbone of big data roles</td></tr>
+      <tr><td><span class="tier-tag core">CORE</span></td><td class="tech">Databricks</td><td class="why">Used across roughly 70% of Fortune 500 (Reuters, Jul 2026)</td></tr>
+      <tr><td><span class="tier-tag core">CORE</span></td><td class="tech">Airflow</td><td class="why">Orchestration is the glue of every pipeline</td></tr>
+      <tr><td><span class="tier-tag core">CORE</span></td><td class="tech">Kafka</td><td class="why">Event-driven architecture underlies real-time systems</td></tr>
+      <tr><td><span class="tier-tag core">CORE</span></td><td class="tech">dbt</td><td class="why">The modern standard for transformation-as-code</td></tr>
+      <tr><td><span class="tier-tag compound">COMPOUND</span></td><td class="tech">Docker</td><td class="why">Ships everything above it reliably</td></tr>
+      <tr><td><span class="tier-tag compound">COMPOUND</span></td><td class="tech">Terraform</td><td class="why">Infrastructure as code, not click-ops</td></tr>
+      <tr><td><span class="tier-tag compound">COMPOUND</span></td><td class="tech">MLflow</td><td class="why">Tracking, registry and deployment in one place</td></tr>
+      <tr><td><span class="tier-tag compound">COMPOUND</span></td><td class="tech">PyTorch</td><td class="why">The bridge from ML into deep learning and LLMs</td></tr>
+      <tr><td><span class="tier-tag diff">DIFFERENTIATOR</span></td><td class="tech">Tableau / Power BI</td><td class="why">Fortune 500 hiring managers can't read raw tables — visualization is how your work gets seen and trusted</td></tr>
+      <tr><td><span class="tier-tag diff">DIFFERENTIATOR</span></td><td class="tech">Neo4j (Graph DB)</td><td class="why">Powers fraud detection, recommendation engines and knowledge graphs — a common enterprise gap most engineers skip</td></tr>
+    </table>
+  </section>
+
+  <section class="phases-section">
+    <div class="section-label">The Path</div>
+    <h2 class="section-title">Eleven phases, in order</h2>
+    <p class="section-desc">Each phase compounds the one before it. Tap a phase to expand it.</p>
+
+    <details class="phase" style="--phase-color:#f2b84b">
+      <summary>
+        <div class="phase-num">01</div>
+        <div class="phase-heading"><span class="tag">Foundation</span><h3>Data</h3></div>
+        <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="phase-body">
+        <div class="why">Everything above this layer inherits its weaknesses — don't rush it.</div>
+        <div class="eli15"><span class="badge">In plain English</span>Data is just information — names, numbers, dates, clicks. Python is the language you use to tell a computer "go get this data and do something with it." SQL is how you ask a database questions, like "show me every customer who bought something last week." Before you can build anything smart, you need to be able to fetch, clean, and store information reliably. That's this whole phase.</div>
+        <div class="skill-groups">
+          <div class="skill-group"><h4>Python</h4><ul>
+            <li>Fundamentals — variables, loops, if/else (the basic building blocks)</li>
+            <li>OOP, modules/packages — organising bigger programs</li>
+            <li>Typing, error handling, testing — writing code that doesn't quietly break</li>
+            <li>Virtual environments, APIs — talking to other systems over the internet</li>
+            <li>pandas, NumPy — the toolkits for wrangling spreadsheets and numbers in code</li>
+          </ul></div>
+          <div class="skill-group"><h4>SQL</h4><ul>
+            <li>SELECT, JOINs — pulling and combining data from tables</li>
+            <li>GROUP BY, subqueries, CTEs — summarising and breaking big questions into steps</li>
+            <li>Window functions, views, indexes — advanced tricks + making queries fast</li>
+            <li>Query optimisation, EXPLAIN — figuring out why a query is slow and fixing it</li>
+            <li>Transactions, ACID, isolation levels — making sure data never gets corrupted</li>
+          </ul></div>
+          <div class="skill-group"><h4>Database</h4><ul>
+            <li>PostgreSQL first — the industry-standard relational database to learn on</li>
+            <li>OLTP vs OLAP — systems built for daily transactions vs. big analysis</li>
+            <li>Dimensional modelling, star schema, slowly changing dimensions</li>
+            <li>Partitioning, indexing — splitting and organising data so it stays fast at scale</li>
+          </ul></div>
+          <div class="skill-group"><h4>Data Visualization</h4><ul>
+            <li>Tableau, Power BI — the dashboard tools Fortune 500 companies use every day so non-technical managers can see the data</li>
+            <li>matplotlib, seaborn, Plotly (Python) — building charts straight from your own code</li>
+            <li>Chart choice — knowing when a bar chart, line chart, or heatmap actually tells the story vs. just looking pretty</li>
+            <li>Dashboard design — one clear message per screen, not twenty numbers crammed in</li>
+          </ul></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="phase" style="--phase-color:#f2b84b">
+      <summary>
+        <div class="phase-num">02</div>
+        <div class="phase-heading"><span class="tag">Foundation</span><h3>Data Engineering</h3></div>
+        <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="phase-body">
+        <div class="why">This is where you stop being a scripter and become a Data Engineer.</div>
+        <div class="eli15"><span class="badge">In plain English</span>Imagine a factory. Raw materials (messy data from apps, sales systems, sensors) come in one end, and clean, useful data comes out the other. ETL/ELT is that factory line: Extract it, Transform it (clean it up), Load it somewhere useful. Spark is what you use when there's too much data for one computer, so the work gets split across hundreds of machines at once. Kafka handles data that never stops arriving — like a live feed of every purchase happening on Amazon right now.</div>
+        <div class="skill-groups">
+          <div class="skill-group"><h4>ETL / ELT</h4><ul>
+            <li>Python + SQL → dbt (transform) → Airflow (schedule it all)</li>
+            <li>Ingestion, transformation, orchestration — get it, clean it, run it on time</li>
+            <li>Scheduling, retries, dependency management — what runs when, and what to do if it fails</li>
+            <li>Data quality, lineage — catching bad data, and tracing where any number came from</li>
+          </ul></div>
+          <div class="skill-group"><h4>Big Data — Spark</h4><ul>
+            <li>RDDs, DataFrames, Spark SQL — the building blocks for huge datasets</li>
+            <li>Partitioning, shuffles, joins, caching — how work gets split across machines efficiently</li>
+            <li>Catalyst optimiser, cluster architecture — how Spark quietly makes your code faster</li>
+          </ul></div>
+          <div class="skill-group"><h4>Streaming — Kafka</h4><ul>
+            <li>Producers, consumers, topics, partitions — who sends data, who reads it, and how it's organised</li>
+            <li>Offsets, consumer groups, replication — not losing data even if a machine crashes</li>
+            <li>Kafka Streams, event-driven architecture — reacting to things the instant they happen</li>
+          </ul></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="phase" style="--phase-color:#f2b84b">
+      <summary>
+        <div class="phase-num">03</div>
+        <div class="phase-heading"><span class="tag">Foundation</span><h3>Cloud — AWS</h3></div>
+        <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="phase-body">
+        <div class="why">One cloud, deeply, not three shallowly — go deep on AWS before touching Azure or GCP.</div>
+        <div class="eli15"><span class="badge">In plain English</span>"The cloud" just means renting computers and storage from a giant company (Amazon, Microsoft, Google) instead of buying your own servers. AWS is Amazon's version, and it's the biggest one, so most Fortune 500 companies already use it. S3 is basically an unlimited hard drive on the internet. Lambda lets your code run for a few seconds without you needing to keep a computer switched on 24/7. Learning AWS well means you can build real systems without ever owning a physical machine.</div>
+        <div class="skill-groups">
+          <div class="skill-group"><h4>Storage & Compute</h4><ul>
+            <li>S3 — a giant internet hard drive for files</li>
+            <li>EC2 — a rentable computer you can switch on and off</li>
+            <li>EMR — a cluster of computers running Spark for you</li>
+          </ul></div>
+          <div class="skill-group"><h4>Data & Streaming</h4><ul>
+            <li>Glue — cleans and moves data automatically (ETL)</li>
+            <li>Redshift — a warehouse built for big analytics queries</li>
+            <li>Athena — lets you query files sitting in S3 with plain SQL</li>
+            <li>Kinesis — AWS's version of a live, never-stopping data feed</li>
+            <li>Lambda — code that runs by itself, only when needed</li>
+          </ul></div>
+          <div class="skill-group"><h4>Platform</h4><ul>
+            <li>IAM — decides who's allowed to touch what</li>
+            <li>CloudWatch — the dashboard that watches if anything breaks</li>
+            <li>CloudFormation → Terraform — writing your infrastructure as code instead of clicking buttons</li>
+          </ul></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="phase" style="--phase-color:#2dd8c4">
+      <summary>
+        <div class="phase-num">04</div>
+        <div class="phase-heading"><span class="tag">Platform</span><h3>Lakehouse — Databricks</h3></div>
+        <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="phase-body">
+        <div class="why">Used by roughly 70% of Fortune 500 companies — one of the highest-value technologies in the whole roadmap.</div>
+        <div class="eli15"><span class="badge">In plain English</span>Old-school companies had two separate systems: a "data lake" (cheap storage for messy raw data) and a "data warehouse" (an organised, query-friendly place for reports). A lakehouse is a modern hybrid that gives you both at once — cheap storage AND reliable, organised tables. Databricks is the company that built the most popular version of this. "Bronze / Silver / Gold" is just a fancy way of saying: raw data → cleaned data → ready-for-business data, like ore → metal → a finished part.</div>
+        <div class="skill-groups">
+          <div class="skill-group"><h4>Databricks</h4><ul>
+            <li>Spark — the processing engine underneath it all</li>
+            <li>Delta Lake — the storage format that adds reliability to raw files</li>
+            <li>Unity Catalog — one place that tracks who can see and use what data</li>
+            <li>MLflow, Databricks SQL — tracking ML experiments and running SQL reports</li>
+          </ul></div>
+          <div class="skill-group"><h4>Lakehouse Architecture</h4><ul>
+            <li>Bronze / Silver / Gold layering — raw → cleaned → business-ready</li>
+            <li>Schema evolution — adapting when the shape of your data changes over time</li>
+            <li>Time travel — being able to "rewind" a table to see what it looked like yesterday</li>
+            <li>ACID transactions, data governance — reliability and control over who touches what</li>
+          </ul></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="phase" style="--phase-color:#2dd8c4">
+      <summary>
+        <div class="phase-num">05</div>
+        <div class="phase-heading"><span class="tag">Platform</span><h3>Data Architecture</h3></div>
+        <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="phase-body">
+        <div class="why">Stop learning tools in isolation — learn to design systems. This is the pivot toward Senior / Platform / Architect track.</div>
+        <div class="eli15"><span class="badge">In plain English</span>So far you've learned individual tools. This phase is about learning how senior engineers decide which tools to combine, and why — like knowing not just how to use a hammer and a saw, but how to actually design a house. Graph databases fit here because some data isn't naturally a table — it's a web of connections: "this person knows that person, who bought this product, which is similar to that product." Fortune 500 companies use graph databases for exactly that kind of connected data — fraud rings, recommendation engines, supply chains, org charts.</div>
+        <div class="skill-groups">
+          <div class="skill-group"><h4>Architecture Patterns</h4><ul>
+            <li>Data warehouse, data lake, lakehouse — where the data physically lives</li>
+            <li>Data mesh — treating each team's data like its own product instead of one giant shared pile</li>
+            <li>Medallion, Lambda, Kappa architectures — named patterns for organising raw-to-ready data flows</li>
+          </ul></div>
+          <div class="skill-group"><h4>Graph Databases</h4><ul>
+            <li>Neo4j — the most widely used graph database, and the one to learn first</li>
+            <li>Cypher — the query language for asking "how are these things connected?"</li>
+            <li>Amazon Neptune — AWS's managed graph database, useful once you know Neo4j</li>
+            <li>Graph modelling — nodes (things) and edges (relationships), instead of rows and columns</li>
+            <li>Real Fortune 500 uses: fraud detection, recommendation engines, knowledge graphs, supply-chain mapping</li>
+          </ul></div>
+          <div class="skill-group"><h4>Distributed Systems</h4><ul>
+            <li>Partitioning, replication — splitting and copying data across machines safely</li>
+            <li>Consistency, availability, fault tolerance, CAP theorem — the trade-offs every large system has to make</li>
+          </ul></div>
+          <div class="skill-group"><h4>Governance</h4><ul>
+            <li>Cataloguing, lineage — knowing what data exists and where it came from</li>
+            <li>RBAC — controlling access by someone's role, not one person at a time</li>
+            <li>Data quality, PII, encryption, access control — keeping data accurate, private, and safe</li>
+          </ul></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="phase" style="--phase-color:#5ec8ff">
+      <summary>
+        <div class="phase-num">06</div>
+        <div class="phase-heading"><span class="tag">Intelligence</span><h3>Machine Learning</h3></div>
+        <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="phase-body">
+        <div class="why">Notice the order: ML is built on top of the engineering foundation, not started from it.</div>
+        <div class="eli15"><span class="badge">In plain English</span>Machine learning is teaching a computer to spot patterns in data instead of you writing exact rules by hand. Show it thousands of past examples ("this customer left, this one didn't") and it learns to predict new ones. You need a bit of maths to understand why it works, but scikit-learn does most of the heavy lifting — you're mainly choosing the right approach and checking the computer's guesses are actually good.</div>
+        <div class="skill-groups">
+          <div class="skill-group"><h4>Mathematics</h4><ul>
+            <li>Probability, statistics</li>
+            <li>Linear algebra, calculus basics</li>
+            <li>Optimisation</li>
+          </ul></div>
+          <div class="skill-group"><h4>scikit-learn</h4><ul>
+            <li>Regression, classification, clustering</li>
+            <li>PCA, feature engineering</li>
+            <li>Cross-validation, hyperparameter tuning</li>
+            <li>Model evaluation</li>
+          </ul></div>
+          <div class="skill-group"><h4>Gradient Boosting</h4><ul>
+            <li>XGBoost</li>
+          </ul></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="phase" style="--phase-color:#5ec8ff">
+      <summary>
+        <div class="phase-num">07</div>
+        <div class="phase-heading"><span class="tag">Intelligence</span><h3>ML Engineering</h3></div>
+        <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="phase-body">
+        <div class="why">This is where the profile becomes materially harder to replace.</div>
+        <div class="eli15"><span class="badge">In plain English</span>Building a smart model on your laptop is easy. Keeping it running correctly for millions of real users, every day, without breaking — that's the hard part, and that's ML Engineering. MLflow is like a lab notebook that remembers every experiment you tried. Docker packs your code into a box that runs the same way on any computer. FastAPI lets other programs ask your model for a prediction over the internet.</div>
+        <div class="skill-groups">
+          <div class="skill-group"><h4>MLflow</h4><ul>
+            <li>Training → tracking → registry</li>
+            <li>Deployment → monitoring</li>
+          </ul></div>
+          <div class="skill-group"><h4>MLOps</h4><ul>
+            <li>Model versioning, experiment tracking</li>
+            <li>Feature stores, model registry, serving</li>
+            <li>Monitoring, drift, reproducibility, CI/CD</li>
+          </ul></div>
+          <div class="skill-group"><h4>Deployment</h4><ul>
+            <li>FastAPI, Docker</li>
+            <li>Kubernetes — enough to understand production, not administer clusters</li>
+          </ul></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="phase" style="--phase-color:#5ec8ff">
+      <summary>
+        <div class="phase-num">08</div>
+        <div class="phase-heading"><span class="tag">Intelligence</span><h3>Deep Learning</h3></div>
+        <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="phase-body">
+        <div class="why">The goal is to understand and deploy modern ML systems — not to become a research scientist.</div>
+        <div class="eli15"><span class="badge">In plain English</span>Deep learning is machine learning's more powerful cousin — instead of one simple pattern-spotting trick, it stacks thousands of tiny connected "neurons" in layers, loosely inspired by how brains work. This is what lets computers recognise faces in photos, understand speech, and — most importantly for this roadmap — understand and generate human language. Everything in the next phase (LLMs) is built using this.</div>
+        <div class="skill-groups">
+          <div class="skill-group"><h4>PyTorch</h4><ul>
+            <li>Tensors, autograd</li>
+            <li>Neural networks, training loops</li>
+          </ul></div>
+          <div class="skill-group"><h4>Architectures</h4><ul>
+            <li>CNNs, RNNs</li>
+            <li>Attention, Transformers</li>
+          </ul></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="phase" style="--phase-color:#8b6bff">
+      <summary>
+        <div class="phase-num">09</div>
+        <div class="phase-heading"><span class="tag">Frontier</span><h3>AI Engineering</h3></div>
+        <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="phase-body">
+        <div class="why">The final major layer before the agentic frontier.</div>
+        <div class="eli15"><span class="badge">In plain English</span>An LLM (like the model behind ChatGPT or Claude) is a deep learning model trained on huge amounts of text, so it's good at predicting "what word comes next." RAG means: instead of expecting the LLM to already know everything, you first fetch the exact relevant facts from your own company's data, hand them to the LLM, and say "answer using this." It's like giving someone an open-book exam instead of expecting them to memorise the textbook.</div>
+        <div class="skill-groups">
+          <div class="skill-group"><h4>LLM Fundamentals</h4><ul>
+            <li>Transformers — the architecture almost every modern LLM is built on</li>
+            <li>Embeddings — turning words/sentences into numbers a computer can compare</li>
+            <li>Tokenisation — how text gets chopped into pieces the model actually reads</li>
+            <li>Context windows, inference — how much the model can "see" at once, and how it answers</li>
+            <li>Fine-tuning, LoRA / PEFT — teaching an existing model your own specific data cheaply</li>
+          </ul></div>
+          <div class="skill-group"><h4>RAG Pipeline</h4><ul>
+            <li>Chunking — cutting documents into bite-sized pieces</li>
+            <li>Embeddings → vector database — turning those pieces into searchable numbers</li>
+            <li>Retrieval → reranking → LLM — finding the best matches, sorting them, then answering</li>
+          </ul></div>
+          <div class="skill-group"><h4>Vector Databases</h4><ul>
+            <li>pgvector first, in depth — vector search added right inside PostgreSQL</li>
+            <li>Then Pinecone, Milvus, Weaviate — awareness, not all three mastered</li>
+            <li>GraphRAG — combining your Phase 05 graph database skills with RAG, so the model can follow relationships ("who reports to whom," "which parts depend on which") instead of just matching similar text — a fast-growing 2026 pattern for Fortune 500 knowledge systems</li>
+          </ul></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="phase" style="--phase-color:#8b6bff">
+      <summary>
+        <div class="phase-num">10</div>
+        <div class="phase-heading"><span class="tag">Frontier</span><h3>Agentic AI</h3></div>
+        <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="phase-body">
+        <div class="why">LLM → Tools → Memory → Retrieval → Agents → Production. Increasingly what "enterprise AI" means in practice.</div>
+        <div class="eli15"><span class="badge">In plain English</span>A regular LLM can only talk. An "agent" is an LLM that can also act — it can decide "I need to check the database," actually run that check using a tool, look at the result, and decide what to do next, on its own, in a loop. Think of the difference between a person who can only give you advice over the phone, versus a personal assistant who can actually go do the task for you and report back.</div>
+        <div class="skill-groups">
+          <div class="skill-group"><h4>Agent Systems</h4><ul>
+            <li>Tool calling, function calling — letting the model actually run code or hit an API</li>
+            <li>Agent workflows — chaining steps: think, act, observe, repeat</li>
+            <li>MCP (Model Context Protocol) — the emerging standard for connecting AI models to real tools and data</li>
+          </ul></div>
+          <div class="skill-group"><h4>Reliability</h4><ul>
+            <li>Evaluation — testing whether the agent actually does the right thing, reliably</li>
+            <li>Guardrails — stopping the agent from doing something risky or wrong</li>
+            <li>Observability — being able to see what the agent did and why, after the fact</li>
+            <li>Multi-agent systems — several agents working together on different parts of a task</li>
+          </ul></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="phase" style="--phase-color:#f2b84b">
+      <summary>
+        <div class="phase-num">11</div>
+        <div class="phase-heading"><span class="tag">Delivery</span><h3>Production</h3></div>
+        <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </summary>
+      <div class="phase-body">
+        <div class="why">This is what separates a portfolio project from something that reads as Fortune 500 engineering.</div>
+        <div class="eli15"><span class="badge">In plain English</span>A school project just needs to work once, on your laptop, while you're watching it. A production system needs to keep working at 3am, handle way more users than expected, recover on its own if something crashes, and let other engineers safely change it without breaking everything else. This phase is about taking everything from Phases 1–10 and gluing it together into one real, reliable system — the kind of project that actually gets you hired.</div>
+        <div class="skill-groups">
+          <div class="skill-group"><h4>Full stack, integrated</h4><ul>
+            <li>Git, GitHub — tracking every change to your code and working with a team</li>
+            <li>Docker, Terraform — packaging code reliably, and building infrastructure from code</li>
+            <li>CI/CD — GitHub Actions, Kubernetes — automatically testing, deploying, and scaling your system</li>
+            <li>AWS, Databricks, Airflow, Spark, Kafka — the full data backbone from earlier phases, working together</li>
+            <li>MLflow, FastAPI, PyTorch, LLMs, RAG, monitoring — the ML/AI layer, live and being watched</li>
+          </ul></div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <section class="position-section">
+    <div class="section-label">Positioning</div>
+    <h2 class="section-title">How the profile reads at the end</h2>
+    <p class="section-desc">Not <span class="not-this">"I know Python, SQL, Power BI and some machine learning"</span> — a crowded junior profile. Instead:</p>
+    <div class="position-flow">
+      <span class="node now">Data Engineer</span><span class="sep">→</span>
+      <span class="node">ML Engineer</span><span class="sep">→</span>
+      <span class="node end">AI Engineer</span>
+    </div>
+    <blockquote class="reframe">
+      Python + SQL → AWS + Databricks → Spark + Kafka + Airflow → Lakehouse + Data Architecture → XGBoost + PyTorch → MLflow + MLOps → LLMs + RAG + Agents → Docker + Kubernetes + Terraform + CI/CD.
+      Current Amazon Data Engineering postings already connect pipelines and lakehouses to forecasting, reinforcement learning and ML infrastructure — this roadmap is built to sit exactly on that seam.
+    </blockquote>
+  </section>
+
+  <footer>
+    <span class="mark">AO</span> · Roadmap Hub · Data → ML → AI Engineer
+  </footer>
+</div>
+
+</body>
+</html>
