@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AO · Adversarial ML & AI Security — Research Track</title>
+<style>
+  :root{
+    --bg:#0a0a12;
+    --bg-alt:#0f0f1a;
+    --card:#13131f;
+    --card-border:#232338;
+    --violet:#8b5cf6;
+    --violet-soft:rgba(139,92,246,.12);
+    --teal:#2dd4bf;
+    --teal-soft:rgba(45,212,191,.12);
+    --amber:#f0b429;
+    --text:#e7e6f2;
+    --text-dim:#9694b0;
+    --text-faint:#605f78;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -5%, rgba(139,92,246,.14), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 90% 10%, rgba(45,212,191,.08), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+
+  a{color:inherit;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,10,18,.86); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--card-border);
+  }
+  .topbar-inner{
+    max-width:1080px; margin:0 auto; padding:14px 28px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:13px; letter-spacing:.06em; color:var(--text-dim);}
+  .brand .mark{
+    width:26px; height:26px; border-radius:7px;
+    background:linear-gradient(135deg,var(--violet),var(--teal));
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--sans); font-weight:800; font-size:11px; color:#0a0a12;
+  }
+  .progress-pill{
+    font-family:var(--mono); font-size:12px; color:var(--teal);
+    background:var(--teal-soft); border:1px solid rgba(45,212,191,.3);
+    padding:5px 12px; border-radius:100px; white-space:nowrap;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding:76px 0 40px;}
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; color:var(--teal);
+    letter-spacing:.14em; text-transform:uppercase; margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:26px; height:1px; background:var(--teal);}
+  h1{
+    font-size:clamp(2.1rem, 5vw, 3.2rem); font-weight:800; letter-spacing:-.02em;
+    line-height:1.08; max-width:820px;
+  }
+  h1 .accent{background:linear-gradient(135deg,var(--violet),var(--teal)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .hero-sub{margin-top:22px; max-width:660px; color:var(--text-dim); font-size:16px;}
+  .hero-meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
+  .meta-chip{
+    font-family:var(--mono); font-size:12px; color:var(--text-dim);
+    border:1px solid var(--card-border); padding:7px 13px; border-radius:8px;
+    background:var(--card);
+  }
+  .meta-chip b{color:var(--violet);}
+
+  /* ---------- reality check ---------- */
+  .callout{
+    margin:34px 0; padding:20px 22px; border-radius:12px;
+    background:linear-gradient(135deg, rgba(240,180,41,.08), rgba(240,180,41,.02));
+    border:1px solid rgba(240,180,41,.28);
+  }
+  .callout .callout-label{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--amber); margin-bottom:8px; display:block;}
+  .callout p{color:var(--text-dim); font-size:14.5px;}
+  .callout p + p{margin-top:8px;}
+
+  /* ---------- ascent signature visual ---------- */
+  .ascent-section{padding:30px 0 10px;}
+  .ascent-head{margin-bottom:24px;}
+  .ascent-head h2{font-size:1.5rem; font-weight:750; letter-spacing:-.01em;}
+  .ascent-head p{color:var(--text-dim); font-size:14.5px; margin-top:6px; max-width:560px;}
+  .ascent-svg-wrap{
+    background:var(--card); border:1px solid var(--card-border); border-radius:16px;
+    padding:10px 4px 4px; overflow-x:auto;
+  }
+  .ascent-svg-wrap svg{display:block; min-width:760px; width:100%;}
+  .peak-label{font-family:var(--mono); font-size:10.5px; fill:var(--text-dim);}
+  .peak-label-strong{font-family:var(--mono); font-size:11px; fill:var(--teal); font-weight:700;}
+  .milestone-dot{fill:var(--violet); stroke:var(--bg); stroke-width:2;}
+  .milestone-dot.award{fill:var(--amber);}
+  .milestone-text{font-family:var(--mono); font-size:9.5px; fill:var(--text-faint);}
+
+  /* ---------- phase nav ---------- */
+  .phase-nav{
+    display:flex; gap:8px; flex-wrap:wrap; margin:36px 0 8px; padding:16px;
+    background:var(--card); border:1px solid var(--card-border); border-radius:12px;
+  }
+  .phase-nav a{
+    font-family:var(--mono); font-size:11.5px; color:var(--text-dim);
+    padding:6px 11px; border-radius:7px; border:1px solid transparent;
+    transition:.15s;
+  }
+  .phase-nav a:hover{color:var(--teal); border-color:rgba(45,212,191,.3); background:var(--teal-soft);}
+
+  /* ---------- phase cards ---------- */
+  .phases{padding:50px 0 20px; display:flex; flex-direction:column; gap:22px;}
+  .phase{
+    background:var(--card); border:1px solid var(--card-border); border-radius:16px;
+    padding:30px 30px 26px; scroll-margin-top:90px; position:relative; overflow:hidden;
+  }
+  .phase::before{
+    content:''; position:absolute; top:0; left:0; width:3px; height:100%;
+    background:linear-gradient(180deg,var(--violet),var(--teal)); opacity:.7;
+  }
+  .phase-top{display:flex; align-items:flex-start; justify-content:space-between; gap:20px; flex-wrap:wrap;}
+  .phase-id{
+    font-family:var(--mono); font-size:12px; color:var(--violet);
+    display:flex; align-items:center; gap:10px; margin-bottom:8px;
+  }
+  .phase-check{
+    width:16px; height:16px; border-radius:5px; border:1.5px solid var(--card-border);
+    cursor:pointer; flex-shrink:0; appearance:none; background:transparent; position:relative;
+  }
+  .phase-check:checked{background:var(--teal); border-color:var(--teal);}
+  .phase-check:checked::after{
+    content:'✓'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-size:11px; color:#0a0a12; font-weight:800;
+  }
+  .phase h3{font-size:1.35rem; font-weight:750; letter-spacing:-.01em;}
+  .phase-timeframe{
+    font-family:var(--mono); font-size:11.5px; color:var(--text-dim);
+    background:var(--bg-alt); border:1px solid var(--card-border); padding:6px 12px; border-radius:8px;
+    white-space:nowrap;
+  }
+  .phase-why{color:var(--text-dim); font-size:14.5px; margin:14px 0 20px; max-width:760px;}
+
+  .block-label{
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--teal); margin:18px 0 10px;
+  }
+  ul.items{list-style:none; display:flex; flex-direction:column; gap:9px;}
+  ul.items li{
+    padding-left:18px; position:relative; font-size:14.5px; color:var(--text);
+  }
+  ul.items li::before{content:'—'; position:absolute; left:0; color:var(--text-faint);}
+  ul.items li b{color:var(--text);}
+  ul.items li .dim{color:var(--text-dim);}
+
+  .explainer{
+    margin-top:20px; padding:16px 18px; border-radius:11px;
+    background:var(--violet-soft); border:1px solid rgba(139,92,246,.25);
+  }
+  .explainer .tag{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--violet); display:block; margin-bottom:6px;}
+  .explainer p{font-size:14px; color:var(--text-dim);}
+
+  .resources{
+    margin-top:18px; display:flex; flex-wrap:wrap; gap:8px;
+  }
+  .resource-chip{
+    font-family:var(--mono); font-size:12px; color:var(--text-dim);
+    border:1px solid var(--card-border); padding:6px 12px; border-radius:100px;
+    background:var(--bg-alt);
+  }
+  .resource-chip .src{color:var(--teal);}
+
+  .award-strip{
+    margin-top:18px; padding:14px 16px; border-radius:10px;
+    background:linear-gradient(90deg, rgba(240,180,41,.09), transparent);
+    border-left:2px solid var(--amber);
+  }
+  .award-strip .tag{font-family:var(--mono); font-size:10.5px; color:var(--amber); letter-spacing:.08em; text-transform:uppercase; display:block; margin-bottom:6px;}
+  .award-strip p{font-size:13.5px; color:var(--text-dim);}
+
+  /* ---------- target orgs ---------- */
+  .orgs{padding:50px 0;}
+  .orgs h2{font-size:1.6rem; font-weight:750; letter-spacing:-.01em; margin-bottom:8px;}
+  .orgs > p{color:var(--text-dim); font-size:14.5px; max-width:640px; margin-bottom:28px;}
+  .org-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px;}
+  .org-card{
+    background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:22px;
+  }
+  .org-card h4{font-size:15px; font-weight:700; margin-bottom:10px; color:var(--teal);}
+  .org-card p{font-size:13.5px; color:var(--text-dim);}
+
+  /* ---------- footer capstone ---------- */
+  .capstone{
+    margin:60px 0 80px; padding:34px 32px; border-radius:18px;
+    background:linear-gradient(135deg, rgba(139,92,246,.10), rgba(45,212,191,.05));
+    border:1px solid rgba(139,92,246,.25);
+  }
+  .capstone h2{font-size:1.5rem; font-weight:750; margin-bottom:12px;}
+  .capstone p{color:var(--text-dim); font-size:14.5px; max-width:700px;}
+  .capstone ul.items{margin-top:16px;}
+
+  footer{padding:30px 0 60px; text-align:center;}
+  footer p{font-family:var(--mono); font-size:11.5px; color:var(--text-faint);}
+
+  @media (max-width:640px){
+    .phase{padding:22px 20px;}
+    .hero{padding:56px 0 30px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><div class="mark">AO</div> ROADMAP HUB / AI SECURITY RESEARCH TRACK</div>
+    <div class="progress-pill" id="progressPill">0 / 10 phases</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">Research-grade · 3–4 year track</div>
+    <h1>Adversarial ML & AI Security, to a <span class="accent">PhD-equivalent, award-bearing</span> level</h1>
+    <p class="hero-sub">A portfolio-driven path to the hiring bar at OpenAI, Google DeepMind, Anthropic, and Cisco's security research teams — built around reimplemented papers, competition wins, and original published work rather than course completions.</p>
+    <div class="hero-meta">
+      <div class="meta-chip"><b>10</b> phases</div>
+      <div class="meta-chip"><b>36–48mo</b> realistic timeline</div>
+      <div class="meta-chip"><b>4</b> target org profiles</div>
+      <div class="meta-chip"><b>2</b> award/competition tracks embedded</div>
+    </div>
+  </section>
+
+  <div class="callout">
+    <span class="callout-label">Reality check, stated upfront</span>
+    <p>"PhD-level with multiple awards" without an actual PhD is achievable but it is not a certificate stack — it's a portfolio of original attack/defense work, at least one workshop paper or strong preprint, and one or two competition placements that a hiring committee can independently verify. Every phase below is built to produce one of those artifacts, not just knowledge.</p>
+    <p>Two of the ten phases run mostly in parallel with the others rather than strictly after them — flagged where relevant. Treat the timeline as a floor, not a target to rush.</p>
+  </div>
+
+  <section class="ascent-section">
+    <div class="ascent-head">
+      <h2>The climb, at a glance</h2>
+      <p>Each marker is a real artifact you'll produce — not a course completion. Violet markers are portfolio milestones; amber markers are competitive/award signal.</p>
+    </div>
+    <div class="ascent-svg-wrap">
+      <svg viewBox="0 0 1000 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ascentGrad" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0%" stop-color="#8b5cf6"/>
+            <stop offset="100%" stop-color="#2dd4bf"/>
+          </linearGradient>
+        </defs>
+        <!-- baseline -->
+        <line x1="30" y1="270" x2="970" y2="270" stroke="#232338" stroke-width="1"/>
+        <!-- ascent path -->
+        <path d="M 30 260 L 160 230 L 280 215 L 400 175 L 520 150 L 640 110 L 760 85 L 880 45 L 960 25"
+              fill="none" stroke="url(#ascentGrad)" stroke-width="2.5"/>
+        <!-- summit flag -->
+        <circle cx="960" cy="25" r="4" fill="#2dd4bf"/>
+        <text x="908" y="12" class="peak-label-strong">OpenAI · DeepMind · Anthropic · Cisco</text>
+
+        <!-- milestones -->
+        <circle cx="160" cy="230" r="4.5" class="milestone-dot"/>
+        <text x="130" y="250" class="milestone-text">from-scratch autograd</text>
+
+        <circle cx="280" cy="215" r="4.5" class="milestone-dot"/>
+        <text x="245" y="205" class="milestone-text">PortSwigger + PicoCTF badges</text>
+
+        <circle cx="400" cy="175" r="4.5" class="milestone-dot award"/>
+        <text x="368" y="195" class="milestone-text">first CTF placement</text>
+
+        <circle cx="520" cy="150" r="4.5" class="milestone-dot"/>
+        <text x="470" y="140" class="milestone-text">FGSM/PGD reimplemented</text>
+
+        <circle cx="640" cy="110" r="4.5" class="milestone-dot"/>
+        <text x="595" y="130" class="milestone-text">jailbreak taxonomy + Garak contrib</text>
+
+        <circle cx="760" cy="85" r="4.5" class="milestone-dot award"/>
+        <text x="715" y="105" class="milestone-text">HackAPrompt / AI Village result</text>
+
+        <circle cx="880" cy="45" r="4.5" class="milestone-dot award"/>
+        <text x="820" y="65" class="milestone-text">workshop paper accepted</text>
+      </svg>
+    </div>
+  </section>
+
+  <nav class="phase-nav">
+    <a href="#p0">0 · Foundations</a>
+    <a href="#p1">1 · ML Engineering</a>
+    <a href="#p2">2 · Offensive Security</a>
+    <a href="#p3">3 · Adversarial ML Core</a>
+    <a href="#p4">4 · LLM Security & Interp</a>
+    <a href="#p5">5 · Research Craft</a>
+    <a href="#p6">6 · Publication & Awards</a>
+    <a href="#p7">7 · OSS & Visibility</a>
+    <a href="#p8">8 · Targeting the Labs</a>
+    <a href="#p9">9 · Capstone</a>
+  </nav>
+
+  <section class="phases" id="phases"></section>
+
+  <section class="orgs">
+    <h2>How the four orgs actually hire for this</h2>
+    <p>Team names and emphasis shift, but the underlying bar is consistent: demonstrated original work over credentials. Verify current team names before applying — org structures move fast.</p>
+    <div class="org-grid">
+      <div class="org-card">
+        <h4>Anthropic</h4>
+        <p>Frontier Red Team and Alignment Science hire for red-teaming instinct and interpretability fluency specifically. Mechanistic interpretability work (Phase 4) is the single strongest differentiator here — it's the house specialty.</p>
+      </div>
+      <div class="org-card">
+        <h4>OpenAI</h4>
+        <p>Preparedness and Safety Systems teams weight practical red-teaming and misuse-pattern research heavily. A published jailbreak taxonomy or novel attack class carries real weight.</p>
+      </div>
+      <div class="org-card">
+        <h4>Google DeepMind</h4>
+        <p>AGI Safety and the AI red team pull from both research and engineering backgrounds. Reproducible, well-documented adversarial robustness work (Phase 3) maps directly onto their public research agenda.</p>
+      </div>
+      <div class="org-card">
+        <h4>Cisco (Talos / Robust Intelligence)</h4>
+        <p>More systems- and product-security rooted. CTF pedigree, binary exploitation depth (Phase 2), and ML supply-chain security work stand out more here than pure research papers.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="capstone">
+    <h2>Capstone: by month 30–36 you should have</h2>
+    <p>This is the actual portfolio a hiring committee at any of the four orgs would look for — it substitutes for the PhD credential when it's genuinely this complete.</p>
+    <ul class="items">
+      <li><b>2–3</b> reimplemented-and-extended attack or defense pipelines, each with a public writeup</li>
+      <li><b>1</b> workshop paper or arXiv preprint with early citations or community engagement</li>
+      <li><b>1–2</b> competition placements (DEF CON AI Village, HackAPrompt, or equivalent)</li>
+      <li>An active technical blog read by people in the field, not just friends</li>
+      <li><b>1</b> meaningful open-source contribution to a real AI security tool (Garak, PyRIT, ART)</li>
+      <li>A declared specialization: LLM red-teaming, adversarial robustness, mech-interp-for-safety, or ML supply-chain security — pick one and be known for it</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>AO · ROADMAP HUB — progress saved locally in this browser</p>
+  </footer>
+
+</div>
+
+<script>
+const phases = [
+  {
+    id: "p0", num: "PHASE 0", title: "Rebuild Foundations at Research Depth",
+    time: "Months 1–6",
+    why: "Every later phase assumes fluency you can't fake under questioning. This is the phase people skip and it's the one that shows in interviews.",
+    blocks: [
+      { label: "Mathematics", items: [
+        "<b>Linear algebra</b> — MIT 18.06 (Strang), through eigendecomposition and SVD",
+        "<b>Probability & statistics</b> — Stanford CS109, hypothesis testing, distributions",
+        "<b>Convex optimization</b> — Boyd & Vandenberghe, first 5 chapters minimum",
+        "<b>Information theory basics</b> — Cover & Thomas, chapters 1–4 (entropy, KL divergence — both show up constantly in adversarial ML)"
+      ]},
+      { label: "CS Core", items: [
+        "Rigorous data structures & algorithms — not bootcamp-level, research-interview-level",
+        "Operating systems — Berkeley CS162 lecture series",
+        "Computer networks — TCP/IP, DNS, HTTP internals",
+        "<span class='dim'>Optional but valuable:</span> compilers/PL theory — helps later with program-analysis-based security work"
+      ]},
+      { label: "Security Core", items: [
+        "Binary exploitation basics — buffer overflows, stack layout",
+        "OWASP Top 10, in depth, not memorized",
+        "Applied cryptography basics — understand what \"broken crypto\" actually means before you study broken ML",
+        "Begin CTF practice — PicoCTF as the entry ramp"
+      ]}
+    ],
+    explainer: "Think of this phase as building the floor everyone else stands on without noticing. When a paper says 'we bound the perturbation in the ℓ∞ norm,' you should not have to stop and look up what a norm is — that's the level of automaticity this phase buys you.",
+    resources: ["MIT 18.06", "Stanford CS109", "Boyd — Convex Optimization", "Berkeley CS162", "PicoCTF"]
+  },
+  {
+    id: "p1", num: "PHASE 1", title: "ML Engineering to Research Fluency",
+    time: "Months 4–12 · overlaps Phase 0's tail",
+    why: "You need to be able to build and break models with your own hands, not just call a library. Research interviews probe implementation depth specifically because it's the easiest thing to fake with library calls.",
+    blocks: [
+      { label: "Core coursework", items: [
+        "Stanford CS231n (vision) and CS224n (NLP) — both, not one",
+        "Karpathy's \"Neural Networks: Zero to Hero\" series, done alongside, not instead of",
+        "Full Stack Deep Learning for the engineering-around-the-model half"
+      ]},
+      { label: "Build from scratch (no framework)", items: [
+        "A working autograd engine — this is the single highest-leverage exercise in this whole roadmap",
+        "Backprop through a plain MLP, then a CNN, then an RNN/LSTM",
+        "A transformer block, following \"Attention Is All You Need\" — then train a small one on real data"
+      ]},
+      { label: "PyTorch mastery", items: [
+        "Custom autograd functions, forward/backward hooks",
+        "Profiling and memory debugging — mixed precision, gradient checkpointing",
+        "Distributed training basics — DDP at minimum"
+      ]},
+      { label: "Read & annotate 20 canonical papers", items: [
+        "AlexNet, ResNet, BatchNorm, Dropout, Adam, Attention Is All You Need, BERT, GPT-1/2/3 — annotate margins, don't just read abstracts"
+      ]}
+    ],
+    explainer: "The from-scratch autograd engine is worth calling out on its own: it's maybe 200 lines of code, and it is the thing that separates 'used PyTorch' from 'understands what PyTorch is doing.' Nearly every strong ML security researcher has built one at some point.",
+    resources: ["Stanford CS231n", "Stanford CS224n", "Karpathy — Zero to Hero", "Full Stack Deep Learning"]
+  },
+  {
+    id: "p2", num: "PHASE 2", title: "Offensive Security & Systems Depth",
+    time: "Months 6–14 · runs parallel to Phase 1",
+    why: "Research-grade AI security work assumes you can think like an attacker at the systems level, not only the model level. This is also the phase that differentiates you for Cisco specifically.",
+    blocks: [
+      { label: "Binary & web exploitation", items: [
+        "Buffer overflows, ROP chains, format string bugs — pwn.college or the Nightmare CTF guide",
+        "PortSwigger Web Security Academy — complete every category, not just the free labs",
+        "Burp Suite fluency for manual web app testing"
+      ]},
+      { label: "Malware & network", items: [
+        "Static and dynamic malware analysis basics, sandboxed environments",
+        "Network attack fundamentals — MITM, DNS poisoning, protocol abuse"
+      ]},
+      { label: "Competitive track", items: [
+        "PicoCTF → HackTheBox Pro Labs → attempt DEF CON CTF qualifiers",
+        "Join a CTF team — solo CTF progress plateaus much earlier than team progress does"
+      ]}
+    ],
+    explainer: "This phase feels like a detour from 'AI security' — it isn't. Every AI security team at these four orgs is staffed partly by people who came up through classic offensive security. The adversarial mindset transfers directly; the tooling is what's new.",
+    resources: ["pwn.college", "PortSwigger Academy", "HackTheBox", "DEF CON CTF"]
+  },
+  {
+    id: "p3", num: "PHASE 3", title: "Adversarial ML — Deep Core",
+    time: "Months 10–20",
+    why: "This is the field's technical center of gravity. The goal is to reimplement the canonical attacks from the paper, not from a library's example notebook — that's what makes the difference legible to a hiring committee.",
+    blocks: [
+      { label: "Attacks, reimplemented from the paper", items: [
+        "FGSM (Goodfellow et al. 2014) and PGD (Madry et al. 2017) — hand-rolled, not called from a library",
+        "Carlini-Wagner attack — widely considered the sharpest test of a defense's actual robustness",
+        "Universal adversarial perturbations, and black-box/transfer attacks"
+      ]},
+      { label: "Poisoning, backdoors, extraction", items: [
+        "BadNets and training-data poisoning attacks",
+        "Trojan/backdoor detection techniques",
+        "Model stealing/extraction and membership inference attacks"
+      ]},
+      { label: "Defenses", items: [
+        "Adversarial training end to end",
+        "Certified robustness via randomized smoothing",
+        "Differential privacy in ML training pipelines"
+      ]},
+      { label: "Map everything to MITRE ATLAS", items: [
+        "Tag every technique you learn with its ATLAS tactic/technique ID — this is the field's shared vocabulary and hiring managers will expect fluency in it"
+      ]}
+    ],
+    explainer: "Run the library version (IBM ART, CleverHans, Foolbox) first to confirm your mental model is right — then throw the library away and hand-roll the attack. The library run is a sanity check, not the deliverable.",
+    resources: ["MITRE ATLAS", "IBM ART", "CleverHans", "Foolbox", "Nicholas Carlini — publications & blog", "Madry Lab robustness materials"]
+  },
+  {
+    id: "p4", num: "PHASE 4", title: "LLM Security & Interpretability",
+    time: "Months 16–26",
+    why: "This is the Anthropic-specific track, and increasingly relevant to all four orgs as frontier work shifts to language models. Mechanistic interpretability in particular is the strongest single differentiator on this whole roadmap.",
+    blocks: [
+      { label: "Prompt injection & jailbreaks", items: [
+        "Reproduce known jailbreak classes end to end — encoding tricks, multi-turn manipulation, role-play framings",
+        "Build a small taxonomy of the attack classes you've reproduced, with working examples"
+      ]},
+      { label: "Red-teaming methodology", items: [
+        "Study Anthropic's and OpenAI's published red-teaming papers closely",
+        "Replicate a small-scale version of a published red-teaming methodology on an open model"
+      ]},
+      { label: "Training pipeline fundamentals", items: [
+        "RLHF/RLAIF basics — you need to understand the pipeline that produces the vulnerabilities you study, not train a frontier model yourself",
+        "Constitutional AI and safety-training papers — read closely enough to critique them"
+      ]},
+      { label: "Mechanistic interpretability", items: [
+        "Anthropic's Transformer Circuits publications, worked through in order",
+        "Neel Nanda's mech interp tutorials, hands-on with a small open model",
+        "This is the highest-leverage specialization on the roadmap if Anthropic specifically is the target"
+      ]},
+      { label: "Tooling", items: [
+        "Garak — the LLM vulnerability scanner", "PyRIT — Microsoft's red-teaming framework", "promptfoo for systematic prompt evaluation"
+      ]}
+    ],
+    explainer: "Interpretability is unintuitive at first because it feels like neuroscience more than security — you're trying to read out what a trained network is actually doing internally, not just poke at its inputs and outputs. That's exactly why it's rare, and exactly why it stands out.",
+    resources: ["transformer-circuits.pub", "Neel Nanda — mech interp tutorials", "Garak", "PyRIT", "promptfoo", "HackAPrompt paper"]
+  },
+  {
+    id: "p5", num: "PHASE 5", title: "Research Craft & Methodology",
+    time: "Months 18–30 · overlaps Phases 3–4",
+    why: "Knowing the field isn't the same as being able to produce new knowledge in it. This phase is where you learn to actually do research, which is a distinct skill from studying it.",
+    blocks: [
+      { label: "Methodology", items: [
+        "Forming a testable hypothesis, not just 'exploring a topic'",
+        "Literature review discipline — know what's already been tried before you try it",
+        "Experiment design, ablation studies, and basic statistical rigor for reporting results"
+      ]},
+      { label: "The reproduction rite of passage", items: [
+        "Pick one well-known paper from Phase 3 or 4 and reproduce its results end to end, from scratch",
+        "Then extend it with a genuinely novel angle — this becomes your first real research contribution"
+      ]},
+      { label: "Technical writing", items: [
+        "Study how top papers structure abstracts and introductions — this is a learnable skill, not innate talent",
+        "\"The Craft of Research\" (Booth, Colomb, Williams) for the underlying discipline",
+        "Get real feedback from communities — r/MachineLearning, AI safety Slack/Discord groups — before you consider anything final"
+      ]}
+    ],
+    explainer: "The reproduction step is deliberately uncomfortable — most published results have small gaps, undocumented hyperparameters, or subtle bugs, and closing those gaps yourself teaches you more about how research actually gets done than any course will.",
+    resources: ["Stanford CS197 — Computer Science Research", "The Craft of Research — Booth et al.", "r/MachineLearning"]
+  },
+  {
+    id: "p6", num: "PHASE 6", title: "Publication & Award Track",
+    time: "Months 24–36+",
+    why: "This is where the 'multiple awards' part of the goal actually gets built — deliberately, not by accident.",
+    blocks: [
+      { label: "Target workshop tracks first", items: [
+        "NeurIPS / ICML / ICLR workshops — far more attainable than the main track, same room, same reviewers, same networking value",
+        "SaTML (IEEE Conference on Secure and Trustworthy ML) — a security-focused venue that's more attainable than a general ML main track and directly on-theme"
+      ]},
+      { label: "Realistic award targets", items: [
+        "DEF CON AI Village CTF — aim for a top placement, not just participation",
+        "HackAPrompt competition leaderboard",
+        "Lakera's Gandalf leaderboard, as a lighter-weight ongoing signal",
+        "Workshop Best Paper — genuinely attainable at the workshop tier with a solid extension of a known result"
+      ]},
+      { label: "Publish pre-review too", items: [
+        "Post to arXiv even before formal peer review — citations and visibility start accumulating immediately, and it's normal practice in this field"
+      ]}
+    ],
+    explainer: "A workshop paper plus a couple of competition placements is not a lesser substitute for a PhD's worth of main-track publications — for a non-academic path into these specific teams, it's often the more legible signal, because it's concrete, dated, and independently verifiable.",
+    resources: ["NeurIPS/ICML/ICLR workshop tracks", "SaTML", "DEF CON AI Village", "HackAPrompt", "arXiv"]
+  },
+  {
+    id: "p7", num: "PHASE 7", title: "Open Source Leadership & Visibility",
+    time: "Ongoing from Month 20",
+    why: "This is frequently what actually gets a hiring manager's attention first — before the paper, before the CTF result. A maintainer credit on a known tool is a very legible signal.",
+    blocks: [
+      { label: "Contribute meaningfully", items: [
+        "Real contributions to IBM ART, Garak, or PyRIT — features and fixes, not typo PRs",
+        "Aim eventually to maintain or lead a smaller tool of your own in a niche gap you've found"
+      ]},
+      { label: "Publish your findings", items: [
+        "Blog every real finding — precise, reproducible, technical. Nicholas Carlini, Simon Willison, and Lakera's engineering blog are the right tonal models",
+        "Write the failed experiments up too — negative results are still useful signal to a reader in this field"
+      ]},
+      { label: "Speak", items: [
+        "Local security meetups first, then DEF CON/BSides villages, then eventually a workshop talk tied to your Phase 6 paper"
+      ]}
+    ],
+    explainer: "Given your existing instructional/training background, this phase should come more naturally than it does to most candidates — the skill of explaining a technical finding clearly to a room is the same skill either way.",
+    resources: ["Garak / PyRIT / IBM ART repos", "Nicholas Carlini's blog", "Simon Willison's blog", "Lakera engineering blog"]
+  },
+  {
+    id: "p8", num: "PHASE 8", title: "Targeting the Labs",
+    time: "Months 30+",
+    why: "The four orgs hire for this work differently, and \"Research Scientist\" is rarely the realistic first door without a completed PhD.",
+    blocks: [
+      { label: "The more realistic entry points", items: [
+        "Security/Trust & Safety engineering roles — far more accessible than a pure Research Scientist title",
+        "Dedicated AI red-team roles — OpenAI, Anthropic, and Google DeepMind all hire engineers onto these teams, not only PhDs",
+        "Adjacent AI security vendors as a deliberate stepping stone: Lakera, HiddenLayer, Protect AI, Robust Intelligence (now part of Cisco) — smaller, faster-hiring, excellent portfolio builders, and Cisco is already one of your targets"
+      ]},
+      { label: "Faster, more credible alternate paths", items: [
+        "A targeted Master's in ML/Security from a research-active department",
+        "MATS (ML Alignment Theory Scholars) — a well-known fellowship that feeds directly into Anthropic's and DeepMind's safety teams and is explicitly designed for exactly this kind of non-traditional path"
+      ]}
+    ],
+    explainer: "None of the four orgs requires a PhD for these roles if the portfolio from Phases 3–7 is genuinely complete — but the PhD-equivalent bar is real, and it's built from artifacts, not from studying alone.",
+    resources: ["MATS Program", "Lakera careers", "HiddenLayer careers", "Protect AI careers"]
+  },
+  {
+    id: "p9", num: "PHASE 9", title: "Capstone — Your Own Research Agenda",
+    time: "Months 30–36+",
+    why: "The final phase isn't a course — it's declaring a specialization and defending it with a body of original work, the way a thesis defense would.",
+    blocks: [
+      { label: "Pick one specialization and be known for it", items: [
+        "LLM red-teaming and jailbreak taxonomy", "Adversarial robustness of vision/multimodal models",
+        "Mechanistic interpretability for safety", "ML supply-chain security (poisoning, dependency/model provenance attacks)"
+      ]},
+      { label: "The capstone project itself", items: [
+        "A genuinely original piece of research within that specialization — not an extension exercise this time, a real open question you're answering",
+        "Written and presented as if it were your job talk at the org you're targeting"
+      ]}
+    ],
+    explainer: "By this point the roadmap stops being a roadmap — you have a research agenda of your own, which is the actual thing these four orgs are hiring for underneath all the process above.",
+    resources: []
+  }
+];
+
+const phasesEl = document.getElementById('phases');
+const progressPill = document.getElementById('progressPill');
+const STORAGE_KEY = 'ao-ai-security-roadmap-progress';
+
+function loadProgress(){
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch(e){ return {}; }
+}
+function saveProgress(state){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e){}
+}
+let progress = loadProgress();
+
+function updatePill(){
+  const done = phases.filter(p => progress[p.id]).length;
+  progressPill.textContent = `${done} / ${phases.length} phases`;
+}
+
+phases.forEach(p => {
+  const section = document.createElement('section');
+  section.className = 'phase';
+  section.id = p.id;
+
+  const blocksHtml = p.blocks.map(b => `
+    <div class="block-label">${b.label}</div>
+    <ul class="items">${b.items.map(i => `<li>${i}</li>`).join('')}</ul>
+  `).join('');
+
+  const resourcesHtml = p.resources.length ? `
+    <div class="resources">${p.resources.map(r => `<span class="resource-chip"><span class="src">↗</span> ${r}</span>`).join('')}</div>
+  ` : '';
+
+  section.innerHTML = `
+    <div class="phase-top">
+      <div>
+        <div class="phase-id">
+          <input type="checkbox" class="phase-check" data-id="${p.id}" ${progress[p.id] ? 'checked' : ''}>
+          ${p.num}
+        </div>
+        <h3>${p.title}</h3>
+      </div>
+      <div class="phase-timeframe">${p.time}</div>
+    </div>
+    <p class="phase-why">${p.why}</p>
+    ${blocksHtml}
+    <div class="explainer">
+      <span class="tag">Why this matters</span>
+      <p>${p.explainer}</p>
+    </div>
+    ${resourcesHtml}
+  `;
+  phasesEl.appendChild(section);
+});
+
+document.querySelectorAll('.phase-check').forEach(cb => {
+  cb.addEventListener('change', e => {
+    progress[e.target.dataset.id] = e.target.checked;
+    saveProgress(progress);
+    updatePill();
+  });
+});
+
+updatePill();
+</script>
+</body>
+</html>
