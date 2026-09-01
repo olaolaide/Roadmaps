@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate AI + Cybersecurity Mastery Roadmap</title>
+<style>
+:root{
+  --bg:#050d18; --panel:#0a1525; --panel2:#0d1c30; --text:#e8f1ff;
+  --muted:#8aa3bf; --line:#1e3a5c; --accent:#5ecfff; --accent2:#a78bfa;
+  --green:#34d399; --gold:#fbbf24; --danger:#fb7185; --orange:#fb923c;
+  --purple:#c084fc; --teal:#2dd4bf; --shadow:0 20px 60px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;
+background:radial-gradient(circle at 10% 0%,#0f2a4d 0,transparent 40%),radial-gradient(circle at 90% 5%,#1a1040 0,transparent 35%),var(--bg);color:var(--text);line-height:1.65}
+a{color:inherit;text-decoration:none}
+.container{width:min(1280px,94%);margin:auto}
+.hero{min-height:85vh;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:8% auto auto 50%;width:520px;height:520px;border:1px solid rgba(94,207,255,.15);border-radius:50%;box-shadow:0 0 120px rgba(94,207,255,.08);transform:translateX(-50%)}
+.hero:after{content:"";position:absolute;inset:auto auto 10% 10%;width:300px;height:300px;border:1px solid rgba(167,139,250,.12);border-radius:50%}
+.eyebrow{color:var(--accent);font-weight:800;letter-spacing:.18em;text-transform:uppercase;font-size:.78rem}
+h1{font-size:clamp(2.8rem,6.5vw,6.2rem);line-height:.95;letter-spacing:-.06em;margin:16px 0;background:linear-gradient(120deg,#fff,var(--accent),#c4b5fd);-webkit-background-clip:text;color:transparent}
+.hero p{font-size:1.15rem;max-width:780px;color:var(--muted)}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}
+.badge{border:1px solid var(--line);background:rgba(10,21,37,.75);padding:8px 14px;border-radius:999px;color:#bdd6f0;font-size:.82rem}
+.btn{display:inline-block;padding:13px 22px;border-radius:14px;background:linear-gradient(135deg,#38bdf8,#8b5cf6);font-weight:800;color:#040d18;box-shadow:var(--shadow);font-size:.95rem}
+section{padding:70px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:32px;flex-wrap:wrap}
+h2{font-size:2.3rem;letter-spacing:-.04em;margin:0}
+h3{margin-top:0;font-size:1.2rem}
+h4{font-size:1rem;margin:12px 0 6px;color:var(--accent)}
+.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
+.card{background:linear-gradient(145deg,rgba(13,28,48,.95),rgba(8,20,35,.95));border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
+.card:hover{transform:translateY(-3px);transition:.2s;border-color:#2d5a87}
+.timeline{position:relative;margin-top:28px}
+.timeline:before{content:"";position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(var(--accent),var(--accent2),var(--green),var(--gold))}
+.phase{position:relative;margin:0 0 20px 0;padding-left:58px}
+.dot{position:absolute;left:10px;top:20px;width:20px;height:20px;border-radius:50%;background:var(--bg);border:4px solid var(--accent);box-shadow:0 0 16px rgba(94,207,255,.3)}
+.phase:nth-child(3n) .dot{border-color:var(--accent2)} .phase:nth-child(4n) .dot{border-color:var(--green)} .phase:nth-child(5n) .dot{border-color:var(--gold)}
+.phase-top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.phase-number{font-size:.75rem;font-weight:900;color:var(--accent);letter-spacing:.12em;text-transform:uppercase}
+.phase h3{font-size:1.4rem;margin:4px 0}
+.pill{padding:5px 11px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.78rem;height:max-content;background:rgba(10,21,37,.5)}
+ul{padding-left:18px;color:#b8cce6;margin:8px 0}
+li{margin:4px 0;font-size:.92rem}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.tag{font-size:.72rem;padding:3px 8px;background:#081424;border:1px solid #1a3352;border-radius:6px;color:#8fb8d9}
+.arch{background:#040d18;border:1px solid var(--line);border-radius:18px;padding:24px;overflow:auto}
+pre{margin:0;color:#93c5fd;font:600 13px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace}
+.matrix{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.metric{font-size:2.2rem;font-weight:900;color:var(--accent)}
+footer{padding:50px 0 70px;border-top:1px solid var(--line);color:var(--muted)}
+nav{position:sticky;top:0;z-index:10;background:rgba(5,13,24,.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(30,58,92,.7)}
+nav .container{display:flex;gap:16px;overflow:auto;padding:12px 0;font-size:.82rem}
+nav a{white-space:nowrap;color:#a3bcd6;padding:4px 10px;border-radius:8px}
+nav a:hover{color:#fff;background:rgba(94,207,255,.1)}
+.quote{border-left:3px solid var(--accent);padding:12px 18px;color:#d4e4f7;background:rgba(94,207,255,.04);border-radius:0 14px 14px 0;margin:16px 0}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.part-header{background:linear-gradient(135deg,rgba(94,207,255,.08),rgba(167,139,250,.08));border:1px solid var(--line);border-radius:18px;padding:28px;margin-bottom:28px}
+.part-header h2{margin:0;font-size:1.9rem}
+.part-header .eyebrow{margin-bottom:8px}
+@media(max-width:900px){.matrix,.two-col,.three-col,.four-col{grid-template-columns:1fr}.phase{padding-left:48px}.timeline:before{left:14px}.dot{left:4px}}
+.warning{border-left:3px solid var(--danger);padding:12px 18px;color:#fecdd3;background:rgba(251,113,133,.06);border-radius:0 14px 14px 0;margin:14px 0}
+.tip{border-left:3px solid var(--green);padding:12px 18px;color:#bbf7d0;background:rgba(52,211,153,.06);border-radius:0 14px 14px 0;margin:14px 0}
+</style>
+</head>
+<body>
+<nav><div class="container">
+<a href="#vision">Vision</a><a href="#meta">Meta-Skills</a><a href="#foundation">Foundation</a><a href="#cyber">Cybersecurity</a><a href="#ai">AI/ML</a><a href="#aisec">AI Security</a><a href="#systems">Systems</a><a href="#safety">Safety & Ethics</a><a href="#research">Research</a><a href="#projects">Projects</a><a href="#plan">10-Year Plan</a><a href="#mastery">Mastery</a>
+</div></nav>
+
+<header class="hero" id="vision">
+<div class="container">
+<div class="eyebrow">The Ultimate Mastery Curriculum · 10-Year Track</div>
+<h1>AI + Cybersecurity<br>Complete Spectrum</h1>
+<p>A doctoral-level roadmap for becoming an <strong>AI Security Research Scientist</strong> with complete spectrum coverage — from silicon to policy, from theory to practice, from offence to defence.</p>
+<div class="badges">
+<span class="badge">Computer Science</span><span class="badge">Systems</span><span class="badge">Cybersecurity</span><span class="badge">Machine Learning</span><span class="badge">AI Systems</span><span class="badge">AI Security</span><span class="badge">Formal Methods</span><span class="badge">Hardware Security</span><span class="badge">Governance</span>
+</div>
+<a class="btn" href="#meta">Begin the ascent ↓</a>
+</div>
+</header>
+
+<main class="container">
+
+<!-- STATS -->
+<section>
+<div class="grid">
+<div class="card"><div class="metric">10</div><div class="muted">Years of compounding depth</div></div>
+<div class="card"><div class="metric">50+</div><div class="muted">Core subject areas</div></div>
+<div class="card"><div class="metric">20+</div><div class="muted">Flagship projects</div></div>
+<div class="card"><div class="metric">1</div><div class="muted">Identity: AI Security Research Scientist</div></div>
+</div>
+</section>
+
+<!-- META-SKILLS -->
+<section id="meta">
+<div class="part-header">
+<div class="eyebrow">Part 0 · The Architecture of Mastery</div>
+<h2>Meta-Skills & Career Infrastructure</h2>
+<p class="muted">Before any technical subject, build the systems that enable lifelong learning.</p>
+</div>
+<div class="grid">
+<div class="card"><h3>Learning Architecture</h3><ul><li>Spaced repetition systems (Anki, Obsidian)</li><li>Zettelkasten note-taking and knowledge graphs</li><li>Deliberate practice with immediate feedback loops</li><li>Interleaving: rotate 3 subjects simultaneously</li><li>Feynman technique: teach to learn</li><li>Build a public knowledge base (blog, wiki, GitHub)</li></ul></div>
+<div class="card"><h3>Scientific Communication</h3><ul><li>Technical writing: papers, reports, documentation</li><li>Scientific presentations and conference speaking</li><li>Peer review and constructive critique</li><li>LaTeX, Markdown, Jupyter, Overleaf fluency</li><li>Data visualization and storytelling</li><li>Cross-disciplinary translation (CS ↔ Security ↔ ML)</li></ul></div>
+<div class="card"><h3>Research Methodology</h3><ul><li>Hypothesis formulation and falsification</li><li>Experimental design and controls</li><li>Statistical power analysis and significance</li><li>Reproducibility and artifact evaluation</li><li>Literature review and systematic mapping</li><li>Research ethics and responsible disclosure</li></ul></div>
+<div class="card"><h3>Career & Leadership</h3><ul><li>Mentorship: both giving and receiving</li><li>Technical leadership without authority</li><li>Open-source community building</li><li>Grant writing and funding acquisition</li><li>Industry-academia bridge building</li><li>Building a personal research brand</li></ul></div>
+<div class="card"><h3>Cognitive Tools</h3><ul><li>First-principles thinking</li><li>Inversion: solve by avoiding failure modes</li><li>Second-order thinking: consequences of consequences</li><li>Probabilistic reasoning and Bayesian updating</li><li>Systems thinking and feedback loops</li><li>Red-teaming your own assumptions</li></ul></div>
+<div class="card"><h3>Physical & Mental Infrastructure</h3><ul><li>Deep work scheduling and environment design</li><li>Sleep, exercise, and cognitive performance</li><li>Stress management and burnout prevention</li><li>Time-boxing and energy management</li><li>Building a trusted peer network</li><li>Long-term compounding over short-term intensity</li></ul></div>
+</div>
+</section>
+
+<!-- FOUNDATIONS -->
+<section id="foundation">
+<div class="part-header">
+<div class="eyebrow">Part I · The Bedrock</div>
+<h2>Foundations: Mathematics, Programming & Theory</h2>
+<p class="muted">Everything rests on these. Depth here creates exponential leverage elsewhere.</p>
+</div>
+
+<div class="timeline">
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-top"><div><div class="phase-number">Phase 0 · Months 0–6</div><h3>Exceptional Programming</h3></div><span class="pill">Developer</span></div>
+<ul><li>Python deeply: concurrency, async, typing, testing, profiling, packaging, Cython</li><li>C/C++ fundamentals: pointers, memory, processes, sockets, RAII, move semantics</li><li>Rust: ownership, borrowing, lifetimes, unsafe, async, secure systems</li><li>Go/Java: distributed systems, concurrency patterns, garbage collection internals</li><li>Bash, AWK, sed — Linux as a development environment</li><li>Git internals, debugging (GDB, LLDB), profiling (perf, valgrind, flamegraphs)</li><li>Build systems: Make, CMake, Bazel, Cargo</li></ul><div class="tags"><span class="tag">Python</span><span class="tag">C</span><span class="tag">C++</span><span class="tag">Rust</span><span class="tag">Go</span><span class="tag">Linux</span><span class="tag">Git</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-top"><div><div class="phase-number">Phase 1 · Months 3–15</div><h3>Mathematical Maturity</h3></div><span class="pill">Mathematician</span></div>
+<ul><li><strong>Discrete mathematics:</strong> logic, proofs, combinatorics, graph theory, set theory, relations</li><li><strong>Linear algebra:</strong> eigenvalues, SVD, projections, matrix calculus, tensor operations</li><li><strong>Calculus:</strong> gradients, Jacobians, Hessians, Taylor expansion, multivariable optimization</li><li><strong>Probability & statistics:</strong> Bayesian reasoning, MLE, MAP, hypothesis testing, confidence intervals</li><li><strong>Convex optimization:</strong> gradient descent, SGD, momentum, Adam, constrained optimization, duality</li><li><strong>Information theory:</strong> entropy, KL divergence, mutual information, source coding, channel capacity</li><li><strong>Game theory:</strong> Nash equilibrium, zero-sum games, Stackelberg games, mechanism design</li></ul><div class="tags"><span class="tag">Strang</span><span class="tag">Blitzstein</span><span class="tag">Boyd</span><span class="tag">Cover & Thomas</span><span class="tag">Osborne</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-top"><div><div class="phase-number">Phase 2 · Months 3–18</div><h3>Algorithms & Theoretical CS</h3></div><span class="pill">Computer Scientist</span></div>
+<ul><li>Advanced data structures: segment trees, Fenwick, tries, union-find, B-trees, Bloom filters, skip lists</li><li>Graph algorithms: Dijkstra, Bellman–Ford, MST, max-flow, matching, strongly connected components</li><li>Dynamic programming, greedy, divide-and-conquer, randomized and approximation algorithms</li><li>String algorithms: KMP, Rabin-Karp, suffix arrays, tries, rolling hash</li><li>Computational complexity: P, NP, NP-completeness, reductions, approximation hardness</li><li>Automata theory: finite automata, pushdown automata, Turing machines, decidability</li><li>Parallel algorithms: PRAM, MapReduce paradigms, work-span model</li></ul><div class="tags"><span class="tag">CLRS</span><span class="tag">Kleinberg & Tardos</span><span class="tag">Sipser</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-top"><div><div class="phase-number">Phase 3 · Months 6–18</div><h3>Computer Architecture & Hardware</h3></div><span class="pill">Systems</span></div>
+<ul><li>CPU microarchitecture: pipelines, out-of-order execution, branch prediction, speculative execution</li><li>Memory hierarchy: caches, TLBs, virtual memory, NUMA, cache coherency protocols</li><li>x86-64 and ARM assembly, ELF/PE/Mach-O formats, calling conventions, binary loading</li><li>GPU architecture: SIMT, warps, shared memory, memory hierarchy, CUDA/ROCm basics</li><li>Hardware security: side channels (cache, timing, power, electromagnetic), Spectre, Meltdown, Rowhammer</li><li>Trusted execution environments: Intel SGX, AMD SEV, ARM TrustZone, Apple Secure Enclave</li><li>FPGA basics and hardware acceleration for security/ML workloads</li></ul><div class="tags"><span class="tag">CS:APP</span><span class="tag">Patterson & Hennessy</span><span class="tag">CUDA</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-top"><div><div class="phase-number">Phase 4 · Months 9–21</div><h3>Operating Systems</h3></div><span class="pill">Systems Engineer</span></div>
+<ul><li>Processes, threads, scheduling algorithms, context switching, kernel vs user mode</li><li>Virtual memory, paging, segmentation, copy-on-write, memory-mapped files</li><li>Filesystems: ext4, Btrfs, ZFS, VFS layer, journaling, copy-on-write</li><li>Concurrency primitives: mutexes, semaphores, condition variables, RCU, lock-free structures</li><li>IPC: pipes, message queues, shared memory, signals, D-Bus</li><li>Containers: namespaces, cgroups, capabilities, seccomp, AppArmor/SELinux</li><li>Virtualization: KVM, hypervisors, paravirtualization, hardware-assisted virtualization</li></ul><div class="tags"><span class="tag">OSTEP</span><span class="tag">xv6</span><span class="tag">Linux Kernel</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-top"><div><div class="phase-number">Phase 5 · Months 12–24</div><h3>Networking & Network Security</h3></div><span class="pill">Network Engineer</span></div>
+<ul><li>Layer 1–7: Ethernet, ARP, IP, ICMP, TCP/UDP, DNS, DHCP, NAT, TLS, HTTP/1–3, QUIC, WebSocket</li><li>Routing: OSPF, BGP, MPLS, anycast, anycast DNS, anycast CDN</li><li>Network security: firewalls (stateful/NGFW), IDS/IPS (Snort, Suricata), NIDS, honeypots</li><li>VPNs: IPsec, WireGuard, OpenVPN, Zero Trust Network Access (ZTNA)</li><li>Proxies, load balancers, CDNs, DDoS mitigation, anycast routing</li><li>Packet-level analysis: Wireshark, tcpdump, Scapy, custom packet crafting</li><li>Wireless: Wi-Fi (802.11), WPA2/3, Bluetooth, Zigbee, cellular security basics</li></ul><div class="tags"><span class="tag">Kurose & Ross</span><span class="tag">Stevens</span><span class="tag">Scapy</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-top"><div><div class="phase-number">Phase 6 · Months 15–27</div><h3>Databases, Distributed Systems & Data Engineering</h3></div><span class="pill">Distributed Systems</span></div>
+<ul><li>Database internals: B+ trees, LSM trees, WAL, MVCC, query planning, cost optimization</li><li>Distributed systems: CAP theorem, consensus (Raft, Paxos, PBFT), vector clocks, CRDTs</li><li>Stream processing: Kafka, Flink, Spark Streaming, event sourcing, CQRS</li><li>Data engineering: ETL/ELT, data lakes, lakehouses, Delta Lake, Iceberg, dbt, Airflow</li><li>Kubernetes: pods, services, ingress, operators, scheduling, resource management</li><li>Cloud-native patterns: microservices, service mesh (Istio), observability (OpenTelemetry)</li></ul><div class="tags"><span class="tag">DDIA</span><span class="tag">Kleppmann</span><span class="tag">K8s</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-top"><div><div class="phase-number">Phase 7 · Months 18–30</div><h3>Compilers, PL Theory & Type Systems</h3></div><span class="pill">Language Engineer</span></div>
+<ul><li>Lexical analysis, parsing (recursive descent, LR, LL), AST construction</li><li>Semantic analysis, type checking, type inference (Hindley-Milner)</li><li>Intermediate representations, code generation, optimization passes</li><li>Type theory: simply typed lambda calculus, dependent types, linear types</li><li>Memory-safe languages: Rust ownership, borrow checker, lifetime analysis</li><li>Formal semantics: operational, denotational, axiomatic semantics</li><li>Just-in-time compilation, LLVM IR, sandboxing via capability-based design</li></ul><div class="tags"><span class="tag">Dragon Book</span><span class="tag">Types and Programming Languages</span><span class="tag">LLVM</span></div></div></div>
+</div>
+</section>
+
+<!-- CYBERSECURITY -->
+<section id="cyber">
+<div class="part-header">
+<div class="eyebrow">Part II · The Shield & The Sword</div>
+<h2>Cybersecurity: Complete Spectrum</h2>
+<p class="muted">From application security to hardware exploitation. Every layer, every angle.</p>
+</div>
+
+<div class="grid">
+<div class="card"><h3>Security Engineering & Architecture</h3><ul><li>Threat modelling: STRIDE, PASTA, OCTAVE, attack trees</li><li>Secure SDLC, security requirements engineering</li><li>Least privilege, defence in depth, zero trust architecture</li><li>Security architecture patterns: gateway, mesh, broker, vault</li><li>Fuzzing: coverage-guided, structure-aware, differential</li><li>Static analysis: dataflow, taint tracking, abstract interpretation</li><li>Dynamic analysis: sanitizers (ASan, MSan, UBSan), symbolic execution</li></ul></div>
+
+<div class="card"><h3>Web Security</h3><ul><li>HTTP deep dive: cookies, sessions, JWT, OAuth 2.0 / OIDC, SAML, CORS, CSP</li><li>Injection: SQLi, NoSQLi, command injection, LDAP injection, XPath injection</li><li>XSS: reflected, stored, DOM-based, CSP bypasses, prototype pollution</li><li>CSRF, SSRF, XXE, deserialization, race conditions, HTTP request smuggling</li><li>Business logic flaws, IDOR, mass assignment, insecure direct object references</li><li>API security: REST, GraphQL, gRPC, rate limiting, schema validation</li><li>WebSocket security, WebRTC security, browser security model</li></ul></div>
+
+<div class="card"><h3>Low-Level Exploitation</h3><ul><li>Buffer overflows, stack/heap overflows, format strings, integer overflows</li><li>Use-after-free, double-free, type confusion, uninitialized memory</li><li>ROP, JOP, COP, ret2libc, ret2csu, SROP, stack pivoting</li><li>ASLR, DEP/NX, stack canaries, CFI, PAC, BTI, shadow stacks</li><li>Heap exploitation: fastbin dup, tcache poisoning, house of spirit</li><li>Kernel exploitation: race conditions, UAF in kernel space, eBPF security</li><li>Return-oriented programming automation: ROPgadget, angrop, one_gadget</li></ul></div>
+
+<div class="card"><h3>Reverse Engineering & Malware Analysis</h3><ul><li>Static analysis: Ghidra, IDA Pro, Binary Ninja, radare2, Cutter</li><li>Dynamic analysis: debuggers, sandboxes, behavioural analysis</li><li>Malware taxonomy: viruses, worms, trojans, rootkits, bootkits, ransomware</li><li>Packers, crypters, obfuscation, anti-debugging, anti-VM techniques</li><li>Memory forensics: Volatility, Rekall, YARA rules</li><li>Shellcode development, position-independent code, stagers</li><li>APT analysis: TTPs, IOCs, attribution, kill chain analysis</li></ul></div>
+
+<div class="card"><h3>Cryptography</h3><ul><li>Symmetric: AES, ChaCha20, modes (GCM, CTR, CBC), padding oracles</li><li>Asymmetric: RSA, Diffie-Hellman, ECC, post-quantum (CRYSTALS-Kyber/Dilithium)</li><li>Hashing: SHA-2/3, BLAKE3, Merkle trees, length extension attacks</li><li>Signatures, MACs, HMAC, authenticated encryption, AEAD</li><li>PKI, certificate transparency, CT logs, OCSP, CRL</li><li>Zero-knowledge proofs, SNARKs/STARKs, secure multiparty computation</li><li>Homomorphic encryption, differential privacy, secure enclaves</li></ul></div>
+
+<div class="card"><h3>Network Security & Traffic Analysis</h3><ul><li>Firewalls: iptables/nftables, pfSense, Palo Alto, Fortinet</li><li>IDS/IPS: Snort, Suricata, Zeek, Suricata rulesets</li><li>Network forensics: pcap analysis, NetFlow, full packet capture</li><li>Traffic analysis: metadata extraction, timing analysis, side channels</li><li>VPN security audit, split tunneling risks, DNS leak prevention</li><li>SDN security, network segmentation, micro-segmentation</li><li>5G/IoT network security, edge computing security</li></ul></div>
+
+<div class="card"><h3>Cloud & Infrastructure Security</h3><ul><li>IAM: RBAC, ABAC, PBAC, identity federation, SSO, JIT access</li><li>AWS, Azure, GCP security: shared responsibility, security benchmarks</li><li>Kubernetes security: RBAC, network policies, PodSecurity, OPA/Gatekeeper</li><li>Container security: image scanning, runtime protection, rootless containers</li><li>Secrets management: HashiCorp Vault, AWS Secrets Manager, SOPS</li><li>Infrastructure as Code security: Terraform scanning, CloudFormation linting</li><li>Supply chain security: SBOM, SLSA, Sigstore, reproducible builds</li></ul></div>
+
+<div class="card"><h3>Digital Forensics & Incident Response</h3><ul><li>DFIR lifecycle: preparation, identification, containment, eradication, recovery</li><li>Disk forensics: file carving, timeline analysis, MFT analysis, EXT analysis</li><li>Memory forensics: process enumeration, network connections, injected code</li><li>Log analysis: SIEM (Splunk, ELK, Sentinel), correlation rules, UEBA</li><li>Incident response: playbooks, chain of custody, evidence preservation</li><li>Threat hunting: hypothesis-driven hunting, IoC sweeping, behavioural analytics</li><li>Malware reverse engineering in incident context</li></ul></div>
+
+<div class="card"><h3>Penetration Testing & Red Teaming</h3><ul><li>Methodologies: PTES, OWASP Testing Guide, NIST SP 800-115</li><li>Reconnaissance: OSINT, passive recon, active scanning, subdomain enumeration</li><li>Exploitation: Metasploit, Cobalt Strike, custom exploit development</li><li>Post-exploitation: lateral movement, privilege escalation, persistence</li><li>Social engineering: phishing, vishing, pretexting, physical access</li><li>Red team operations: adversary emulation, TTP mapping, purple teaming</li><li>Bug bounty: responsible disclosure, HackerOne, Bugcrowd, CVE assignment</li></ul></div>
+
+<div class="card"><h3>Wireless, IoT & Embedded Security</h3><ul><li>Wi-Fi: WPA2/WPA3 attacks, evil twin, deauth, PMKID capture</li><li>Bluetooth: BLE sniffing, pairing vulnerabilities, spoofing</li><li>IoT protocols: MQTT, CoAP, Zigbee, Z-Wave security analysis</li><li>Embedded: firmware extraction, UART/JTAG debugging, SPI flash dumping</li><li>Hardware hacking: logic analyzers, oscilloscopes, side-channel analysis</li><li>RTOS security: FreeRTOS, Zephyr, secure boot, trusted firmware</li><li>Automotive: CAN bus, OBD-II, ECU security, over-the-air updates</li></ul></div>
+
+<div class="card"><h3>Mobile Security</h3><ul><li>Android: APK reverse engineering, smali, ART, intent injection, content providers</li><li>iOS: IPA analysis, jailbreaking, Mach-O, Objective-C runtime manipulation</li><li>Mobile app security: OWASP MASVS, MSTG, runtime instrumentation (Frida)</li><li>Mobile network security: SS7, Diameter, SMS interception, IMSI catchers</li><li>Mobile malware: spyware, stalkerware, banking trojans</li><li>Mobile forensics: logical vs physical extraction, backup analysis</li></ul></div>
+
+<div class="card"><h3>Security Intelligence & Threat Hunting</h3><ul><li>MITRE ATT&CK, MITRE D3FEND, MITRE ATLAS (AI threats)</li><li>Threat intelligence: strategic, tactical, operational, technical</li><li>STIX/TAXII, MISP, OpenCTI, threat intel platforms</li><li>Adversary emulation: CALDERA, Atomic Red Team, Prelude Operator</li><li>Detection engineering: Sigma rules, YARA, KQL, SPL</li><li>Purple teaming: collaborative attack-defence exercises</li><li>Cyber threat intelligence lifecycle and dissemination</li></ul></div>
+</div>
+
+<div class="quote" style="margin-top:24px"><strong>The Cybersecurity Mastery Loop:</strong> Build → Break → Understand → Defend → Measure → Automate → Teach. Every system you secure, you must first learn to attack.</div>
+</section>
+
+<!-- AI / ML -->
+<section id="ai">
+<div class="part-header">
+<div class="eyebrow">Part III · The Mind</div>
+<h2>Artificial Intelligence: Complete Spectrum</h2>
+<p class="muted">From classical ML to multi-modal foundation models. Theory, implementation, and systems.</p>
+</div>
+
+<div class="matrix">
+<div class="card"><h3>Classical Machine Learning</h3><ul><li>Linear/logistic regression, polynomial regression, regularization (L1/L2/Elastic)</li><li>Decision trees, random forests, gradient boosting (XGBoost, LightGBM, CatBoost)</li><li>SVMs, kernel methods, Gaussian processes</li><li>Clustering: K-means, hierarchical, DBSCAN, spectral clustering</li><li>Dimensionality reduction: PCA, t-SNE, UMAP, autoencoders</li><li>Model evaluation: ROC-AUC, calibration, precision-recall, F1, log-loss</li><li>Cross-validation, bootstrap, hyperparameter optimization (Bayesian, Hyperband)</li></ul></div>
+
+<div class="card"><h3>Deep Learning Fundamentals</h3><ul><li>Perceptrons, MLPs, backpropagation, computational graphs</li><li>Activation functions, initialization schemes (Xavier, He), normalization (Batch, Layer, Group)</li><li>Optimization: SGD, momentum, Adam, AdamW, LAMB, learning rate scheduling</li><li>Regularization: dropout, early stopping, data augmentation, mixup, cutout</li><li>CNNs: convolutions, pooling, ResNet, DenseNet, EfficientNet, vision transformers</li><li>RNNs, LSTMs, GRUs, bidirectional RNNs, sequence-to-sequence models</li><li>PyTorch internals: autograd, custom CUDA kernels, torch.compile, torch.distributed</li></ul></div>
+
+<div class="card"><h3>Transformers & Foundation Models</h3><ul><li>Self-attention, multi-head attention, positional encoding, RoPE, ALiBi</li><li>Encoder-only (BERT), decoder-only (GPT), encoder-decoder (T5, BART)</li><li>Scaling laws, mixture of experts (MoE), sparse attention patterns</li><li>Training at scale: data parallelism, tensor parallelism, pipeline parallelism, ZeRO</li><li>Pretraining: next-token prediction, masked language modelling, contrastive learning</li><li>Alignment: SFT, RLHF, DPO, IPO, KTO, constitutional AI</li><li>Efficiency: KV caching, FlashAttention, speculative decoding, quantization (GPTQ, AWQ)</li></ul></div>
+
+<div class="card"><h3>Natural Language Processing</h3><ul><li>Tokenization: BPE, WordPiece, SentencePiece, Unigram, byte-level BPE</li><li>Embeddings: Word2Vec, GloVe, FastText, contextual embeddings (ELMo)</li><li>Sequence labelling: NER, POS tagging, chunking with CRFs and transformers</li><li>Syntactic parsing: dependency parsing, constituency parsing,CCG</li><li>Semantic analysis: sentiment analysis, topic modelling (LDA), semantic similarity</li><li>Machine translation: attention mechanism, BLEU, chrF, COMET metrics</li><li>Question answering, summarization, dialogue systems, text generation control</li></ul></div>
+</div>
+
+<div class="grid" style="margin-top:16px">
+<div class="card"><h3>Computer Vision</h3><ul><li>Image classification, object detection (YOLO, Faster R-CNN), segmentation (Mask R-CNN, SAM)</li><li>Image generation: GANs (StyleGAN, BigGAN), VAEs, diffusion models (Stable Diffusion, DALL-E)</li><li>Video understanding: 3D CNNs, transformers for video, action recognition</li><li>OCR: text detection, recognition, document understanding (LayoutLM, Donut)</li><li>Multi-modal: CLIP, BLIP, LLaVA, visual question answering</li><li>Medical imaging: segmentation, anomaly detection, federated learning for healthcare</li></ul></div>
+
+<div class="card"><h3>Reinforcement Learning</h3><ul><li>MDPs, Bellman equations, value iteration, policy iteration</li><li>Q-learning, SARSA, DQN, double DQN, dueling DQN, Rainbow</li><li>Policy gradients: REINFORCE, A2C, A3C, PPO, TRPO</li><li>Model-based RL: Dyna-Q, Monte Carlo Tree Search, AlphaZero principles</li><li>Multi-agent RL: cooperative, competitive, mixed games, emergent behaviour</li><li>RLHF for LLMs: reward modelling, PPO, DPO, rejection sampling</li><li>Safe RL: constrained MDPs, shielding, reward hacking detection</li></ul></div>
+
+<div class="card"><h3>Graph Neural Networks & Structured Data</h3><ul><li>Graph representations: adjacency, Laplacian, spectral graph theory</li><li>GNN architectures: GCN, GraphSAGE, GAT, GIN, Message Passing Neural Networks</li><li>Graph-level tasks: classification, regression, link prediction</li><li>Knowledge graphs: embedding (TransE, RotatE), reasoning, pathfinding</li><li>Geometric deep learning: equivariance, invariance, E(n)-GNNs</li><li>Applications: molecular property prediction, social network analysis, fraud detection</li></ul></div>
+
+<div class="card"><h3>Time Series & Sequential Data</h3><ul><li>Classical methods: ARIMA, exponential smoothing, seasonal decomposition</li><li>Deep learning for time series: LSTM, Temporal Convolutional Networks, N-BEATS, N-HiTS</li><li>Transformers for time series: Informer, Autoformer, PatchTST</li><li>Anomaly detection: statistical, isolation forest, autoencoder-based, transformer-based</li><li>Forecasting evaluation: MAPE, sMAPE, MASE, probabilistic forecasting</li><li>Multivariate time series, causal discovery, Granger causality</li></ul></div>
+
+<div class="card"><h3>RAG & Information Retrieval</h3><ul><li>Embedding models: sentence-transformers, E5, BGE, GTE, ColBERT</li><li>Vector databases: FAISS, Milvus, Pinecone, Weaviate, pgvector</li><li>ANN search: HNSW, IVF, product quantization, scalar quantization</li><li>Retrieval strategies: dense, sparse (BM25), hybrid, reranking (Cross-encoders, LLM rerankers)</li><li>Chunking strategies, metadata filtering, query expansion, hypothetical document embedding</li><li>RAG evaluation: retrieval accuracy, answer relevance, faithfulness, context precision</li></ul></div>
+
+<div class="card"><h3>AI Agents & Multi-Agent Systems</h3><ul><li>Agent architectures: ReAct, Reflexion, Plan-and-Execute, Tree of Thoughts</li><li>Tool use: function calling, MCP (Model Context Protocol), API integration</li><li>Memory: short-term (context window), long-term (vector DB), episodic memory</li><li>Planning: hierarchical task networks, STRIPS, PDDL, LLM-based planners</li><li>Multi-agent: communication protocols, consensus, emergent behaviour, game-theoretic agents</li><li>Self-improvement: reflection, critique, iterative refinement, tool creation</li><li>Agent evaluation: task success rate, safety metrics, cost efficiency, latency</li></ul></div>
+
+<div class="card"><h3>MLOps & Production AI</h3><ul><li>Experiment tracking: MLflow, Weights & Biases, DVC</li><li>Model serving: TorchServe, Triton, vLLM, TensorRT, ONNX Runtime</li><li>Feature stores: Feast, Tecton, feature engineering pipelines</li><li>Model monitoring: data drift, concept drift, performance degradation, outlier detection</li><li>CI/CD for ML: testing, validation gates, canary deployments, A/B testing</li><li>GPU cluster management: Slurm, Kubernetes + GPU operators, scheduling</li><li>Cost optimization: model compression, distillation, efficient serving strategies</li></ul></div>
+
+<div class="card"><h3>Multi-Modal & Emerging AI</h3><ul><li>Vision-language models: CLIP, BLIP-2, LLaVA, GPT-4V, Gemini</li><li>Audio: speech recognition (Whisper), text-to-speech, music generation</li><li>Embodied AI: robotics, sim-to-real, foundation models for robotics</li><li>Neural radiance fields (NeRF), 3D generation, digital twins</li><li>World models: JEPA, Sora-like video generation, causal reasoning</li><li>Neuromorphic computing, analog AI, photonic computing basics</li></ul></div>
+</div>
+</section>
+
+
+<!-- AI SECURITY -->
+<section id="aisec">
+<div class="part-header">
+<div class="eyebrow">Part IV · The Convergence</div>
+<h2>AI Security: Complete Spectrum</h2>
+<p class="muted">Where artificial intelligence meets adversarial computation. The primary specialization.</p>
+</div>
+
+<div class="grid">
+<div class="card"><h3>Adversarial Machine Learning</h3><ul><li>Evasion attacks: FGSM, PGD, C&W, DeepFool, AutoAttack, adaptive attacks</li><li>Decision-based, score-based, transfer attacks, ensemble attacks</li><li>Physical-world attacks: adversarial patches, glasses, stickers, 3D objects</li><li>Certified defences: randomized smoothing, interval bound propagation</li><li>Adversarial training, TRADES, MART, curriculum adversarial training</li><li>Robustness evaluation: Lp norms, perceptual metrics, Wasserstein distance</li><li>Universal adversarial perturbations, adversarial examples in the wild</li></ul></div>
+
+<div class="card"><h3>Data & Training Pipeline Attacks</h3><ul><li>Data poisoning: clean-label, dirty-label, availability poisoning</li><li>Backdoor attacks: BadNets, TrojanNN, blended, WaNet, physical backdoors</li><li>Label flipping, source inference, dataset reconstruction</li><li>Training data extraction, memorization analysis, canary insertion</li><li>Data sanitization, influence functions, data provenance tracking</li><li>Federated learning attacks: Byzantine clients, model poisoning, Sybil attacks</li><li>Supply-chain data poisoning: Hugging Face, PyPI, dataset repositories</li></ul></div>
+
+<div class="card"><h3>Model Extraction & Inversion</h3><ul><li>Model extraction: equation-solving, path-finding, fine-tuning attacks</li><li>Membership inference: shadow models, loss-based, metric-based</li><li>Model inversion: gradient inversion (Deep Leakage), GAN-based reconstruction</li><li>Attribute inference, property inference, model stealing defenses</li><li>Model watermarking: parameter perturbation, trigger set, post-processing</li><li>Fingerprinting: adversarial examples as fingerprints, dataset fingerprints</li><li>API protection: rate limiting, output perturbation, query monitoring</li></ul></div>
+
+<div class="card"><h3>LLM Security</h3><ul><li>Direct prompt injection: jailbreaks, DAN, roleplay attacks, encoding attacks</li><li>Indirect prompt injection: data poisoning, RAG injection, tool poisoning</li><li>Instruction hierarchy attacks, system prompt extraction, prompt leaking</li><li>Data exfiltration via side channels: timing, output length, error messages</li><li>Model supply chain: weight poisoning, fine-tuning attacks, LoRA poisoning</li><li>Multi-turn attacks, conversation manipulation, context window attacks</li><li>Defences: input filtering, output filtering, prompt hardening, RLHF safety</li></ul></div>
+
+<div class="card"><h3>RAG Security</h3><ul><li>Corpus poisoning: document injection, embedding manipulation</li><li>Retrieval manipulation: ranking attacks, query rewriting attacks</li><li>Context injection: malicious context insertion, context overflow</li><li>Access control bypass: horizontal/vertical privilege escalation in RAG</li><li>Embedding attacks: adversarial embeddings, nearest-neighbour poisoning</li><li>Knowledge base integrity: versioning, provenance, tamper detection</li><li>Sanitization pipelines, content security policies, output guardrails</li></ul></div>
+
+<div class="card"><h3>Agent Security</h3><ul><li>Tool abuse: unauthorized tool calls, parameter injection, tool poisoning</li><li>Excessive agency: over-delegation, scope creep, autonomous escalation</li><li>Privilege escalation: confused deputy, OAuth token theft, session hijacking</li><li>Memory poisoning: long-term memory injection, context manipulation</li><li>Multi-agent attacks: collusion, cascading failures, consensus manipulation</li><li>Capability-based security, sandboxing, least-privilege tool access</li><li>Agent evaluation: safety benchmarks, red-teaming harnesses, monitoring</li></ul></div>
+
+<div class="card"><h3>AI Red Teaming & Evaluation</h3><ul><li>Systematic red teaming: threat modelling, attack taxonomy, coverage metrics</li><li>Automated attack generation: fuzzing, genetic algorithms, RL-based attacks</li><li>Human-in-the-loop red teaming: expert elicitation, adversarial simulation</li><li>Evaluation frameworks: HELM, BIG-bench, AgentBench, SWE-bench</li><li>Safety evaluation: harmlessness, honesty, helpfulness, refusal robustness</li><li>Capability evaluation: coding, reasoning, tool use, multi-step planning</li><li>Continuous monitoring: drift detection, anomaly detection, behaviour baselines</li></ul></div>
+
+<div class="card"><h3>AI for Cyber Defence</h3><ul><li>Malware detection: static analysis ML, behavioural analysis, deep learning</li><li>Network intrusion detection: anomaly detection, flow-based ML, graph NNs</li><li>Phishing detection: URL analysis, email content, sender reputation</li><li>Threat intelligence: NLP for IOC extraction, TTP mapping, attribution</li><li>Automated SOC: alert triage, root cause analysis, response recommendation</li><li>Vulnerability discovery: fuzzing with RL, static analysis enhancement</li><li>Autonomous defence: active response, deception, moving target defence</li></ul></div>
+
+<div class="card"><h3>Privacy-Preserving ML</h3><ul><li>Differential privacy: DP-SGD, local DP, central DP, privacy accounting</li><li>Federated learning: FedAvg, FedProx, SCAFFOLD, secure aggregation</li><li>Homomorphic encryption: CKKS, BFV, encrypted inference</li><li>Secure multiparty computation: garbled circuits, secret sharing</li><li>Trusted execution environments for ML: confidential training, inference</li><li>Model unlearning: exact unlearning, approximate unlearning, SISA</li><li>Synthetic data generation: GANs, diffusion models, DP synthetic data</li></ul></div>
+
+<div class="card"><h3>AI Supply-Chain Security</h3><ul><li>Model provenance: signing, verification, reproducible training</li><li>Dependency security: PyPI, npm, conda, container image scanning</li><li>Dataset integrity: checksums, versioning, malicious sample detection</li><li>Checkpoint security: encryption at rest, access control, audit logging</li><li>Training infrastructure: GPU cluster isolation, network segmentation</li><li>Deployment pipeline: model cards, datasheets, bias auditing</li><li>Third-party model risk: API providers, fine-tuning services, plugins</li></ul></div>
+
+<div class="card"><h3>Physical & Adversarial AI</h3><ul><li>Adversarial patches for autonomous vehicles, facial recognition bypass</li><li>Sensor spoofing: LiDAR, radar, camera, GPS spoofing</li><li>Audio adversarial examples: hidden voice commands, ultrasonic attacks</li><li>Trojan attacks in physical systems: backdoored traffic signs</li><li>Robustness in safety-critical systems: medical, automotive, aviation</li><li>Sim-to-real transfer of adversarial robustness</li><li>Hardware trojans in AI accelerators</li></ul></div>
+
+<div class="card"><h3>Multi-Modal AI Security</h3><ul><li>Vision-language model attacks: visual prompt injection, misleading images</li><li>Audio-language attacks: manipulated audio inputs, voice cloning misuse</li><li>Cross-modal attacks: image-to-text poisoning, text-to-image jailbreaks</li><li>Multi-modal red teaming: comprehensive attack surfaces across modalities</li><li>Embodied AI security: robot manipulation attacks, sim-to-real exploits</li><li>Digital twin security: data integrity, model fidelity, manipulation</li></ul></div>
+</div>
+</section>
+
+<!-- ADVANCED SYSTEMS -->
+<section id="systems">
+<div class="part-header">
+<div class="eyebrow">Part V · The Infrastructure</div>
+<h2>Secure AI Infrastructure & Advanced Systems</h2>
+<p class="muted">The systems layer that most researchers ignore. Your competitive advantage.</p>
+</div>
+
+<div class="grid">
+<div class="card"><h3>GPU Computing & AI Accelerators</h3><ul><li>GPU architecture: SM, warp scheduling, memory hierarchy, coalescing</li><li>CUDA programming: kernels, shared memory, streams, events, profiling</li><li>Matrix multiplication optimization: tiling, shared memory, WMMA, Tensor Cores</li><li>Attention kernel optimization: FlashAttention, FlashDecoding, paging</li><li>Multi-GPU communication: NCCL, NVLink, InfiniBand, collective operations</li><li>AI accelerators: TPU, AWS Trainium, Graphcore, Cerebras basics</li><li>Power efficiency, thermal management, data centre sustainability</li></ul></div>
+
+<div class="card"><h3>Distributed ML at Scale</h3><ul><li>Data parallelism: DDP, Horovod, gradient synchronization</li><li>Model parallelism: tensor parallelism, pipeline parallelism, sequence parallelism</li><li>FSDP, DeepSpeed ZeRO stages, Megatron-LM, Colossal-AI</li><li>Mixture of Experts: expert parallelism, load balancing, routing</li><li>Fault tolerance: checkpointing, elastic training, preemption handling</li><li>Scheduling: Kubernetes + Kubeflow, Slurm, Ray Train, MosaicML</li><li>Network optimization: gradient compression, overlapping communication</li></ul></div>
+
+<div class="card"><h3>Confidential AI & Privacy Tech</h3><ul><li>Trusted execution environments: Intel TDX, AMD SEV-SNP, ARM CCA</li><li>Confidential computing for training and inference</li><li>Homomorphic encryption libraries: Microsoft SEAL, HElib, TenSEAL</li><li>Secure multiparty computation frameworks: MP-SPDZ, SCALE-MAMBA</li><li>Zero-knowledge ML: zk-SNARKs for model inference verification</li><li>Private set intersection, private information retrieval</li><li>Regulatory compliance: GDPR Article 25, data minimization, purpose limitation</li></ul></div>
+
+<div class="card"><h3>Formal Methods & Verification</h3><ul><li>Propositional and first-order logic, SAT solvers (MiniSat, CryptoMiniSat)</li><li>SMT solvers: Z3, CVC5, Boolector — model checking, symbolic execution</li><li>Hoare logic, weakest preconditions, separation logic</li><li>Temporal logic: LTL, CTL, model checking (SPIN, NuSMV)</li><li>Program verification: Dafny, F*, Coq, Lean 4, TLA+</li><li>Neural network verification: Reluplex, Marabou, α,β-CROWN</li><li>Formal verification of agent policies, smart contracts, protocols</li></ul></div>
+
+<div class="card"><h3>Quantum Computing & Post-Quantum Security</h3><ul><li>Quantum computing basics: qubits, superposition, entanglement, gates</li><li>Quantum algorithms: Shor's, Grover's, quantum ML (QML) basics</li><li>Post-quantum cryptography: lattice-based, hash-based, code-based, multivariate</li><li>NIST PQC standards: CRYSTALS-Kyber, CRYSTALS-Dilithium, SPHINCS+, Falcon</li><li>Quantum key distribution, quantum random number generation</li><li>Quantum threat timeline, crypto-agility, hybrid schemes</li><li>Impact on AI security: quantum ML, quantum-resistant federated learning</li></ul></div>
+
+<div class="card"><h3>DevSecOps & Secure Pipelines</h3><ul><li>Secure CI/CD: SAST, DAST, SCA, IaC scanning, secret detection</li><li>Container security: image signing (cosign), SBOM generation, vulnerability scanning</li><li>Infrastructure as Code security: Terraform, CloudFormation, Pulumi</li><li>GitOps: ArgoCD, Flux, policy enforcement (OPA, Kyverno)</li><li>Chaos engineering: Gremlin, Litmus, security chaos engineering</li><li>Observability: metrics, logs, traces, security event correlation</li><li>SLSA framework, reproducible builds, provenance attestation</li></ul></div>
+
+<div class="card"><h3>Blockchain & Web3 Security</h3><ul><li>Blockchain fundamentals: consensus, smart contracts, DeFi protocols</li><li>Smart contract vulnerabilities: reentrancy, overflow, access control</li><li>Formal verification of smart contracts (Certora, K Framework)</li><li>MEV, sandwich attacks, oracle manipulation, flash loan attacks</li><li>Zero-knowledge rollups, zkEVMs, bridge security</li><li>Decentralized identity, verifiable credentials, DID standards</li><li>AI + blockchain: decentralized AI, federated learning on chain</li></ul></div>
+
+<div class="card"><h3>Hardware Security & Side Channels</h3><ul><li>Side-channel analysis: power analysis (DPA, CPA), electromagnetic, acoustic</li><li>Fault injection: voltage glitching, clock glitching, laser fault injection</li><li>Hardware trojans: detection, prevention, trust verification</li><li>Physical unclonable functions (PUFs), true random number generators</li><li>Secure boot, measured boot, TPM, remote attestation</li><li>Chip-level security: ARM TrustZone, RISC-V security extensions</li><li>Supply chain integrity: hardware bill of materials, counterfeit detection</li></ul></div>
+</div>
+
+<div class="arch" style="margin-top:20px"><pre>
+┌─────────────────────────────────────────────────────────────────┐
+│                    SECURE AI ARCHITECTURE                       │
+├─────────────────────────────────────────────────────────────────┤
+│  USER → Gateway → AuthN/AuthZ → Rate Limit → Policy Engine      │
+│         ↓                                                       │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │              PROMPT DEFENSE LAYER                        │    │
+│  │  Input sanitization │ Instruction hierarchy │ Jailbreak  │    │
+│  │  detection │ Content filter │ PII detection              │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│         ↓                                                       │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │              AI AGENT CORE                                 │    │
+│  │  LLM │ Planning │ Memory │ Tool Router │ Reflection       │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│         ↓                                                       │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │              SECURITY & POLICY ENGINE                    │    │
+│  │  Capability system │ Least privilege │ Approval gates   │    │
+│  │  Audit logging │ Risk scoring │ Anomaly detection        │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│         ↓                                                       │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │              SECURE RUNTIME                              │    │
+│  │  Sandbox │ Network policy │ Data controls │ Encryption   │    │
+│  │  TEE/Enclave │ Resource limits │ Telemetry               │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│         ↓                                                       │
+│  Tools ←──→ APIs ←──→ Databases ←──→ Cloud Services            │
+│         ↓                                                       │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │              OBSERVABILITY & RESPONSE                    │    │
+│  │  SIEM │ AI SOC │ Threat Detection │ Automated Response  │    │
+│  └─────────────────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────────────────┘
+</pre></div>
+</section>
+
+<!-- SAFETY & ETHICS -->
+<section>
+<div class="part-header" id="safety">
+<div class="eyebrow">Part VI · The Responsibility</div>
+<h2>AI Safety, Governance & Ethics</h2>
+<p class="muted">Security without safety is incomplete. Understand the full risk landscape.</p>
+</div>
+
+<div class="grid">
+<div class="card"><h3>AI Safety Fundamentals</h3><ul><li>Alignment problem: outer alignment, inner alignment, reward hacking</li><li>Specification gaming, proxy gaming, goal misgeneralization</li><li>Scalable oversight: debate, recursive reward modelling, IDA</li><li>Mechanistic interpretability: circuits, superposition, feature visualization</li><li>Red-teaming for catastrophic risks, dangerous capability evaluation</li><li>Emergent behaviours, phase transitions, capability overhang</li><li>Control theory for AI: containment, boxing, tripwires, steganography detection</li></ul></div>
+
+<div class="card"><h3>Mechanistic Interpretability</h3><ul><li>Activation patching, causal mediation analysis, path patching</li><li>Feature extraction: PCA, NMF, sparse autoencoders (SAEs)</li><li>Probing, tuning, representation engineering (RepE)</li><li>Circuit tracing, attribution, automated circuit discovery</li><li>Multi-modal interpretability: vision transformers, CLIP neurons</li><li>Security applications: detecting backdoors, trojans, hidden capabilities</li><li>Open problems: superposition, polysemanticity, universality</li></ul></div>
+
+<div class="card"><h3>Governance & Regulation</h3><ul><li>EU AI Act: risk classification, conformity assessment, transparency</li><li>NIST AI RMF: Govern, Map, Measure, Manage functions</li><li>ISO/IEC 42001, ISO/IEC 23894 (AI risk management)</li><li>Executive Order 14110, Blueprint for an AI Bill of Rights</li><li>International frameworks: OECD AI Principles, G7 Hiroshima Process</li><li>Export controls: compute thresholds, model weights, dual-use</li><li>Industry self-regulation: frontier model commitments, RSPs</li></ul></div>
+
+<div class="card"><h3>Ethics & Societal Impact</h3><ul><li>Algorithmic fairness: demographic parity, equalized odds, calibration</li><li>Bias detection and mitigation: pre-processing, in-processing, post-processing</li><li>Transparency and explainability: SHAP, LIME, concept-based explanations</li><li>Environmental impact: carbon footprint, water usage, sustainable AI</li><li>Labor impact, automation, displacement, human-AI collaboration</li><li>Dual-use dilemma, responsible publication norms, staged release</li><li>Democratic participation, public deliberation, AI for social good</li></ul></div>
+
+<div class="card"><h3>AI Risk Management</h3><ul><li>Risk taxonomy: security, safety, privacy, fairness, robustness, transparency</li><li>Risk assessment: qualitative, quantitative, scenario planning, red lines</li><li>Red teaming at scale: structured access, external evaluation, bug bounties</li><li>Incident response for AI: model rollback, communication, stakeholder management</li><li>Continuous monitoring: capability evaluation, drift detection, abuse monitoring</li><li>Third-party risk: vendor assessment, model cards, datasheets</li><li>Insurance and liability: AI-specific coverage, professional indemnity</li></ul></div>
+
+<div class="card"><h3>International Security & Geopolitics</h3><ul><li>AI arms race dynamics, strategic stability, deterrence</li><li>Cyber-physical convergence: critical infrastructure, autonomous weapons</li><li>Information warfare: deepfakes, influence operations, synthetic media</li><li>Supply chain geopolitics: semiconductors, rare earth, talent flows</li><li>Export controls, sanctions, technology transfer restrictions</li><li>Multilateral governance: UN GGE, OEWG, Paris Call, Global Partnership on AI</li><li>National AI strategies and their security implications</li></ul></div>
+</div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+<div class="part-header">
+<div class="eyebrow">Part VII · The Scientific Method</div>
+<h2>Research Mastery & Scientific Practice</h2>
+<p class="muted">Transition from student to scientist. This is where you create knowledge.</p>
+</div>
+
+<div class="card" style="margin-bottom:20px">
+<div class="quote">Read → Reproduce → Critique → Extend → Discover → Publish → Impact</div>
+<div class="grid" style="margin-top:20px">
+<div><h3>Literature Mastery</h3><p class="muted">Start at 1 paper/week. Progress to 3–5 papers/week. Maintain a living literature review. Use reference managers (Zotero, Mendeley). Build citation networks. Track seminal vs cutting-edge.</p></div>
+<div><h3>Reproduction Discipline</h3><p class="muted">Reproduce influential papers honestly. Document mismatches. Share reproductions publicly. Use reproducibility checklists. Publish negative results.</p></div>
+<div><h3>Experimental Design</h3><p class="muted">Formulate falsifiable hypotheses. Design proper controls. Calculate statistical power. Pre-register experiments. Use random seeds, deterministic pipelines. Version everything.</p></div>
+<div><h3>Publication & Impact</h3><p class="muted">Target venues strategically. Build reviewer relationships. Create open-source artifacts. Write for multiple audiences. Translate research into practice.</p></div>
+</div>
+</div>
+
+<div class="grid">
+<div class="card"><h3>Research Skills</h3><ul><li>LaTeX, BibTeX, Overleaf, academic writing style</li><li>Figure creation: Matplotlib, Seaborn, TikZ, Inkscape</li><li>Statistical testing: t-tests, ANOVA, bootstrap, permutation tests</li><li>Experiment tracking: Weights & Biases, MLflow, Sacred</li><li>Artifact evaluation: Docker, reproducibility packages, datasets</li><li>Peer review: writing reviews, responding to reviews, revision cycles</li><li>Grant writing: NSF, ERC, industry funding, fellowship applications</li></ul></div>
+
+<div class="card"><h3>Target Venues</h3>
+<h4>Security</h4><ul><li>IEEE S&P, USENIX Security, ACM CCS, NDSS, ACSAC</li></ul>
+<h4>ML/AI</h4><ul><li>NeurIPS, ICML, ICLR, AAAI, IJCAI, COLING</li></ul>
+<h4>AI Safety/Security</h4><ul><li>SaTML, AISec, IEEE TPS, TrustNLP, SecML</li></ul>
+<h4>Systems</h4><ul><li>OSDI, SOSP, NSDI, EuroSys, ATC</li></ul>
+<h4>Privacy</h4><ul><li>PETS, PoPETS, TPDP, WPES</li></ul>
+</div>
+
+<div class="card"><h3>Research Areas — Tier S</h3><ul><li>AI Agent Security & Autonomous System Safety</li><li>LLM Security & Robustness</li><li>Adversarial Machine Learning</li><li>Secure AI Infrastructure & Confidential Computing</li><li>Automated AI Red Teaming</li><li>Mechanistic Interpretability for Security</li><li>Formal Verification of AI Systems</li></ul></div>
+
+<div class="card"><h3>Research Areas — Tier A</h3><ul><li>Privacy-Preserving Machine Learning</li><li>AI Supply-Chain Security</li><li>Autonomous Cyber Defence</li><li>Multi-Modal AI Security</li><li>Post-Quantum AI Security</li><li>Hardware Security for AI Accelerators</li><li>AI Governance & Risk Management</li></ul></div>
+
+<div class="card"><h3>Research Ladder</h3>
+<ul><li><strong>Level 1:</strong> Reproduce an existing paper end-to-end</li>
+<li><strong>Level 2:</strong> Extend with one new experiment or dataset</li>
+<li><strong>Level 3:</strong> Compare multiple methods systematically</li>
+<li><strong>Level 4:</strong> Identify and characterize failure modes</li>
+<li><strong>Level 5:</strong> Design a novel method with theoretical justification</li>
+<li><strong>Level 6:</strong> Propose and validate a new research question</li>
+<li><strong>Level 7:</strong> Publish original peer-reviewed work</li>
+<li><strong>Level 8:</strong> Build a research line with multiple papers</li>
+<li><strong>Level 9:</strong> Lead a research group or lab</li>
+<li><strong>Level 10:</strong> Define a new subfield or paradigm</li></ul>
+</div>
+
+<div class="card"><h3>Building Your Lab</h3><ul><li>Compute: university clusters, cloud credits (AWS, GCP, Azure), Colab Pro</li><li>Storage: NAS, cloud object storage, dataset curation pipelines</li><li>Software: reproducible environments, container registries, CI for research</li><li>Collaboration: version control for papers, shared experiment databases</li><li>Community: reading groups, seminar series, workshop organization</li><li>Mentorship: supervise students, review for venues, give tutorials</li></ul></div>
+</div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+<div class="part-header">
+<div class="eyebrow">Part VIII · The Forge</div>
+<h2>Flagship Projects — Complete Portfolio</h2>
+<p class="muted">Build fewer things. Make them exceptional. Each project should be publication-worthy.</p>
+</div>
+
+<div class="grid">
+<div class="card"><h3>01 · Mini Operating System</h3><p class="muted">Boot → kernel → memory manager → process scheduler → filesystem → shell → networking stack. Demonstrates systems mastery.</p><div class="tags"><span class="tag">C</span><span class="tag">Assembly</span><span class="tag">x86-64</span></div></div>
+
+<div class="card"><h3>02 · Compiler / Interpreter</h3><p class="muted">Lexer → parser → AST → type checker → IR → optimizer → code generator. Target a subset of C or a custom language. Demonstrates PL theory.</p><div class="tags"><span class="tag">Rust</span><span class="tag">LLVM</span><span class="tag">Type Theory</span></div></div>
+
+<div class="card"><h3>03 · Distributed Database / KV Store</h3><p class="muted">Storage engine → B+ tree/LSM → WAL → transactions → Raft consensus → partitioning → replication. Demonstrates distributed systems.</p><div class="tags"><span class="tag">Go/Rust</span><span class="tag">Raft</span><span class="tag">Consensus</span></div></div>
+
+<div class="card"><h3>04 · Packet Analyzer / Mini Wireshark</h3><p class="muted">Parse Ethernet, IP, TCP, UDP, DNS, HTTP at the byte level. Implement BPF-like filtering. Demonstrates networking depth.</p><div class="tags"><span class="tag">C</span><span class="tag">libpcap</span><span class="tag">Networking</span></div></div>
+
+<div class="card"><h3>05 · Vulnerable Web Application + CTF</h3><p class="muted">Build a deliberately vulnerable full-stack app. Document every vulnerability. Create a CTF around it. Demonstrates web security fluency.</p><div class="tags"><span class="tag">Full-Stack</span><span class="tag">OWASP</span><span class="tag">CTF</span></div></div>
+
+<div class="card"><h3>06 · Security Scanner / Vulnerability Assessment Tool</h3><p class="muted">Crawler → endpoint discovery → vulnerability tests → report generation. Build for authorized targets only. Demonstrates automation.</p><div class="tags"><span class="tag">Python</span><span class="tag">Async</span><span class="tag">Security</span></div></div>
+
+<div class="card"><h3>07 · Binary Analysis Framework</h3><p class="muted">ELF parser → disassembler → control flow graph → basic static analysis → vulnerability detection. Demonstrates reverse engineering.</p><div class="tags"><span class="tag">Rust/C++</span><span class="tag">Binary</span><span class="tag">CFG</span></div></div>
+
+<div class="card"><h3>08 · Cryptographic Library</h3><p class="muted">Implement AES, RSA, ECC, SHA-256 from specifications. Add side-channel resistance. Demonstrates cryptography fundamentals.</p><div class="tags"><span class="tag">C</span><span class="tag">Constant-Time</span><span class="tag">Number Theory</span></div></div>
+
+<div class="card"><h3>09 · Malware Detection System</h3><p class="muted">Static feature extraction → behavioural analysis → ML classifier → ensemble → evaluation. Demonstrates security + ML intersection.</p><div class="tags"><span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">PE Analysis</span></div></div>
+
+<div class="card"><h3>10 · Network Intrusion Detection</h3><p class="muted">Packet capture → feature engineering → anomaly detection → alert generation → dashboard. Demonstrates NIDS + ML.</p><div class="tags"><span class="tag">Scapy</span><span class="tag">Time Series</span><span class="tag">Anomaly Detection</span></div></div>
+
+<div class="card"><h3>11 · Adversarial ML Laboratory</h3><p class="muted">Implement FGSM, PGD, C&W, AutoAttack. Add defences: adversarial training, randomized smoothing. Reproduce major papers. Demonstrates adversarial ML depth.</p><div class="tags"><span class="tag">PyTorch</span><span class="tag">Robustness</span><span class="tag">Benchmark</span></div></div>
+
+<div class="card"><h3>12 · Mini Neural Network Framework</h3><p class="muted">Tensor → autograd → nn.Module → optimizers → GPU support. Train MNIST/CIFAR. Demonstrates deep learning internals.</p><div class="tags"><span class="tag">Python/C++</span><span class="tag">CUDA</span><span class="tag">Autograd</span></div></div>
+
+<div class="card"><h3>13 · Mini GPT from Scratch</h3><p class="muted">Tokenizer → attention → transformer → training loop → generation → evaluation. 10M–100M parameters. Demonstrates LLM fundamentals.</p><div class="tags"><span class="tag">PyTorch</span><span class="tag">Transformers</span><span class="tag">Distributed</span></div></div>
+
+<div class="card"><h3>14 · LLM Security Benchmark Suite</h3><p class="muted">Prompt injection, jailbreaks, data leakage, RAG poisoning, tool misuse. Automated evaluation harness. Demonstrates LLM security expertise.</p><div class="tags"><span class="tag">Red Teaming</span><span class="tag">Benchmark</span><span class="tag">Evaluation</span></div></div>
+
+<div class="card"><h3>15 · Secure RAG Platform</h3><p class="muted">Document sanitizer → security labels → auth-aware retrieval → injection detector → output guard. Demonstrates RAG security architecture.</p><div class="tags"><span class="tag">RAG</span><span class="tag">Access Control</span><span class="tag">Guardrails</span></div></div>
+
+<div class="card"><h3>16 · AI Red Team Agent</h3><p class="muted">Automated attack generation → mutation → evaluation → reporting. Target controlled environments. Demonstrates automated red teaming.</p><div class="tags"><span class="tag">Agents</span><span class="tag">Fuzzing</span><span class="tag">Automation</span></div></div>
+
+<div class="card"><h3>17 · Secure Agent Runtime (Aegis)</h3><p class="muted">Policy engine → capability system → sandbox → audit logs → approval gates → identity. The signature project. Demonstrates secure AI systems mastery.</p><div class="tags"><span class="tag">Rust</span><span class="tag">Sandboxing</span><span class="tag">IAM</span></div></div>
+
+<div class="card"><h3>18 · AI SOC / Autonomous Defence</h3><p class="muted">Kafka → telemetry → ML detection → LLM investigation → response recommendation. Demonstrates AI for cyber defence.</p><div class="tags"><span class="tag">Streaming</span><span class="tag">LLM Agents</span><span class="tag">SOC</span></div></div>
+
+<div class="card"><h3>19 · Autonomous Cyber Range</h3><p class="muted">Contained attacker/defender agents → virtual network → measurement → evaluation. Demonstrates autonomous security research.</p><div class="tags"><span class="tag">Multi-Agent</span><span class="tag">Simulation</span><span class="tag">Metrics</span></div></div>
+
+<div class="card"><h3>20 · Formal Verification of Agent Policies</h3><p class="muted">Model agent as state machine → specify safety properties → verify with Z3/TLA+. Demonstrates formal methods + AI intersection.</p><div class="tags"><span class="tag">Z3</span><span class="tag">TLA+</span><span class="tag">Verification</span></div></div>
+</div>
+</section>
+
+<!-- 10-YEAR PLAN -->
+<section id="plan">
+<div class="part-header">
+<div class="eyebrow">Part IX · The Long Game</div>
+<h2>10-Year Transformation</h2>
+<p class="muted">From novice to world-class researcher. Each year builds on the last.</p>
+</div>
+
+<div class="timeline">
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-number">Year 1 · Computer Science Student</div><h3>Foundation Forging</h3><p class="muted">Programming mastery, mathematics, DSA, architecture, OS, networking. Build 3–4 systems projects. Start a technical blog. Contribute to open source.</p><div class="tags"><span class="tag">Python</span><span class="tag">C</span><span class="tag">Linux</span><span class="tag">Math</span><span class="tag">DSA</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-number">Year 2 · Systems & Security Engineer</div><h3>Security Immersion</h3><p class="muted">Databases, distributed systems, cryptography, web security, low-level exploitation, cloud security. Build vulnerable apps and break them. Start CTFs. First security certification optional.</p><div class="tags"><span class="tag">Crypto</span><span class="tag">WebSec</span><span class="tag">Pwn</span><span class="tag">Cloud</span><span class="tag">K8s</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-number">Year 3 · ML / AI Engineer</div><h3>Intelligence Building</h3><p class="muted">Classical ML, deep learning, PyTorch, transformers, GPU computing, NLP, computer vision. Implement algorithms from scratch. Build MiniGPT. Start reading 1 paper/week. First ML security project.</p><div class="tags"><span class="tag">PyTorch</span><span class="tag">Transformers</span><span class="tag">CUDA</span><span class="tag">NLP</span><span class="tag">CV</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-number">Year 4 · AI Security Engineer</div><h3>Convergence</h3><p class="muted">Adversarial ML, LLM security, RAG security, agent security, AI red teaming. Build adversarial ML lab and LLM security benchmark. Attend first security/ML conference. Start research collaborations.</p><div class="tags"><span class="tag">Adversarial ML</span><span class="tag">LLM Sec</span><span class="tag">Red Team</span><span class="tag">Agents</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-number">Year 5 · AI Security Research Engineer</div><h3>Research Onset</h3><p class="muted">Reproduce major papers. Build research platform. First workshop paper or technical report. Open-source tools gaining traction. Apply for research internships (OpenAI, Anthropic, Google DeepMind, MSR).</p><div class="tags"><span class="tag">Reproduction</span><span class="tag">Open Source</span><span class="tag">Internship</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-number">Year 6 · AI Security Researcher</div><h3>Original Contributions</h3><p class="muted">First top-tier conference paper. Lead a research project end-to-end. Build a benchmark or dataset used by others. Give a conference talk. Mentor junior researchers.</p><div class="tags"><span class="tag">NeurIPS</span><span class="tag">S&P</span><span class="tag">Benchmark</span><span class="tag">Mentorship</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-number">Year 7 · Senior Researcher</div><h3>Research Leadership</h3><p class="muted">Multiple publications. Defined research direction. Collaborations across institutions. Industry or academic lab leadership. Grant funding secured. PhD completed or equivalent.</p><div class="tags"><span class="tag">Publications</span><span class="tag">Leadership</span><span class="tag">Funding</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-number">Year 8 · Principal Researcher</div><h3>Field Definition</h3><p class="muted">Known for a specific subfield (e.g., "agent security"). Keynote invitations. Program committee memberships. Patents or spin-outs considered. Advisory roles for policy bodies.</p><div class="tags"><span class="tag">Keynotes</span><span class="tag">PC Member</span><span class="tag">Policy</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-number">Year 9 · Distinguished Scientist</div><h3>Global Recognition</h3><p class="muted">Widely cited work. Training the next generation. Industry-academia bridge. Standards body participation (NIST, ISO, OWASP). Media commentary on AI security.</p><div class="tags"><span class="tag">Impact</span><span class="tag">Standards</span><span class="tag">Media</span></div></div></div>
+
+<div class="phase"><span class="dot"></span><div class="card"><div class="phase-number">Year 10+ · Technical Founder or Research Director</div><h3>Legacy Building</h3><p class="muted">Found a company, lead a major lab, or become a tenured professor. Define the next decade of AI security. Build infrastructure used globally. Train researchers who will surpass you.</p><div class="tags"><span class="tag">Founder</span><span class="tag">Professor</span><span class="tag">Legacy</span></div></div></div>
+</div>
+</section>
+
+<!-- MASTERY -->
+<section id="mastery">
+<div class="part-header">
+<div class="eyebrow">Part X · The Standard</div>
+<h2>What "God-Tier" Actually Means</h2>
+</div>
+
+<div class="card">
+<p style="font-size:1.2rem">When an autonomous AI agent is compromised through indirect prompt injection and attempts to exfiltrate credentials from a Kubernetes environment, you should be able to reason about the incident across <strong>every layer</strong> — and then build a defence, prove its correctness, and publish the research.</p>
+
+<div class="tags" style="margin:18px 0">
+<span class="tag">Transformer behaviour</span><span class="tag">Prompt injection</span><span class="tag">Agent reasoning</span><span class="tag">Tool security</span><span class="tag">Capability systems</span><span class="tag">Authorization</span><span class="tag">Operating systems</span><span class="tag">Containers</span><span class="tag">Kubernetes</span><span class="tag">Networks</span><span class="tag">Cloud IAM</span><span class="tag">Credentials</span><span class="tag">Cryptography</span><span class="tag">Formal verification</span><span class="tag">Detection</span><span class="tag">Incident response</span><span class="tag">Publication</span>
+</div>
+
+<div class="two-col">
+<div class="quote"><strong>The Technical Loop:</strong><br>Build → Break → Understand → Defend → Prove → Measure → Publish</div>
+<div class="tip"><strong>The Career Loop:</strong><br>Learn → Implement → Teach → Research → Lead → Mentor → Legacy</div>
+</div>
+
+<div class="warning" style="margin-top:18px"><strong>One Critical Rule:</strong> Don't optimize your life around "How many technologies do I know?" Optimize around "How deeply can I understand and solve difficult problems that matter?" Someone who knows Python, PyTorch, LangChain, Kubernetes, AWS, and Burp is useful. Someone who understands algorithms, mathematics, operating systems, networks, distributed systems, security, cryptography, ML, deep learning, transformers, AI systems, adversarial ML, formal methods, and governance — and can conduct original research — is operating at a completely different level. That is the standard.</div>
+</div>
+
+<div class="part-header" style="margin-top:32px">
+<div class="eyebrow">Part XI · The Library</div>
+<h2>Complete Book Curriculum</h2>
+</div>
+
+<div class="grid">
+<div class="card"><h3>Programming & Systems</h3>
+<ul><li><em>Effective Python</em> — Slatkin</li><li><em>C Programming: A Modern Approach</em> — King</li><li><em>The Rust Programming Language</em> — Klabnik & Nichols</li><li><em>Computer Systems: A Programmer's Perspective</em> — Bryant & O'Hallaron</li><li><em>Operating Systems: Three Easy Pieces</em> — Arpaci-Dusseau</li><li><em>Computer Networking: A Top-Down Approach</em> — Kurose & Ross</li><li><em>TCP/IP Illustrated</em> — Stevens</li><li><em>Designing Data-Intensive Applications</em> — Kleppmann</li><li><em>Database System Concepts</em> — Silberschatz</li><li><em>Compilers: Principles, Techniques, and Tools</em> — Aho et al.</li></ul></div>
+
+<div class="card"><h3>Mathematics</h3>
+<ul><li><em>Discrete Mathematics and Its Applications</em> — Rosen</li><li><em>Mathematics for Computer Science</em> — Lehman, Leighton, Meyer</li><li><em>Introduction to Linear Algebra</em> — Strang</li><li><em>Linear Algebra Done Right</em> — Axler</li><li><em>Introduction to Probability</em> — Blitzstein & Hwang</li><li><em>All of Statistics</em> — Wasserman</li><li><em>Convex Optimization</em> — Boyd & Vandenberghe</li><li><em>Elements of Information Theory</em> — Cover & Thomas</li><li><em>Game Theory</em> — Osborne</li></ul></div>
+
+<div class="card"><h3>Algorithms & Theory</h3>
+<ul><li><em>Algorithms</em> — Sedgewick & Wayne</li><li><em>Introduction to Algorithms</em> — Cormen et al. (CLRS)</li><li><em>Algorithm Design</em> — Kleinberg & Tardos</li><li><em>Introduction to the Theory of Computation</em> — Sipser</li><li><em>Types and Programming Languages</em> — Pierce</li></ul></div>
+
+<div class="card"><h3>Cybersecurity</h3>
+<ul><li><em>Security Engineering</em> — Ross Anderson</li><li><em>The Web Application Hacker's Handbook</em> — Stuttard & Pinto</li><li><em>The Shellcoder's Handbook</em> — Anley et al.</li><li><em>Practical Malware Analysis</em> — Sikorski & Honig</li><li><em>Reversing: Secrets of Reverse Engineering</em> — Eilam</li><li><em>Practical Binary Analysis</em> — Andriesse</li><li><em>Rootkits and Bootkits</em> — Matrosov et al.</li><li><em>The Art of Memory Forensics</em> — Ligh et al.</li></ul></div>
+
+<div class="card"><h3>Cryptography</h3>
+<ul><li><em>Cryptography Engineering</em> — Ferguson, Schneier, Kohno</li><li><em>Introduction to Modern Cryptography</em> — Katz & Lindell</li><li><em>Serious Cryptography</em> — Aumasson</li><li><em>Post-Quantum Cryptography</em> — Bernstein & Lange</li><li><em>A Graduate Course in Applied Cryptography</em> — Boneh & Shoup</li></ul></div>
+
+<div class="card"><h3>Machine Learning & AI</h3>
+<ul><li><em>An Introduction to Statistical Learning</em> — James et al.</li><li><em>Hands-On Machine Learning</em> — Géron</li><li><em>Pattern Recognition and Machine Learning</em> — Bishop</li><li><em>Probabilistic Machine Learning</em> — Murphy</li><li><em>Deep Learning</em> — Goodfellow, Bengio, Courville</li><li><em>Speech and Language Processing</em> — Jurafsky & Martin</li><li><em>Reinforcement Learning: An Introduction</em> — Sutton & Barto</li><li><em>Natural Language Processing with Transformers</em> — Tunstall et al.</li></ul></div>
+
+<div class="card"><h3>AI Safety & Security</h3>
+<ul><li><em>AI Safety and Security</em> — Amodei et al. (papers)</li><li><em>Alignment Problem</em> — Christian</li><li><em>Human Compatible</em> — Russell</li><li><em>The Coming Wave</em> — Suleyman</li><li><em>Weapons of Math Destruction</em> — O'Neil</li><li><em>Automating Inequality</em> — Eubanks</li></ul></div>
+
+<div class="card"><h3>Formal Methods</h3>
+<ul><li><em>Logic in Computer Science</em> — Huth & Ryan</li><li><em>Software Foundations</em> — Pierce et al. (Coq)</li><li><em>Theorem Proving in Lean 4</em> — Avigad et al.</li><li><em>Specifying Systems</em> — Lamport (TLA+)</li><li><em>Decision Procedures</em> — Kroening & Strichman</li></ul></div>
+</div>
+
+<div class="part-header" style="margin-top:32px">
+<div class="eyebrow">Part XII · Credentials</div>
+<h2>Certification & Credential Strategy</h2>
+</div>
+
+<div class="two-col">
+<div class="card"><h3>Useful (Secondary)</h3>
+<ul><li><strong>Security+</strong> — Foundation validation</li><li><strong>AWS Solutions Architect</strong> — Cloud architecture</li><li><strong>AWS Security Specialty</strong> — Cloud security depth</li><li><strong>Azure AZ-104 / Security</strong> — Multi-cloud</li><li><strong>OSCP</strong> — Practical offensive skills</li><li><strong>OSWE</strong> — Web exploitation depth</li><li><strong>OSED</strong> — Exploit development</li></ul></div>
+<div class="card"><h3>Primary Credentials (More Important)</h3>
+<ul><li>GitHub portfolio with 15+ quality projects</li><li>Peer-reviewed publications</li><li>Open-source tools with community adoption</li><li>Conference talks and tutorials</li><li>Technical blog with 50+ deep articles</li><li>Research reproducibility artifacts</li><li>Industry or academic references</li><li>Bug bounty or responsible disclosure record</li></ul></div>
+</div>
+
+<div class="part-header" style="margin-top:32px">
+<div class="eyebrow">Part XIII · The Ecosystem</div>
+<h2>Community & Professional Development</h2>
+</div>
+
+<div class="grid">
+<div class="card"><h3>Conferences to Attend</h3>
+<ul><li><strong>Security:</strong> Black Hat, DEF CON, BSides, CCC</li><li><strong>Academic Security:</strong> IEEE S&P, USENIX Security, CCS</li><li><strong>ML:</strong> NeurIPS, ICML, ICLR</li><li><strong>AI Safety:</strong> AISafety, ICML Workshop on Socially Responsible ML</li><li><strong>Industry:</strong> RSA, re:Invent, KubeCon, MLConf</li></ul></div>
+
+<div class="card"><h3>Online Communities</h3>
+<ul><li>r/MachineLearning, r/netsec, r/ReverseEngineering</li><li>AI Safety Slack, ML Safety Forum, LessWrong</li><li>Discord: The Odin Project, AI Safety Info</li><li>GitHub: Awesome lists, reproduction communities</li><li>Papers With Code, Hugging Face, Kaggle</li></ul></div>
+
+<div class="card"><h3>Continuous Practice</h3>
+<ul><li>CTFs: PicoCTF, Hack The Box, TryHackMe, CTFtime</li><li>Wargames: OverTheWire, Pwnable.kr, Cryptohack</li><li>Bug Bounty: HackerOne, Bugcrowd, Synack</li><li>Kaggle competitions, AI Village CTF</li><li>Advent of Code, Project Euler</li></ul></div>
+
+<div class="card"><h3>Teaching & Output</h3>
+<ul><li>Write technical articles monthly</li><li>Record video tutorials or live coding</li><li>Give local meetup talks, then conference talks</li><li>Mentor 1–2 people at a time</li><li>Contribute to open-source documentation</li><li>Organize reading groups or study circles</li></ul></div>
+</div>
+</section>
+
+</main>
+
+<footer><div class="container">
+<strong>Ultimate AI + Cybersecurity Mastery Roadmap</strong>
+<p>Use this as a living curriculum. Depth beats breadth. Research and public contribution should begin before you feel "ready." The goal is not to finish — it is to become someone who can learn anything, break anything, and build secure intelligent systems that matter.</p>
+<p class="muted" style="margin-top:12px">"The master has failed more times than the beginner has even tried." — Stephen McCranie</p>
+</div></footer>
+</body>
+</html>
+
+</body>
+</html>
