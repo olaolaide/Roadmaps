@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AO | AI/ML in Medicine: Undergraduate to PhD Roadmap</title>
+<meta name="description" content="A five-year roadmap from undergraduate computer science to a PhD in AI and machine learning for medicine, with projects, articles, repo structure and an application timeline.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1020;--surface:#151a2e;--surface2:#1b2140;--line:#262d4a;
+  --text:#e8eaf6;--muted:#9aa3c7;--violet:#8b5cf6;--violet-soft:rgba(139,92,246,.14);
+  --teal:#2dd4bf;--teal-soft:rgba(45,212,191,.12);--amber:#f5a524;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){
+  :root{
+    --bg:#f6f7fb;--surface:#ffffff;--surface2:#eef0fa;--line:#dde1f0;
+    --text:#161a2e;--muted:#566086;--violet:#6d28d9;--violet-soft:rgba(109,40,217,.08);
+    --teal:#0f766e;--teal-soft:rgba(15,118,110,.09);--amber:#b45309;color-scheme:light;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--teal)}
+:focus-visible{outline:2px solid var(--violet);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+nav.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;gap:18px;height:52px;overflow-x:auto;white-space:nowrap}
+.mark{font-weight:800;letter-spacing:.04em;padding:3px 9px;border-radius:6px;background:linear-gradient(135deg,var(--violet),var(--teal));color:#0d1020;flex:none}
+nav.top a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500}
+nav.top a:hover{color:var(--text)}
+header.hero{padding:64px 0 24px}
+h1{font-size:clamp(32px,5.4vw,56px);line-height:1.05;margin:0 0 16px;font-weight:800;letter-spacing:-.025em;max-width:16ch}
+.lede{color:var(--muted);font-size:18px;max-width:62ch;margin:0}
+.ecg{margin:36px 0 8px}
+.ecg svg{width:100%;height:auto;display:block;overflow:visible}
+.ecg .trace{fill:none;stroke:var(--teal);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.ecg .base{stroke:var(--line);stroke-width:1;stroke-dasharray:3 6}
+.ecg .node{fill:var(--bg);stroke:var(--violet);stroke-width:3}
+.ecg-labels{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;text-align:center}
+.ecg-labels a{display:block;text-decoration:none;color:var(--text);padding:8px 4px;border-radius:8px}
+.ecg-labels a:hover{background:var(--surface)}
+.ecg-labels b{display:block;font-family:var(--mono);font-size:12px;color:var(--violet);font-weight:600}
+.ecg-labels span{font-size:14px;font-weight:600}
+.progress{display:flex;align-items:center;gap:14px;margin:28px 0 8px;padding:14px 18px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.progress .bar{flex:1;height:8px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--violet),var(--teal));transition:width .35s}
+.progress .txt{font-family:var(--mono);font-size:13px;color:var(--muted);min-width:120px;text-align:right}
+.progress button{background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:5px 10px;font:500 12px var(--sans);cursor:pointer}
+.progress button:hover{color:var(--text);border-color:var(--muted)}
+h2{font-size:clamp(24px,3.4vw,34px);line-height:1.15;margin:0 0 10px;letter-spacing:-.015em}
+h3{font-size:15px;margin:0 0 8px;color:var(--muted);font-weight:600}
+section.block{padding:52px 0 8px}
+.sub{color:var(--muted);max-width:68ch;margin:0 0 24px}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.rule{padding:16px 18px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:10px}
+.rule.cut{border-left-color:var(--amber)}
+.rule b{display:block;margin-bottom:4px}
+.rule p{margin:0;color:var(--muted);font-size:14.5px}
+.phase{margin:0 0 28px;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.phase-head{padding:24px 26px 18px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,var(--violet-soft),transparent 60%)}
+.phase-head .yr{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--violet)}
+.phase-head h2{margin:2px 0 8px}
+.phase-head .goal{margin:0;color:var(--text);max-width:70ch}
+.phase-head .hrs{display:inline-block;margin-top:10px;font-size:13px;color:var(--muted)}
+.eli{margin:18px 26px 0;padding:12px 16px;background:var(--teal-soft);border-radius:10px;font-size:14.5px}
+.eli b{color:var(--teal)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 36px;padding:20px 26px 26px}
+@media (max-width:760px){.grid{grid-template-columns:1fr}.progress{flex-wrap:wrap}}
+.grid ul{margin:0 0 14px;padding-left:18px}
+.grid li{margin:0 0 6px;font-size:15px}
+.grid li::marker{color:var(--violet)}
+.checks{list-style:none;padding:0!important}
+.checks li{display:flex;gap:10px;align-items:flex-start}
+.checks input{margin-top:5px;accent-color:var(--violet);width:16px;height:16px;flex:none;cursor:pointer}
+.checks label{cursor:pointer}
+.checks input:checked+label{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--teal)}
+.full{grid-column:1/-1}
+table{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--surface2);font-weight:600;font-size:13.5px}
+tr:last-child td{border-bottom:0}
+.scroll{overflow-x:auto;border-radius:12px}
+.scroll table{min-width:560px}
+pre{margin:0;padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow-x:auto;font:400 13.5px/1.7 var(--mono);color:var(--text)}
+pre .c{color:var(--muted)}
+.note{margin-top:14px;padding:12px 16px;border:1px dashed var(--amber);border-radius:10px;font-size:14.5px;color:var(--text)}
+code{font-family:var(--mono);font-size:.9em;background:var(--surface2);padding:1px 6px;border-radius:5px}
+footer{margin-top:64px;padding:28px 0 56px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.progress .fill{transition:none}}
+</style>
+</head>
+<body>
+<nav class="top" aria-label="Sections">
+  <div class="wrap">
+    <span class="mark">AO</span>
+    <a href="#rules">Ground rules</a>
+    <a href="#y1">Year 1</a><a href="#y2">Year 2</a><a href="#y3">Year 3</a><a href="#y4">Year 4</a><a href="#y5">Year 5</a>
+    <a href="#tracks">Tracks</a>
+    <a href="#apply">Applications</a>
+    <a href="#repo">Repo template</a>
+    <a href="#teach">Teaching</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>AI/ML in Medicine: undergraduate to PhD</h1>
+    <p class="lede">A five-year plan for a computer science student aiming at a funded PhD in machine learning for healthcare, in the UK with NHS-linked groups or anywhere in the world. It trades certificate collecting for what admissions panels actually weigh: grades, a supervisor who vouches for you, validated research, and work other people can build on.</p>
+
+    <div class="ecg" aria-hidden="true">
+      <svg id="ecg" viewBox="0 0 1000 130"></svg>
+    </div>
+    <div class="ecg-labels">
+      <a href="#y1"><b>Year 1</b><span>Foundations</span></a>
+      <a href="#y2"><b>Year 2</b><span>ML and stats</span></a>
+      <a href="#y3"><b>Year 3</b><span>First research</span></a>
+      <a href="#y4"><b>Year 4</b><span>Flagship and apply</span></a>
+      <a href="#y5"><b>Year 5</b><span>Bridge to PhD</span></a>
+    </div>
+
+    <div class="progress" role="group" aria-label="Progress">
+      <div class="bar"><div class="fill" id="fill"></div></div>
+      <div class="txt" id="txt">0 of 0 done</div>
+      <button type="button" id="reset">Reset</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="block" id="rules">
+  <h2>Ground rules</h2>
+  <p class="sub">Your degree comes first: grades gate offers and funding. Six to eight hours a week in Years 1 and 2, ten to twelve in Years 3 and 4 (research placements excluded). Consistency over five years beats sprints.</p>
+  <div class="rules">
+    <div class="rule"><b>Grades</b><p>A first or strong 2:1 (or a high GPA) keeps funding and most programmes open.</p></div>
+    <div class="rule"><b>One academic who knows your work</b><p>Aim to have a strong referee by the summer of Year 3.</p></div>
+    <div class="rule"><b>One validated preprint</b><p>Real external validation work, not another leaderboard score.</p></div>
+    <div class="rule"><b>One reusable, citable tool</b><p>Documented, tested, licensed, with a DOI, so others can build on it.</p></div>
+    <div class="rule"><b>Clinical grounding</b><p>Governance training, a clinician collaborator, and a project tested on a second dataset.</p></div>
+    <div class="rule cut"><b>Skip these</b><p>SAS, Cloudera, Kafka and multi-cloud architect certificates, AGI years, "one paper a day", "50 projects". Clinical data lives in secure environments, so cloud certificates barely transfer.</p></div>
+  </div>
+</section>
+
+<section class="block" id="phases"></section>
+
+<section class="block" id="tracks">
+  <h2>Choose your track by the end of Year 2</h2>
+  <p class="sub">With a software or testing mindset, EHR/clinical ML or trustworthy medical AI gives the best opportunity-to-competition ratio. Rigorous evaluation is scarce in this field and gets noticed.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Track</th><th>What you do</th><th>Core skills</th></tr></thead>
+    <tbody>
+      <tr><td><b>Medical imaging</b></td><td>Segmentation, detection, foundation models for radiology and pathology</td><td>Computer vision, DICOM, 3D deep learning</td></tr>
+      <tr><td><b>EHR / clinical ML</b></td><td>Risk prediction, trajectories, phenotyping</td><td>Time series, survival analysis, causal inference</td></tr>
+      <tr><td><b>Clinical NLP</b></td><td>Notes, letters, reports, LLMs in clinical workflows</td><td>Transformers, de-identification, evaluation</td></tr>
+      <tr><td><b>Genomics</b></td><td>Variant effects, single-cell, drug discovery</td><td>Bioinformatics, sequence and graph models</td></tr>
+      <tr><td><b>Trustworthy medical AI</b></td><td>Validation, fairness, drift, safety cases</td><td>Statistics, calibration, regulation</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:28px">Datasets to practise on</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Domain</th><th>Datasets</th><th>Access</th></tr></thead>
+    <tbody>
+      <tr><td>ICU / EHR</td><td>MIMIC-IV, eICU, AmsterdamUMCdb, HiRID</td><td>PhysioNet credentialing (CITI training)</td></tr>
+      <tr><td>Imaging</td><td>CheXpert, MIMIC-CXR, NIH ChestX-ray14, BraTS, Medical Segmentation Decathlon, TCIA</td><td>Mostly open or data use agreement</td></tr>
+      <tr><td>Pathology / omics</td><td>Camelyon16/17, TCGA, gnomAD</td><td>Open</td></tr>
+      <tr><td>Clinical text</td><td>MIMIC notes, n2c2 shared tasks</td><td>Data use agreement</td></tr>
+      <tr><td>UK</td><td>HDR UK Gateway, OpenSAFELY, UK Biobank, OpenPrescribing</td><td>Open or approved application</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:28px">Reporting standards to follow</h3>
+  <p class="sub" style="margin-bottom:0"><b>TRIPOD+AI</b> for prediction models, <b>PROBAST+AI</b> for appraising bias risk, <b>CLAIM</b> for imaging, <b>CONSORT-AI / SPIRIT-AI</b> for trials, <b>DECIDE-AI</b> for early clinical evaluation. Always split by patient, never by image or encounter.</p>
+</section>
+
+<section class="block" id="apply">
+  <h2>PhD application timeline</h2>
+  <p class="sub">In the UK the NHS partners with universities rather than awarding PhDs. Target university groups with NHS-embedded supervisors and funded programmes (UKRI AI CDTs, NIHR and Wellcome-linked routes, university studentships). Elsewhere, look at funded US departments and European or Canadian programmes. Dates shift every cycle, so verify before you plan around them.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>When (Year 4)</th><th>Do</th></tr></thead>
+    <tbody>
+      <tr><td>Summer before</td><td>Shortlist 8 to 12 supervisors. Read their last three years of papers. Pair every ML supervisor with a clinical co-supervisor in your plan.</td></tr>
+      <tr><td>August to October</td><td>Send five-sentence emails: who you are, one specific paper of theirs, one project of yours with a link, a concrete idea, and a question about openings or funding.</td></tr>
+      <tr><td>October to December</td><td>Submit CDT and studentship applications. US deadlines usually fall in December. Have three referees briefed and a 2 to 4 page proposal anchored in a problem a clinician told you matters.</td></tr>
+      <tr><td>January to March</td><td>Interviews. Be ready to defend your validation choices and explain a failure.</td></tr>
+      <tr><td>February to April</td><td>Funding decisions. If none land, take the Year 5 research-assistant route and reapply from a stronger position.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="block" id="repo">
+  <h2>GitHub: one repo per project</h2>
+  <p class="sub">A single giant journey repo is hard to cite and hard to build on. Use a profile README that links to pinned project repos, plus one <code>learning-log</code> repo for notes and exercises.</p>
+<pre><span class="c"># ml-health-&lt;project&gt;/</span>
+README.md          <span class="c"># question, data, method, results, limitations</span>
+MODEL_CARD.md      <span class="c"># intended use and what it must NOT be used for</span>
+DATASHEET.md       <span class="c"># provenance, splits, how to request access</span>
+CITATION.cff
+LICENSE
+pyproject.toml     <span class="c"># or environment.yml</span>
+Dockerfile
+Makefile           <span class="c"># make data / train / eval / report</span>
+configs/           <span class="c"># every experiment reproducible from YAML</span>
+src/&lt;pkg&gt;/         <span class="c"># data, features, models, evaluation, fairness</span>
+tests/             <span class="c"># includes: fails if any patient is in two splits</span>
+notebooks/         <span class="c"># exploration only</span>
+reports/           <span class="c"># TRIPOD+AI checklist, figures, preprint</span>
+docs/</pre>
+  <div class="note"><b>Never commit patient data</b> and never send credentialed data to external LLM APIs. Data use agreements such as MIMIC's forbid redistribution; share extraction code and access instructions instead.</div>
+</section>
+
+<section class="block" id="teach">
+  <h2>Teaching syllabus</h2>
+  <p class="sub">Blog first, a university talk second, video last. Cap teaching at roughly 10% of your weekly hours. Every post gets one diagram, one real example, and one failure story.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Series</th><th>Years</th><th>Posts</th></tr></thead>
+    <tbody>
+      <tr><td><b>Clinical metrics for engineers</b></td><td>1</td><td>Sensitivity and PPV, calibration, base rates</td></tr>
+      <tr><td><b>Medical imaging pitfalls</b></td><td>2</td><td>Patient-level splits, shortcut learning, limits of saliency maps</td></tr>
+      <tr><td><b>Clinical prediction done right</b></td><td>3</td><td>TRIPOD+AI, external validation, decision curves</td></tr>
+      <tr><td><b>Health data and governance</b></td><td>3</td><td>OMOP, FHIR, the Five Safes, ethics approval</td></tr>
+      <tr><td><b>Research log</b></td><td>4 to 5</td><td>Preprint lessons, tool design, negative results</td></tr>
+    </tbody>
+  </table></div>
+  <p class="sub" style="margin-top:14px">Also run a reading group in your university AI society, tutor juniors, and offer a tutorial to an open-source project. These show leadership on an application.</p>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">AO Roadmap Hub. Programme details, dates and dataset access terms change; check each source before you apply.</div>
+</footer>
+
+<script>
+(function(){
+  var phases=[
+    {id:'y1',year:'Year 1',title:'Foundations',hrs:'6 to 8 hours a week',
+     goal:'Strong grades, a maths and Python base, and three clean public repos.',
+     eli:'Before a model can help a doctor, you have to read numbers honestly. This year is maths, code, and learning why "95% accurate" can still be useless.',
+     learn:['Linear algebra: Strang, MIT 18.06','Calculus and probability for ML','Python (NumPy, Pandas, Matplotlib), SQL, Git, Linux','Andrew Ng, Machine Learning Specialization (DeepLearning.AI)','One introductory human physiology or biology source'],
+     training:['No certificates needed. Protect your grades.'],
+     projects:['NHS open-data analysis (OpenPrescribing or NHS England waiting times), with findings reported with uncertainty','Tabular disease classifier on UCI or Kaggle data, done properly: baseline, cross-validation, calibration, and a write-up of why the dataset misleads','Logistic regression and gradient descent from scratch in NumPy, with tests'],
+     articles:['Why accuracy is the wrong metric for disease prediction','Logistic regression from scratch','What I learned analysing NHS open data'],
+     teach:['Sensitivity, specificity and PPV, and how prevalence changes PPV','Overfitting','Train, validation and test splits'],
+     checkpoint:['Top grades in maths, statistics and programming modules','GitHub profile README with three clean repos']},
+    {id:'y2',year:'Year 2',title:'ML, statistics and deep learning',hrs:'6 to 8 hours a week',
+     goal:'Three medical-ML projects and your first articles. Apply for summer research.',
+     eli:'You learn the tools (neural nets, survival models) and, more importantly, the ways medical models quietly cheat, like reading a hospital logo instead of a lung.',
+     learn:['An Introduction to Statistical Learning','PyTorch, Stanford CS231n, fast.ai','Introduction to survival analysis','First chapters of Hernan and Robins, Causal Inference: What If (free)'],
+     training:['DeepLearning.AI AI for Medicine Specialization (diagnosis, prognosis, treatment)','End of year: CITI "Data or Specimens Only Research", so PhysioNet access is ready for Year 3'],
+     projects:['Chest X-ray classifier (CheXpert or ChestX-ray14) with transfer learning and Grad-CAM, patient-level splits, subgroup results, and a shortcut-learning test','Segmentation with MONAI: U-Net on a Medical Segmentation Decathlon task or BraTS, with Dice scores and failure cases','Survival modelling: Cox vs random survival forest vs a deep survival model, reporting C-index and calibration'],
+     articles:['Grad-CAM can mislead','Data leakage in medical imaging: split by patient','Cox vs deep survival models: what is actually better'],
+     teach:['Patient-level splits','Calibration','Censoring'],
+     checkpoint:['Apply to summer research studentships with medical-AI groups (the most valuable action this year)','Pick a track by the end of the year']},
+    {id:'y3',year:'Year 3',title:'Medical ML and first real research',hrs:'10 to 12 hours a week, plus the placement',
+     goal:'A validated EHR project, a preprint, and a supervisor who can write a strong reference.',
+     eli:'Anyone can train a model on one hospital\'s data. Research is showing it still works on another hospital\'s data, and being honest when it does not.',
+     learn:['Steyerberg, Clinical Prediction Models','TRIPOD+AI, PROBAST+AI, CLAIM','OMOP (the free EHDEN Academy courses) and an introduction to FHIR','Transformers for clinical text'],
+     training:['PhysioNet credentialing for MIMIC-IV','NIHR Good Clinical Practice e-learning','Information governance: GDPR, the Five Safes, how research ethics approval works'],
+     projects:['Summer research placement with a medical-AI group (this produces your reference)','EHR prediction on MIMIC-IV (for example AKI or mortality) following TRIPOD+AI: temporal and external validation on eICU or AmsterdamUMCdb, calibration, decision-curve analysis','Reproduce-and-critique a well-cited medical ML paper: external data, subgroups, leakage. Aim for a preprint','NLP track option: evaluate an open-weight LLM on clinical tasks with contamination checks'],
+     articles:['What TRIPOD+AI asks for, and what most papers skip','External validation: the AUROC drop nobody reports','Decision curve analysis for engineers'],
+     teach:['Confounding vs prediction','Distribution shift','Why fairness metrics trade off against each other'],
+     checkpoint:['Preprint submitted','One academic who will write a strong reference']},
+    {id:'y4',year:'Year 4',title:'Flagship work and applications',hrs:'10 to 12 hours a week',
+     goal:'A flagship dissertation, a reusable tool, and applications submitted.',
+     eli:'This is the year you turn practice into proof: one project with a clinician behind it, one tool others can install, and the applications that use both.',
+     learn:['Deep dives in your chosen track','Three papers a week, with short notes','Electives in statistics and ML theory'],
+     training:['No new certificates. Spend the time on the dissertation and applications.'],
+     projects:['Dissertation as flagship: a clinically grounded question with a clinician co-supervisor and a short analysis plan written before you touch the data. Target ML4H, a MICCAI workshop, CHIL or BMJ Health and Care Informatics','Reusable open-source tool: a patient-overlap and leakage checker, an OMOP feature-extraction library, or a clinical-LLM evaluation harness. Ship docs, tests, a licence and a Zenodo DOI','Small contributions to MONAI, PyHealth or OHDSI tools: bug fixes, tutorials, docs'],
+     articles:['Lessons from validating my model','A leak-proof clinical prediction pipeline','A reusable evaluation protocol for my task'],
+     teach:['Walk a clinician through your validation results','Run a reading group at your AI society'],
+     checkpoint:['Three referees briefed','Supervisor shortlist and 2 to 4 page proposal drafted','Applications submitted (see timeline below)']},
+    {id:'y5',year:'Year 5',title:'Bridge into the PhD',hrs:'Full time',
+     goal:'Start the PhD, or build the record that gets you one next cycle.',
+     eli:'Offers rarely arrive all at once. This year has three honest outcomes, and each one still moves you forward.',
+     learn:['Whatever your supervisor\'s group reads','Grant and funding basics','Research project management'],
+     training:['Funded PhD offer: start, and extend your flagship into a paper over the summer','No offer yet: take a research-assistant or research-software-engineer role in a medical-AI group, then reapply','MSc only if grades or research record are the weak point, or a funder requires it (Health Data Science, ML in Health, Medical Image Computing)'],
+     projects:['Release your tool at v1.0','Publish at least one paper','Get clinical exposure: shadowing, clinician meetings, or a hospital data-science placement'],
+     articles:['Post-mortem of a dataset I trusted too much','What I would tell my first-year self'],
+     teach:['Present at a group seminar or a meetup','Mentor a first-year using the Year 1 plan'],
+     checkpoint:['Tool at v1.0 with a DOI','Funded PhD place secured or a stronger reapplication prepared']}
+  ];
+
+  var KEY='ao-ml-medicine-phd-roadmap-v1', done={};
+  try{done=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){done={};}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(done));}catch(e){}}
+
+  function list(items){return '<ul>'+items.map(function(t){return '<li>'+t+'</li>';}).join('')+'</ul>';}
+  function checks(id,kind,items){
+    return '<ul class="checks">'+items.map(function(t,i){
+      var k=id+'-'+kind+i;
+      return '<li><input type="checkbox" id="'+k+'" data-k="'+k+'"'+(done[k]?' checked':'')+'><label for="'+k+'">'+t+'</label></li>';
+    }).join('')+'</ul>';
+  }
+
+  var html=phases.map(function(p){
+    return '<article class="phase" id="'+p.id+'">'+
+      '<div class="phase-head"><div class="yr">'+p.year+'</div><h2>'+p.title+'</h2><p class="goal">'+p.goal+'</p><span class="hrs">'+p.hrs+'</span></div>'+
+      '<div class="eli"><b>In plain English.</b> '+p.eli+'</div>'+
+      '<div class="grid">'+
+        '<div><h3>Learn</h3>'+list(p.learn)+'<h3>Training</h3>'+list(p.training)+'</div>'+
+        '<div><h3>Projects</h3>'+checks(p.id,'p',p.projects)+'</div>'+
+        '<div><h3>Articles to write</h3>'+list(p.articles)+'<h3>Concepts to teach</h3>'+list(p.teach)+'</div>'+
+        '<div><h3>Checkpoints</h3>'+checks(p.id,'c',p.checkpoint)+'</div>'+
+      '</div></article>';
+  }).join('');
+  document.getElementById('phases').innerHTML=html;
+
+  var boxes=[].slice.call(document.querySelectorAll('input[data-k]'));
+  var fill=document.getElementById('fill'), txt=document.getElementById('txt');
+  function update(){
+    var n=boxes.filter(function(b){return b.checked;}).length;
+    fill.style.width=(boxes.length?Math.round(n/boxes.length*100):0)+'%';
+    txt.textContent=n+' of '+boxes.length+' done';
+  }
+  boxes.forEach(function(b){b.addEventListener('change',function(){
+    if(b.checked){done[b.dataset.k]=1;}else{delete done[b.dataset.k];}
+    save();update();
+  });});
+  document.getElementById('reset').addEventListener('click',function(){
+    done={};save();boxes.forEach(function(b){b.checked=false;});update();
+  });
+  update();
+
+  // ECG trace: five beats, each peak higher than the last
+  var svg=document.getElementById('ecg'), base=80, d='M0,'+base, nodes='';
+  var cx=[100,300,500,700,900], peaks=[62,48,36,24,12];
+  cx.forEach(function(x,i){
+    var up=peaks[i];
+    d+=' L'+(x-70)+','+base+' L'+(x-55)+','+(base-8)+' L'+(x-40)+','+base+
+       ' L'+(x-14)+','+base+' L'+x+','+up+' L'+(x+12)+','+(base+22)+' L'+(x+24)+','+base+
+       ' L'+(x+44)+','+(base-6)+' L'+(x+62)+','+base;
+    nodes+='<circle class="node" cx="'+x+'" cy="'+up+'" r="6"/>';
+  });
+  d+=' L1000,'+base;
+  svg.innerHTML='<line class="base" x1="0" y1="'+base+'" x2="1000" y2="'+base+'"/><path class="trace" id="trace" d="'+d+'" vector-effect="non-scaling-stroke"/>'+nodes;
+  var tr=document.getElementById('trace');
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && tr.getTotalLength){
+    var L=tr.getTotalLength();
+    tr.style.strokeDasharray=L;tr.style.strokeDashoffset=L;
+    tr.getBoundingClientRect();
+    tr.style.transition='stroke-dashoffset 2.4s ease-out';
+    requestAnimationFrame(function(){tr.style.strokeDashoffset=0;});
+  }
+})();
+</script>
+</body>
+</html>
