@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>System Design and Build Roadmap</title>
+<style>
+:root{--bg:#fafaf7;--sf:#fff;--tx:#1c1c1a;--mu:#6b6b66;--bd:#e3e3dc;--ac:#2f6f5e;--m:#b7791f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161715;--sf:#1f201e;--tx:#ecece6;--mu:#9a9a92;--bd:#34352f;--ac:#5fb59d;--m:#e0b45a}}
+:root[data-theme="dark"]{--bg:#161715;--sf:#1f201e;--tx:#ecece6;--mu:#9a9a92;--bd:#34352f;--ac:#5fb59d;--m:#e0b45a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:920px;margin:0 auto;padding:24px 16px 64px}
+h1{font:700 28px/1.2 Georgia,serif;margin:0 0 4px}h2{font:600 19px Georgia,serif;margin:0}h3{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mu);margin:14px 0 4px}
+.mu{color:var(--mu);font-size:13px}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:16px;margin:16px 0}
+.bar{height:8px;background:var(--bd);border-radius:4px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:var(--ac);width:0;transition:width .3s}
+details{background:var(--sf);border:1px solid var(--bd);border-radius:12px;margin:12px 0}
+summary{cursor:pointer;padding:14px 16px;list-style:none}summary::-webkit-details-marker{display:none}
+.body{padding:0 16px 14px}
+label{display:flex;gap:8px;align-items:flex-start;padding:4px 0;font-size:14px}
+label.d{color:var(--mu);text-decoration:line-through}
+input[type=checkbox]{accent-color:var(--ac);width:17px;height:17px;margin-top:2px;flex:none}
+.pj{background:var(--bg);border:1px solid var(--ac);border-radius:10px;padding:12px;margin-top:14px}
+.tag{font-size:11px;padding:1px 7px;border-radius:99px;border:1px solid var(--m);color:var(--m)}
+input[type=url],textarea{width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:8px;background:var(--sf);color:var(--tx);font:inherit;margin-top:8px}
+ol,ul{margin:6px 0 0;padding-left:20px}li{margin:2px 0}
+</style></head><body><main>
+<h1>System Design and Build Roadmap</h1>
+<div class="mu">Designing Data-Intensive Applications · low-level design · high-level design · database design · one project per phase · 28 weeks, run alongside the DSA roadmap</div>
+<div class="card"><b>Overall progress</b> <span class="mu" id="ov"></span><div class="bar"><i id="ovb"></i></div></div>
+<div class="card"><b>How this works</b>
+<ul class="mu"><li><b>Build the engine projects in Java</b> and stay with it. The storage and query-engine phases overlap with a Java database build, so reuse that code rather than starting over. The API lab (Phase 11) uses Express and MongoDB, because that is the stack where you practice reading, breaking, and fixing real web code.</li>
+<li><b>Chapter names differ</b> between DDIA’s first and second editions, so the reading lists use topic names. Read the topics in the order shown.</li>
+<li><b>Each phase:</b> read, then do the timed design exercises, then build the project. The project is where the reading sticks, and it is what you show employers.</li></ul></div>
+<div class="card"><b>45-minute design interview structure</b>
+<ul class="mu"><li><b>High-level design:</b> 5 min requirements and scope · 5 min estimation and API · 10 min data model and diagram · 15 min deep dive on two components · 10 min bottlenecks, failures, trade-offs.</li>
+<li><b>Low-level design:</b> 5 min requirements · 10 min entities and relationships · 10 min patterns and class design · 15 min code the core · 5 min extensibility and concurrency.</li></ul></div>
+<div class="card"><b>Every project is done only when it has</b>
+<ul class="mu"><li>A README with an architecture diagram and a design-decisions section.</li><li>Unit tests plus a randomized or fault-injection test (kill processes, drop messages, corrupt files).</li><li>A benchmark with real numbers (JMH or k6) and a note on what limited throughput.</li><li>A short write-up of what you would change. Link the repo below.</li></ul></div>
+<div class="card"><b>Bug-hunt method (30 minutes)</b>
+<ul class="mu"><li><b>Reproduce first:</b> run the app and the tests, and trigger the failure before reading code (5 min).</li><li><b>Trace the request path:</b> route, middleware, validation, handler, database call, response (5 min).</li><li><b>Check the usual suspects:</b> missing await, wrong comparison, unvalidated input, missing authorization, non-atomic update, missing index.</li><li><b>Fix properly:</b> write a failing test, make the smallest change that passes, rerun everything.</li><li><b>Explain aloud:</b> the root cause, why the fix is right, and where else the same flaw could hide.</li></ul></div>
+<div id="ph"></div>
+<div class="card"><b>Design journal</b> <span class="mu">saved in this browser</span><textarea id="nb" rows="6" placeholder="Trade-offs you hit, bugs that taught you something, numbers from benchmarks."></textarea></div>
+</main>
+<script>
+const P=[
+{n:"Low-level design and concurrency",w:"Weeks 1–3",
+read:["Object-oriented design and SOLID, then the core patterns: Strategy, Observer, Factory, Builder, State, Decorator","Concurrency basics: threads, locks, atomics, producer–consumer, thread pools","Reference books: Clean Code and Head First Design Patterns (dip in, don’t read cover to cover)"],
+ex:["Parking lot","Elevator controller","Rate limiter (token bucket and sliding window)","Splitwise-style expense sharing","In-memory file system","Pub-sub notification system","Logger framework","Chess with undo"],
+t:"Thread-safe cache library",ds:"hash map, doubly linked list, min-heap",
+ms:["LRU cache with O(1) get and put","Pluggable eviction policies (LRU, LFU, FIFO) through the Strategy pattern","TTL expiry using a min-heap or timing wheel","Concurrent version with striped locks, plus a stress test","JMH benchmarks and a README with a class diagram"]},
+{n:"Storage engines",w:"Weeks 4–7",
+read:["DDIA: reliability, scalability and maintainability (nonfunctional requirements)","DDIA: data models and query languages (relational, document, graph)","DDIA: storage and retrieval (log-structured storage, SSTables, LSM-trees, B-trees)","DDIA: encoding and schema evolution (Protobuf, Avro)","Database Internals by Alex Petrov: the storage engine chapters","CMU 15-445 lectures (free online): storage, buffer pool, indexes","CLRS Ch 18: B-trees, read properly now"],
+ex:["URL shortener: data model and key generation","Schema design for e-commerce orders and inventory","Pick SQL, document or wide-column for three scenarios and justify each"],
+t:"Key-value store: Bitcask, then LSM-tree",ds:"hash map, skip list, Bloom filter, merge of sorted runs",
+ms:["Bitcask: append-only log, in-memory hash index, crash recovery","Write-ahead log and memtable (skip list or red-black tree)","SSTables with a sparse index, flush, and a merge iterator","Compaction (size-tiered or leveled) and Bloom filters","Range scans and tombstone deletes, fuzz-tested against an in-memory map","Bonus: a B-tree page store benchmarked against the LSM"]},
+{n:"Network servers and in-memory stores",w:"Weeks 8–10",
+read:["Event loops and non-blocking I/O (Java NIO or Netty basics)","Redis internals: dict, skip list, listpack, and how RDB and AOF persistence work","DDIA: dataflow through services and RPC"],
+ex:["Distributed cache (Redis or Memcached at scale)","Leaderboard using sorted sets","Session store"],
+t:"Redis clone",ds:"hash table, skip list, min-heap, ring buffer",
+ms:["TCP server speaking RESP: PING, GET, SET, DEL","Event loop handling thousands of connections","Lists, hashes, sets, and sorted sets (skip list plus hash map)","Key expiry: lazy plus active, using a min-heap","Persistence: AOF with rewrite, and RDB snapshots","Pub/sub and pipelining; verify with redis-cli and benchmark with k6 or redis-benchmark"]},
+{n:"Database design and query engines",w:"Weeks 11–13",
+read:["Relational modelling: normalization to 3NF and when to denormalize","Indexes: composite, covering, partial; reading EXPLAIN ANALYZE output","Query processing: parsing, planning, join algorithms (nested loop, hash, sort-merge), cost-based optimization","PostgreSQL internals: MVCC, VACUUM, WAL"],
+ex:["Model ride-sharing (drivers, trips, payments) in 3NF, then denormalize for reads","Diagnose a slow query with EXPLAIN ANALYZE and fix it with an index","Schema and sharding key for a social network","Design a time-series store"],
+t:"Mini SQL engine",ds:"B-tree, hash join, sort, expression trees",
+ms:["Tokenizer and parser for CREATE TABLE, INSERT, SELECT, WHERE","Table and index storage on your storage engine","Executor: scan, filter, projection, nested-loop join, hash join","Simple cost-based planner choosing index scan or table scan","Benchmark on generated data and print the chosen plan"]},
+{n:"Replication",w:"Weeks 14–15",
+read:["DDIA: replication (leader–follower, multi-leader, leaderless)","DDIA: replication lag and guarantees (read-your-writes, monotonic reads)","DDIA: quorums and conflict resolution (last-write-wins, version vectors, CRDTs)","The Dynamo paper"],
+ex:["Chat system","Notification service","Multi-region user profile store"],
+t:"Replicated key-value store",ds:"append-only log, version vectors, queues",
+ms:["Leader–follower log shipping on your KV store","Switch between async and sync replication and measure the latency cost","Follower catch-up (snapshot plus log tail) and promotion after a failure","Read-your-writes using session tokens","Fault-injection tests: kill the leader mid-write, partition the network"]},
+{n:"Sharding",w:"Weeks 16–17",
+read:["DDIA: partitioning by key range and by hash, and hot spots","DDIA: secondary indexes, rebalancing, request routing","Consistent hashing and virtual nodes (the original paper or a good write-up)","CLRS Ch 11: revisit hashing with sharding in mind"],
+ex:["Distributed key-value store, Dynamo-style","Unique ID generator (Snowflake)","Web crawler"],
+t:"Sharded cluster",ds:"consistent hash ring, sorted map, heap",
+ms:["Consistent hash ring with virtual nodes","Router that forwards commands to the right shard","Add and remove a node with online key migration","Hot-key detection and mitigation","k6 load test with key-distribution and rebalance-cost charts in Grafana"]},
+{n:"Transactions",w:"Weeks 18–19",
+read:["DDIA: isolation levels and anomalies (dirty read, lost update, write skew, phantoms)","DDIA: snapshot isolation and MVCC, two-phase locking, serializable snapshot isolation","DDIA: distributed transactions, two-phase commit, sagas","CMU 15-445 lectures: concurrency control and recovery","Two or three Jepsen analyses"],
+ex:["Payment system with idempotency and a ledger","Ticket booking without double booking","Bank transfer across two services"],
+t:"Transactional storage engine",ds:"version chains, lock tables, WAL",
+ms:["Per-key versioning with MVCC and snapshot reads","Optimistic concurrency control with conflict detection","ARIES-style recovery from the WAL (redo and undo)","Tests that reproduce each anomaly and show your isolation level prevents it","Optional: two-phase commit across two shards"]},
+{n:"Distributed systems and consensus",w:"Weeks 20–22",
+read:["DDIA: the trouble with distributed systems (partial failure, clocks, timeouts)","DDIA: consistency models, linearizability, ordering","DDIA: consensus (Raft and Paxos, total-order broadcast, leader election)","The Raft paper","MIT 6.5840 (formerly 6.824) lectures and labs","Lamport clocks and vector clocks"],
+ex:["Distributed lock service","Distributed job scheduler","Configuration service in the style of etcd"],
+t:"Raft-replicated key-value store",ds:"replicated log, timers, state machine",
+ms:["Leader election with randomized timeouts","Log replication and commitment","Persistence and crash recovery","Linearizable KV on top, with client retries using request IDs","Log compaction through snapshots","Deterministic simulation test: random partitions, delays, and crashes"]},
+{n:"Batch, streaming and derived data",w:"Weeks 23–25",
+read:["DDIA: batch processing (MapReduce, dataflow engines)","DDIA: event logs, stream processing, windows and joins","DDIA: change data capture, event sourcing, idempotence and exactly-once","DDIA: derived data (caches, search indexes, materialized views)","The Kafka design documentation and the MapReduce paper"],
+ex:["Metrics and monitoring system","Log aggregation pipeline","News feed (fan-out on write versus read)","Real-time analytics dashboard"],
+t:"Mini Kafka and stream processor",ds:"segmented log, sparse index, heap, sliding windows",
+ms:["Partitioned append-only log with segment files and an index","Producers, consumer groups, and committed offsets","Partition replication (reuse your Raft)","Stream processor with tumbling windows and a join","Idempotent producer and transactional offset commit"]},
+{n:"High-level design capstone",w:"Weeks 26–28",
+read:["System Design Interview, volumes 1 and 2, by Alex Xu","Back-of-envelope numbers: latency tables, QPS, storage estimation","Engineering blogs from Uber, Netflix, Stripe, Discord and Meta: write a one-page summary of five","Re-read the trade-off sections of DDIA"],
+ex:["URL shortener","Rate limiter","News feed","Chat system","Notification system","Video streaming","Ride sharing","Search autocomplete","Web crawler","Payment system","Google Drive or file sync","Ticket booking"],
+t:"Production-grade service",ds:"your own cache, KV store, and queue",
+ms:["Choose a design (for example a URL shortener with analytics) and write a five-page design doc with estimates and trade-offs","Implement it using your own components behind clean interfaces","Dockerize it and deploy to a cloud or local Kubernetes","Observability: metrics, structured logs, tracing, Grafana dashboards","k6 load test showing p50 and p99 latency, plus one bottleneck you found and fixed","Publish a blog post and record a ten-minute walkthrough"]},
+{n:"API implementation and bug-hunt lab (Express and MongoDB)",w:"Weeks 4–28, in parallel",
+read:["Express: middleware order, async error handling, routing, and validation with Zod or Joi","MongoDB: schema design (embed or reference), indexes, aggregation pipeline, transactions, and explain()","Mongoose pitfalls: casting, validation, lean(), populate, and unique-index races","Authentication and authorization: JWT versus sessions, password hashing, and object-level checks","Node concurrency: the event loop, blocking calls, promises, and unhandled rejections","OWASP API Security Top 10"],
+ex:["Find and fix: a missing await or unhandled rejection that crashes the process","Find and fix: an async error that never reaches the error-handling middleware","Find and fix: middleware in the wrong order (auth after the route, missing body parser)","Find and fix: pagination with an off-by-one, unstable sort, or unindexed skip and limit","Find and fix: a read-modify-write race that needs an atomic $inc or findOneAndUpdate","Find and fix: a missing unique index that allows duplicate records","Find and fix: NoSQL injection through unsanitized query objects ($ne, $gt)","Find and fix: broken authorization where user A reads or edits user B’s data","Find and fix: an ObjectId versus string comparison or Mongoose casting bug","Find and fix: N+1 queries and missing indexes, verified with explain()","Find and fix: wrong status codes and inconsistent error responses","Find and fix: timezone, date comparison, and floating-point money errors","Find and fix: a memory leak from an unbounded cache or listeners never removed","Find and fix: missing input validation, secrets in code, no rate limiting, open CORS"],
+t:"Express and MongoDB API suite",ds:"indexes, atomic updates, caches, queues",
+ms:["Baseline: a URL shortener API in Express and MongoDB with validation, Jest and Supertest tests, and a README","Implement your rate limiter, cache layer, and session store from the design exercises as middleware","Implement a chat or notification API with pagination, proper indexes, and change streams or polling","Implement a payments or booking API with idempotency keys and Mongo transactions to prevent double booking","Make a buggy fork: seed 10 bugs from the list above, write a failing test for each, then fix each with a minimal diff","Swap codebases with a peer: find and fix five seeded bugs in 30 minutes, cold","Write a short post-mortem per bug: symptom, root cause, fix, and the test that would have caught it","Load test with k6 and fix the slowest endpoint using explain() and an index"]}
+];
+let S={d:{},u:{},n:""};const K="sysdesign-roadmap-v1";
+try{S=Object.assign(S,JSON.parse(localStorage.getItem(K))||{})}catch(e){}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const L=(id,t)=>`<label class="${S.d[id]?"d":""}"><input type="checkbox" data-k="${id}" ${S.d[id]?"checked":""}><span>${t}</span></label>`;
+function render(){
+const open=[...document.querySelectorAll("details")].map(d=>d.open);let T=0,D=0,h="";
+P.forEach((p,i)=>{
+const g=(a,k)=>a.map((x,j)=>L(`${i}${k}${j}`,x)).join(""),c=(a,k)=>a.filter((x,j)=>S.d[`${i}${k}${j}`]).length;
+const n=p.read.length+p.ex.length+p.ms.length,d=c(p.read,"r")+c(p.ex,"e")+c(p.ms,"m");T+=n;D+=d;
+h+=`<details ${open[i]||(!open.length&&i==0)?"open":""}><summary><h2>Phase ${i+1}: ${p.n}</h2><span class="mu">${p.w} · ${d}/${n} done · project: ${p.t}</span><div class="bar"><i style="width:${d/n*100}%"></i></div></summary><div class="body">
+<h3>Read and watch</h3>${g(p.read,"r")}<h3>Exercises (timed, 45 minutes each)</h3>${g(p.ex,"e")}
+<div class="pj"><b>Build: ${p.t}</b> <span class="tag">uses ${p.ds}</span>${g(p.ms,"m")}<input type="url" data-u="${i}" value="${(S.u[i]||"").replace(/"/g,"")}" placeholder="Paste your repo link"></div></div></details>`});
+document.getElementById("ph").innerHTML=h;
+document.getElementById("ov").textContent=`${D} of ${T} items`;
+document.getElementById("ovb").style.width=D/T*100+"%"}
+document.addEventListener("change",e=>{const k=e.target.dataset.k;if(k){S.d[k]=e.target.checked;save();render()}const u=e.target.dataset.u;if(u!==undefined){S.u[u]=e.target.value;save()}});
+render();
+const nb=document.getElementById("nb");nb.value=S.n||"";nb.oninput=()=>{S.n=nb.value;save()};
+</script></body></html>
