@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ML for Health</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{--bg:#f6f5fb;--sf:#fff;--tx:#1b1830;--mu:#5d5a78;--bd:#dcd8ee;--v:#6d3df0;--t:#0b8f83;--cd:#ece9fa;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0b1a;--sf:#16132b;--tx:#ebe9fa;--mu:#a29ec4;--bd:#2a2549;--v:#9b7bff;--t:#2dd4bf;--cd:#1f1b3a}}
+:root[data-theme="dark"]{--bg:#0d0b1a;--sf:#16132b;--tx:#ebe9fa;--mu:#a29ec4;--bd:#2a2549;--v:#9b7bff;--t:#2dd4bf;--cd:#1f1b3a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:860px;margin:0 auto;padding:28px 18px 56px}
+.mark{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--v),var(--t));color:#fff;font:800 17px "JetBrains Mono",monospace}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:14px 0 8px;font-weight:800}
+.sub{color:var(--mu);max-width:62ch;margin:0 0 20px}
+.bar{height:10px;border-radius:99px;background:var(--cd);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--v),var(--t));transition:width .3s}
+.meta{font:12px "JetBrains Mono",monospace;color:var(--mu);margin:8px 0 22px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:0 0 26px}
+.stack div{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;font-size:13.5px}
+.stack b{display:block;font-size:13px;color:var(--v)}
+details{background:var(--sf);border:1px solid var(--bd);border-left:4px solid var(--v);border-radius:12px;margin:0 0 12px}
+summary{cursor:pointer;padding:14px 16px;display:flex;gap:12px;align-items:baseline;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary:focus-visible,input:focus-visible{outline:2px solid var(--t);outline-offset:2px}
+.n{font:600 13px "JetBrains Mono",monospace;color:var(--v)}
+.tt{font-weight:600;flex:1}
+.wh,.ct{font:12px "JetBrains Mono",monospace;color:var(--mu);white-space:nowrap}
+.bd{padding:0 16px 16px}
+.pl{background:var(--cd);border-radius:10px;padding:10px 12px;font-size:14.5px;margin:0 0 12px}
+.g{margin:0 0 10px;font-weight:600}
+ul{list-style:none;margin:0 0 12px;padding:0}
+li{margin:0 0 6px}
+label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:15px}
+input[type=checkbox]{margin-top:5px;accent-color:var(--v);width:16px;height:16px;flex:none}
+.rs{font-size:13.5px;color:var(--mu);margin:0 0 12px}
+.pj{border:1px solid var(--t);border-radius:10px;padding:12px}
+.pj h4{margin:0 0 4px;font-size:15px;color:var(--t)}
+.pj p{margin:0 0 8px;font-size:14.5px}
+.note{font-size:13.5px;color:var(--mu);margin:22px 0 0;border-top:1px solid var(--bd);padding-top:14px}
+code{font-family:"JetBrains Mono",monospace;font-size:.9em}
+</style>
+</head>
+<body>
+<main>
+<span class="mark" aria-hidden="true">AO</span>
+<h1>Python ML for Health: from first tests to a PhD-ready toolkit</h1>
+<p class="sub">Eight phases for a second-year computer science student graduating in 2028. Everything is Python and PyTorch. The goal is one open-source evaluation toolkit for clinical AI, built up from small projects, plus the evidence trail a PhD or Global Talent application needs.</p>
+<div class="bar" role="progressbar" aria-label="Overall progress" aria-valuemin="0" aria-valuemax="100"><i id="ob"></i></div>
+<div class="meta"><span id="ot">0 of 0 done</span><span>Nov 2026 to Sep 2028 and beyond</span></div>
+<div class="stack">
+<div><b>Foundation</b>Python, DSA, statistics</div>
+<div><b>Core</b>Classical ML, PyTorch</div>
+<div><b>Domain</b>Imaging, clinical data</div>
+<div><b>Differentiator</b>Evaluation and assurance</div>
+</div>
+<div id="ph"></div>
+<p class="note">Left out on purpose: Java, Kafka, Spark and distributed-systems builds. Add them back only if you pivot toward data engineering. Dates are targets, so slide them if a term gets heavy. Global Talent decisions rest on independent recognition, not on finishing a checklist, so treat the evidence file as the real deliverable and check current Home Office and endorsing-body guidance before relying on any plan.</p>
+</main>
+<script>
+var K="ao-ml-health-v1";
+var P=[
+{t:"Python, data and DSA",w:"Nov 2026 to Jan 2027",g:"Write clean, tested Python and solve interview-style problems fluently.",pl:"Before models come tools: a language you can bend and habits that keep your work correct.",
+l:["Python fundamentals: typing, dataclasses, generators, virtual environments","NumPy broadcasting and pandas (groupby, joins, time series)","pytest, ruff, pre-commit and GitHub Actions CI","DSA in Python: arrays, hashing, heaps, graphs, dynamic programming","60 timed LeetCode problems in Python, with a log","SQL fundamentals: SELECT, joins, GROUP BY, window functions, CTEs, indexes (SQLite or PostgreSQL)"],
+r:"Python Crash Course, pandas docs, CLRS 4th ed. (selected chapters), NeetCode 150, SQLBolt, the Mode SQL tutorial",
+pn:"clean-it: a tested data-cleaning CLI",pd:"Reads messy CSVs, validates a schema, loads clean rows into SQLite and reports issues with SQL queries. Aim for 90% test coverage, a CI badge and a clear README on GitHub."},
+{t:"Maths and statistics",w:"Jan to Mar 2027",g:"Reason about uncertainty instead of just fitting models.",pl:"Statistics tells you whether a result is real or luck. Linear algebra and calculus are how models actually learn.",
+l:["Linear algebra: vectors, matrices, SVD, eigendecomposition","Calculus and the chain rule (the engine behind backprop)","Probability, Bayes’ rule, distributions, maximum likelihood","Confidence intervals, hypothesis tests, bootstrap, permutation tests","Multiple testing, effect sizes, statistical power"],
+r:"Mathematics for Machine Learning (Deisenroth), All of Statistics (Wasserman), 3Blue1Brown linear algebra, StatQuest",
+pn:"statlab: statistics from scratch",pd:"Implement bootstrap intervals, permutation tests, calibration curves and a DeLong AUC comparison in NumPy, checked against SciPy. This is the seed of your evaluation toolkit."},
+{t:"Classical ML",w:"Mar to May 2027",g:"Build honest baselines and catch leakage before it catches you.",pl:"Most real ML is careful baselines and careful validation. Fancy models come second.",
+l:["scikit-learn pipelines, cross-validation, regularisation","Gradient boosting with XGBoost or LightGBM","Leakage, patient-level splits and temporal splits","Metrics: AUROC, precision-recall, calibration, decision-curve analysis","Experiment tracking with MLflow or Weights &amp; Biases"],
+r:"An Introduction to Statistical Learning (Python edition), Andrew Ng’s Machine Learning Specialization, scikit-learn user guide",
+pn:"risk-baseline: a clinical risk model with a leakage audit",pd:"Use a public tabular dataset such as the MIMIC-IV demo or UCI heart disease. Build the cohort and features in SQL (CTEs and window functions), not only pandas. Ship a model card and a one-page note listing every leakage risk you checked."},
+{t:"Deep learning in PyTorch",w:"Jun to Aug 2027",g:"Build and train networks you understand down to the gradient.",pl:"A neural network is a stack of simple functions whose settings are nudged by calculus until it gets things right.",
+l:["Tensors, autograd, nn.Module, DataLoader, mixed precision","Backprop by hand; MLP, CNN and ResNet","Optimisers, schedulers, regularisation, debugging training runs","Attention and transformer basics","GPU habits on Colab or Kaggle: seeds, checkpoints, reproducibility"],
+r:"Karpathy’s Neural Networks: Zero to Hero, fast.ai Practical Deep Learning, Dive into Deep Learning, Stanford CS231n",
+pn:"microgradient: an autograd engine plus a CNN",pd:"Write a tiny autograd library from scratch, then train a CNN in PyTorch on MedMNIST and check your engine against PyTorch on a small task."},
+{t:"Medical imaging and clinical data",w:"Sep to Dec 2027",g:"Handle real health data responsibly and train imaging models that mean something.",pl:"Health data is messy and private. The skill is using it properly and knowing what the labels really represent.",
+l:["MONAI, DICOM and NIfTI; U-Net segmentation","Transfer learning and self-supervised pretraining","EHR basics: OMOP, FHIR, coding systems, MIMIC","Information governance: de-identification, data use agreements, credentialed access","Read 10 clinical-ML papers and write a one-paragraph critique of each","Clinical SQL: cohort definitions, time-windowed features, reading query plans on large tables"],
+r:"MIT 6.S897 Machine Learning for Healthcare, MONAI tutorials, PhysioNet (credentialing and ethics training required for MIMIC)",
+pn:"cxr-audit: a chest X-ray classifier with a subgroup report",pd:"Train on a public chest X-ray dataset. Report performance by age, sex and acquisition site, and include a gallery of failure cases."},
+{t:"Trustworthy ML: evaluation and assurance",w:"Jan to Apr 2028",g:"Turn your earlier projects into one reusable open-source toolkit.",pl:"Anyone can say a model is 95% accurate. This phase shows when it fails, for whom, and whether it can be trusted.",
+l:["Subgroup and fairness analysis, calibration, uncertainty (conformal prediction, ensembles)","Distribution shift, drift monitoring and robustness tests","Adversarial robustness and ML security basics","Explainability with sanity checks (saliency can mislead)","Reporting standards: TRIPOD+AI, CONSORT-AI, model cards, and how MHRA and NICE assess clinical AI"],
+r:"Fairlearn, MAPIE and Captum docs, Adversarial Robustness Toolbox, MHRA guidance on software and AI as a medical device",
+pn:"Flagship: clinical-eval, a pip-installable evaluation toolkit",pd:"Combine statlab, risk-baseline and cxr-audit into one package: subgroup metrics, calibration, shift tests and an auto-generated model-card report. Add docs, CI, a PyPI release, a benchmark against existing tools and a tutorial notebook on public data."},
+{t:"Research and visibility",w:"May to Sep 2028",g:"Turn your work into output that other people can find, check and use.",pl:"Work only counts for a PhD or Global Talent if independent people can see it and rely on it.",
+l:["Reproduce one published paper and write it up","Write a workshop paper (ML4H, NeurIPS or MICCAI workshops) with a supervisor","Post to arXiv; archive code with a DOI on Zenodo","Give two or three talks: society, meetup, department seminar","Open issues and pull requests on Fairlearn, MONAI or similar projects"],
+r:"Papers With Code, arXiv, Zenodo, the ML Reproducibility Challenge",
+pn:"Final-year project: clinical-eval with a real collaborator",pd:"Ask a supervisor early which clinical collaborator or dataset is feasible. Aim for a result you could submit to a workshop."},
+{t:"PhD and the evidence file",w:"2028 onwards, started in Phase 1",g:"Secure a PhD place and keep a running record of your impact.",pl:"Assessors and supervisors both ask the same thing: what did you build, who used it, and who can vouch for it?",
+l:["Shortlist 8 to 10 supervisors working on safe or evaluated health AI (UK and abroad)","Email each with a concrete project idea and your toolkit link","Draft a research proposal and get it read by two people","Keep a dated log of stars, downloads, citations, talks and invitations","Build a list of senior referees who have seen your work first-hand"],
+r:"FindAPhD, UKRI doctoral training listings, Google Scholar alerts",
+pn:"evidence-file: a living document",pd:"A dated log of every output and who used it. Update it monthly from Phase 1 so nothing has to be reconstructed later."}
+];
+var S={};try{S=JSON.parse(localStorage.getItem(K)||"{}")}catch(e){}
+function sv(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function cb(id,tx){return '<li><label><input type="checkbox" data-id="'+id+'"'+(S[id]?' checked':'')+'><span>'+tx+'</span></label></li>'}
+document.getElementById("ph").innerHTML=P.map(function(p,i){
+return '<details'+(i===0?' open':'')+'><summary><span class="n">'+(i+1)+'</span><span class="tt">'+p.t+'</span><span class="wh">'+p.w+'</span><span class="ct" data-c="'+i+'"></span></summary><div class="bd"><p class="g">'+p.g+'</p><p class="pl"><b>In plain English:</b> '+p.pl+'</p><ul>'+p.l.map(function(x,j){return cb(i+"-"+j,x)}).join("")+'</ul><p class="rs"><b>Resources:</b> '+p.r+'</p><div class="pj"><h4>Mini project: '+p.pn+'</h4><p>'+p.pd+'</p><ul>'+cb(i+"-p","Project shipped and on GitHub")+'</ul></div></div></details>'}).join("");
+function up(){var all=document.querySelectorAll("input[data-id]"),d=0;
+P.forEach(function(p,i){var c=document.querySelectorAll('input[data-id^="'+i+'-"]'),k=0;c.forEach(function(x){if(x.checked)k++});document.querySelector('[data-c="'+i+'"]').textContent=k+"/"+c.length});
+all.forEach(function(x){if(x.checked)d++});
+document.getElementById("ob").style.width=(all.length?100*d/all.length:0)+"%";
+document.getElementById("ot").textContent=d+" of "+all.length+" done"}
+document.addEventListener("change",function(e){var id=e.target.getAttribute&&e.target.getAttribute("data-id");if(id){S[id]=e.target.checked;sv();up()}});
+up();
+</script>
+</body>
+</html>
